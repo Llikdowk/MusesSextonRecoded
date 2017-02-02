@@ -1,19 +1,10 @@
-﻿using System.Security.AccessControl;
-using Game.Actions;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace CustomInput {
+namespace Game.CustomInput {
 
+	public class InputController : MonoBehaviour {
 
-	public class Input : MonoBehaviour {
-
-		public string outside;
-		private ActionManager _actionMng;
-
-		public void Awake() {
-			_actionMng = new ActionManager();
-			_actionMng.Actions[0].WhileBehaviour = () => { Debug.Log(outside); };// Action.nop; // TODO: add action id in actionmng
-		}
+		private readonly ActionManager _actionMng = new ActionManager();
 
 		public void Update() {
 
