@@ -1,0 +1,50 @@
+﻿using Scripts.Debug;
+using UnityEngine;
+
+public class CharacterController : MonoBehaviour {
+
+	public Vector3 Gravity = Physics.gravity;
+	private CapsuleCollider _collider;
+	private Camera _camera;
+	private Transform _transform;
+
+	private GameObject _debugSphere1;
+	private GameObject _debugSphere2;
+
+	public void Awake() {
+		_debugSphere1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+		_debugSphere2 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+		Object.Destroy(_debugSphere1.GetComponent<Collider>());
+		Object.Destroy(_debugSphere2.GetComponent<Collider>());
+	}
+
+	public void Start() {
+		_camera = GetComponentInChildren<Camera>();
+		_collider = GetComponent<CapsuleCollider>();
+		_transform = GetComponent<Transform>();
+	}
+
+	public void Update() {
+		Vector3 start = _transform.position;
+		Vector3 end = start + Vector3.down * 100;
+		Debug.DrawRay(start, end, Color.magenta);
+
+		Vector3 p1 = _transform.position; // TODO collider offset
+		Vector3 p2 = p1 - _transform.up * (_collider.height - _collider.radius);
+		Collider[] colliders = Physics.OverlapCapsule(p1, p2, _collider.radius);
+
+		_debugSphere1.transform.position = p1;
+		_debugSphere2.transform.position = p2;
+
+		string s = "";
+		foreach (Collider c in colliders) {
+			s += c.name + " ";
+		}
+
+		Debug.Log(colliders.Length + " " + s);
+
+
+		//DebugDraw.RenderVolume(Vector3.zero, Vector3.one, 2, Vector3.down, 10);
+		//Physics.OverlapCapsule();
+	}
+}
