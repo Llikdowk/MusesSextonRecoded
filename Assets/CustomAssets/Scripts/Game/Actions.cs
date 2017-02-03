@@ -55,10 +55,7 @@ namespace Game {
 			_actions.Add(new Action(ActionTag.MoveLeft, KeyCode.A));
 			_actions.Add(new Action(ActionTag.MoveBack, KeyCode.S));
 			_actions.Add(new Action(ActionTag.MoveRight, KeyCode.D));
-
-			var use = new Action(ActionTag.Use, KeyCode.Mouse0);
-			use.DefineAllDefaults(()=> Debug.Log("use start"), () => Debug.Log("use while"), () => Debug.Log("use finish"));
-			_actions.Add(use);
+			_actions.Add(new Action(ActionTag.Use, KeyCode.E));
 		}
 
 		public Action GetAction(ActionTag tag) {

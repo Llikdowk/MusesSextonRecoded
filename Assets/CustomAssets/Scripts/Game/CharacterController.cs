@@ -85,9 +85,9 @@ public class CharacterController : MonoBehaviour {
 			if (Physics.Raycast(raycast, out feetRayHit, 1.0f, _layerMaskAllButPlayer)) {
 				if (feetRayHit.distance >= _collider.radius + SkinWidth) {
 
-					Vector3 dif = _feet - feetRayHit.point;
 					Vector3 dir = Vector3.up;
-					transform.position += Vector3.Min(_collider.radius * dir - dif, dir*(_collider.radius + SkinWidth/2.0f));// * Time.deltaTime * 4.0f;
+					Vector3 dif = _feet - feetRayHit.point + dir*SkinWidth/2.0f;
+					transform.position += _collider.radius * dir - dif; 
 				}
 				else {
 					IsGrounded = true;
