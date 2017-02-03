@@ -106,32 +106,23 @@ public class CharacterController : MonoBehaviour {
 			}
 
 
-			/*
-
 			if (collider.Raycast(raycast2, out hit, 1.0f)) {
+				if (hit.distance <= SkinWidth) continue;
 				Debug.DrawRay(raycast2.origin, raycast2.direction, Color.cyan);
-				if (hit.distance >= _collider.radius + SkinWidth) {
+				if (hit.distance <= _collider.radius) {
 					Vector3 dir = -raycast2.direction;
-					Vector3 dif = raycast2.origin - hit.point + dir*SkinWidth/2.0f;
-					transform.position += _collider.radius * dir - dif;
-					Debug.Log("YOU SHALL NOT PASS");
+					Vector3 dif = raycast2.origin - hit.point;
+					transform.position += (_collider.radius + SkinWidth/2.0f) * dir - dif;
 				}
 			}
-			*/
 
 
 		}
 		
 		if (colliders.Length == 0) _isGrounded = false;
-		//Debug.Log(colliders.Length + " " + s);
 
-		/*
 		if (!IsGrounded) {
-			transform.localPosition += Gravity * Time.deltaTime;// * _timeOnAir;
-		}
-		*/
-		if (!IsGrounded) {
-			_timeOnAir = Mathf.Min(_timeOnAir + Time.deltaTime, 10.0f);
+			_timeOnAir += Time.deltaTime;
 		}
 	}
 }
