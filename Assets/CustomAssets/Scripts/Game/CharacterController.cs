@@ -1,14 +1,21 @@
-﻿using Scripts.Debug;
+﻿using Game;
+using Scripts.Debug;
+using UnityEditor;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour {
 
 	public Vector3 Gravity = Physics.gravity;
+	public float SkinWidth = 0.1f;
+	public float ForwardSpeed = 1.0f;
+	public float BackwardSpeed = 1.0f;
+	public float LeftSpeed = 1.0f;
+	public float RightSpeed = 1.0f;
+
 	private CapsuleCollider _collider;
 	private Camera _camera;
 	private int _layerMaskAllButPlayer;
 	private Vector3 _feet;
-	public float SkinWidth = 0.1f;
 	private float _timeOnAir = 0.0f;
 
 	private bool IsGrounded {
@@ -36,6 +43,20 @@ public class CharacterController : MonoBehaviour {
 		_layerMaskAllButPlayer = ~player;
 		_camera = GetComponentInChildren<Camera>();
 		_collider = GetComponent<CapsuleCollider>();
+		ActionManager actions = ActionManager.GetInstance();
+
+		actions.GetAction(ActionTag.MoveForward).WhileBehaviour = () => {
+			transform.position += transform.forward * ForwardSpeed * Time.deltaTime;
+		};
+		actions.GetAction(ActionTag.MoveBack).WhileBehaviour = () => {
+			transform.position -= transform.forward * BackwardSpeed * Time.deltaTime;
+		};
+		actions.GetAction(ActionTag.MoveLeft).WhileBehaviour = () => {
+			transform.position -= transform.right * LeftSpeed * Time.deltaTime;
+		};
+		actions.GetAction(ActionTag.MoveRight).WhileBehaviour = () => {
+			transform.position += transform.right * RightSpeed * Time.deltaTime;
+		};
 	}
 
 	public void Update() {

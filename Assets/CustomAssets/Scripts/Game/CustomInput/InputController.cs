@@ -4,7 +4,7 @@ namespace Game.CustomInput {
 
 	public class InputController : MonoBehaviour {
 
-		private readonly ActionManager _actionMng = new ActionManager();
+		private readonly ActionManager _actionMng = ActionManager.GetInstance();
 
 		public void Update() {
 

@@ -44,7 +44,12 @@ namespace Game {
 		public List<Action> Actions { get { return _actions; } }
 		private readonly List<Action> _actions = new List<Action>();
 
-		public ActionManager() {
+		private static ActionManager _instance;
+		public static ActionManager GetInstance() {
+			return _instance ?? (_instance = new ActionManager());
+		}
+
+		private ActionManager() {
 
 			_actions.Add(new Action(ActionTag.MoveForward, KeyCode.W));
 			_actions.Add(new Action(ActionTag.MoveLeft, KeyCode.A));
