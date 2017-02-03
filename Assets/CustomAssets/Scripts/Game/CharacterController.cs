@@ -64,6 +64,7 @@ public class CharacterController : MonoBehaviour {
 	}
 
 	public void Update() {
+		
 		_currentSpeed = (transform.position - _lastPosition) / Time.deltaTime;
 		_lastPosition = transform.position;
 		if (!IsGrounded) {
@@ -83,14 +84,28 @@ public class CharacterController : MonoBehaviour {
 		float raycastMargin = 0.1f;
 		Ray raycast = new Ray(_feet + raycastMargin * transform.up, -transform.up);
 		Debug.DrawRay(raycast.origin, raycast.direction, Color.magenta);
-		Ray raycast2 = new Ray(_feet - raycastMargin * transform.forward, transform.forward);
-		Debug.DrawRay(raycast2.origin, raycast2.direction, Color.magenta);
+
+		Ray[] wallRaycast = new Ray[8];
+		wallRaycast[0] = new Ray(_feet, transform.forward);
+		wallRaycast[1] = new Ray(_feet, -transform.forward);
+		wallRaycast[2] = new Ray(_feet, transform.right);
+		wallRaycast[3] = new Ray(_feet, -transform.right);
+
+		// fixme disposable hack: not working properly and poorly optimized
+		wallRaycast[4] = new Ray(_feet, transform.forward + transform.right);
+		wallRaycast[5] = new Ray(_feet, -transform.forward + transform.right);
+		wallRaycast[6] = new Ray(_feet, -transform.right + transform.forward);
+		wallRaycast[7] = new Ray(_feet, -transform.right - transform.forward);
+		foreach (Ray r in wallRaycast) {
+			Debug.DrawRay(r.origin, r.direction, Color.magenta);
+		}
 
 		RaycastHit hit;
 		foreach (Collider collider in colliders) {
 			s += collider.name + " ";
 
 			if (collider.Raycast(raycast, out hit, 10.0f)) {
+			Debug.DrawRay(transform.position, collider.ClosestPointOnBounds(hit.point) - transform.position, Color.red);
 				if (hit.distance <= SkinWidth) continue;
 				Debug.DrawRay(raycast.origin, raycast.direction, Color.cyan);
 				Vector3 dir = -raycast.direction;
@@ -105,18 +120,19 @@ public class CharacterController : MonoBehaviour {
 				}
 			}
 
-
-			if (collider.Raycast(raycast2, out hit, 1.0f)) {
-				if (hit.distance <= SkinWidth) continue;
-				Debug.DrawRay(raycast2.origin, raycast2.direction, Color.cyan);
-				if (hit.distance <= _collider.radius) {
-					Vector3 dir = -raycast2.direction;
-					Vector3 dif = raycast2.origin - hit.point;
-					transform.position += (_collider.radius + SkinWidth/2.0f) * dir - dif;
+			foreach (Ray wallRay in wallRaycast) {
+				if (collider.Raycast(wallRay, out hit, 1.0f)) {
+					if (hit.distance <= SkinWidth) continue;
+					Debug.DrawRay(wallRay.origin, wallRay.direction, Color.cyan);
+					if (hit.distance <= _collider.radius) {
+						Vector3 dir = -wallRay.direction;
+						Vector3 dif = wallRay.origin - hit.point;
+						transform.position += (_collider.radius + SkinWidth / 2.0f) * dir - dif;
+					}
 				}
 			}
 
-
+	
 		}
 		
 		if (colliders.Length == 0) _isGrounded = false;
@@ -125,4 +141,5 @@ public class CharacterController : MonoBehaviour {
 			_timeOnAir += Time.deltaTime;
 		}
 	}
+
 }

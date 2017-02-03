@@ -10,7 +10,7 @@ namespace Game.CustomInput {
 		public void Update() {
 			float speed = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivity;
 
-			transform.Rotate(-speed, 0, 0, Space.Self);
+			transform.Rotate(-speed, 0, 0, Space.Self); // TODO clamp angle
 		}
 
 	}

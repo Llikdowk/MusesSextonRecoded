@@ -380,6 +380,11 @@ Prefab:
       propertyPath: SkinWidth
       value: 0.03
       objectReference: {fileID: 0}
+    - target: {fileID: 136995954625932830, guid: fa6833343ffc34142894b3eecf68948b,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa6833343ffc34142894b3eecf68948b, type: 2}
   m_IsPrefabParent: 0
