@@ -29,8 +29,9 @@ public class CharacterController : MonoBehaviour {
 		Vector3 end = start + Vector3.down * 100;
 		Debug.DrawRay(start, end, Color.magenta);
 
-		Vector3 p1 = _transform.position; // TODO collider offset
-		Vector3 p2 = p1 - _transform.up * (_collider.height - _collider.radius);
+		Matrix4x4 M = _collider.transform.localToWorldMatrix;
+		Vector3 p1 = _transform.position + M.MultiplyVector(_collider.center) + transform.up * (_collider.height/2.0f - _collider.radius);
+		Vector3 p2 = _transform.position + M.MultiplyVector(_collider.center) - transform.up * (_collider.height/2.0f - _collider.radius);
 		Collider[] colliders = Physics.OverlapCapsule(p1, p2, _collider.radius);
 
 		_debugSphere1.transform.position = p1;
