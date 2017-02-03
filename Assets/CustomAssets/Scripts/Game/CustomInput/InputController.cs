@@ -6,7 +6,7 @@ namespace Game.CustomInput {
 
 		private readonly ActionManager _actionMng = ActionManager.GetInstance();
 
-		public void Update() {
+		public void Update() { // Executed before anything else (check ScriptOrder)
 
 			foreach (Action action in _actionMng.Actions) {
 				foreach (KeyCode k in action.Keys) {
