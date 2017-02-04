@@ -28,10 +28,15 @@ namespace Game {
 			StartBehaviour = start;
 			WhileBehaviour = during;
 			FinishBehaviour = finish;
+
+			DefaultStartBehaviour = start;
+			DefaultWhileBehaviour = during;
+			DefaultFinishBehaviour = finish;
 		}
 
-		public void SetAllNop() {
+		public Action SetAllNop() {
 			DefineAllDefaults(nop, nop, nop);
+			return this;
 		}
 
 		public Action(ActionTag tag, KeyCode k1) {
@@ -48,6 +53,7 @@ namespace Game {
 
 	public class ActionManager {
 		public List<Action> Actions { get { return _actions; } }
+		public bool AllowActions = true;
 		private readonly List<Action> _actions = new List<Action>();
 
 		private static ActionManager _instance;
