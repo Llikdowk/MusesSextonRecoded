@@ -1,4 +1,5 @@
-﻿using Game;
+﻿using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using Game;
 using Scripts.Debug;
 using UnityEditor;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class CharacterController : MonoBehaviour {
 	private Vector3 _lastPosition;
 	private Vector3 _currentSpeed; // units/s (m/s)
 	private Vector3 _nextRelPosition = Vector3.zero;
+	private Vector3 _movementDirection = Vector3.zero;
 	private float _pushbackForce = 1.5f;
 
 	private bool IsGrounded {
@@ -68,21 +70,21 @@ public class CharacterController : MonoBehaviour {
 
 	public void Update() {
 		_currentSpeed = _nextRelPosition / Time.deltaTime;
+		_movementDirection = _nextRelPosition.normalized;
 		transform.position += _nextRelPosition;
 		_nextRelPosition = Vector3.zero;
 		if (!IsGrounded) {
 			_nextRelPosition += Gravity * _timeOnAir * Time.deltaTime;
 		}
-
 		Matrix4x4 M = _collider.transform.localToWorldMatrix;
 		Vector3 p1 = transform.position + M.MultiplyVector(_collider.center) +
 		             transform.up * (_collider.height / 2.0f - _collider.radius);
 		Vector3 p2 = transform.position + M.MultiplyVector(_collider.center) -
 		             transform.up * (_collider.height / 2.0f - _collider.radius);
-		RaycastHit[] hits = Physics.CapsuleCastAll(p1, p2, _collider.radius, -Vector3.up, SkinWidth, _layerMaskAllButPlayer);
-		if (hits.Length == 0) IsGrounded = false;
+		RaycastHit[] floorHits = Physics.CapsuleCastAll(p1, p2, _collider.radius, -Vector3.up, SkinWidth, _layerMaskAllButPlayer);
+		if (floorHits.Length == 0) IsGrounded = false;
 
-		foreach (RaycastHit hit in hits) {
+		foreach (RaycastHit hit in floorHits) {
 			// overlapping collision
 			if (hit.point == Vector3.zero) {
 				transform.position += hit.normal * (_nextRelPosition.magnitude) + hit.normal * SkinWidth / 2.0f;
@@ -101,6 +103,19 @@ public class CharacterController : MonoBehaviour {
 		if (!IsGrounded) {
 			_timeOnAir += Time.deltaTime;
 		}
+
+
+		RaycastHit[] wallHits = Physics.CapsuleCastAll(p1, p2, _collider.radius, Vector3.ProjectOnPlane(_movementDirection, Vector3.up)/*transform.forward*/, SkinWidth, _layerMaskAllButPlayer);
+		foreach (RaycastHit hit in wallHits) {
+			if (hit.point == Vector3.zero) {
+				transform.position += (hit.distance - SkinWidth/2.0f * 10.0f) * -hit.normal; //(transform.position - hit.point);
+			}
+			else { // if (hit.distance > SkinWidth / 2.0f) {
+				Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
+				transform.position += (hit.distance - SkinWidth/2.0f * 10.0f) * -hit.normal; //(transform.position - hit.point);
+			}
+		}
+
 	}
 
 }
