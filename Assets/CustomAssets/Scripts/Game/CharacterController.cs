@@ -20,6 +20,7 @@ public class CharacterController : MonoBehaviour {
 	private float _timeOnAir = 0.0f;
 	private Vector3 _lastPosition;
 	private Vector3 _currentSpeed; // units/s (m/s)
+	private Vector3 _nextRelPosition = Vector3.zero;
 
 	private bool IsGrounded {
 		get { return _isGrounded; }
@@ -48,22 +49,22 @@ public class CharacterController : MonoBehaviour {
 		_collider = GetComponent<CapsuleCollider>();
 		ActionManager actions = ActionManager.GetInstance();
 
-		transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 		actions.GetAction(ActionTag.MoveForward).WhileBehaviour = () => {
-			transform.position += transform.forward * ForwardSpeed * Time.deltaTime;
+			_nextRelPosition += transform.forward * ForwardSpeed * Time.deltaTime;
 		};
 		actions.GetAction(ActionTag.MoveBack).WhileBehaviour = () => {
-			transform.position -= transform.forward * BackwardSpeed * Time.deltaTime;
+			_nextRelPosition -= transform.forward * BackwardSpeed * Time.deltaTime;
 		};
 		actions.GetAction(ActionTag.MoveLeft).WhileBehaviour = () => {
-			transform.position -= transform.right * LeftSpeed * Time.deltaTime;
+			_nextRelPosition -= transform.right * LeftSpeed * Time.deltaTime;
 		};
 		actions.GetAction(ActionTag.MoveRight).WhileBehaviour = () => {
-			transform.position += transform.right * RightSpeed * Time.deltaTime;
+			_nextRelPosition += transform.right * RightSpeed * Time.deltaTime;
 		};
 	}
 
-	public void Update() {
+	//Responsive Strategy
+	public void OldUpdate() {
 		
 		_currentSpeed = (transform.position - _lastPosition) / Time.deltaTime;
 		_lastPosition = transform.position;
@@ -139,6 +140,30 @@ public class CharacterController : MonoBehaviour {
 
 		if (!IsGrounded) {
 			_timeOnAir += Time.deltaTime;
+		}
+	}
+
+	// PREDICTIVE Strategy
+	public void Update() {
+		_currentSpeed = _nextRelPosition / Time.deltaTime;
+		transform.position += _nextRelPosition;
+		_nextRelPosition = Vector3.zero;
+		//_nextRelPosition += Gravity * Time.deltaTime;
+
+		Matrix4x4 M = _collider.transform.localToWorldMatrix;
+		Vector3 p1 = transform.position + M.MultiplyVector(_collider.center) + transform.up * (_collider.height/2.0f - _collider.radius);
+		Vector3 p2 = transform.position + M.MultiplyVector(_collider.center) - transform.up * (_collider.height/2.0f - _collider.radius);
+		RaycastHit[] hits = Physics.CapsuleCastAll(p1, p2, _collider.radius, _nextRelPosition, _nextRelPosition.sqrMagnitude, _layerMaskAllButPlayer);
+
+		foreach (RaycastHit hit in hits) {
+			// overlapping collision
+			if (hit.point == Vector3.zero) {
+				transform.position += hit.normal * 9.81f * Time.deltaTime;
+			}
+			else {
+				Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
+			}
+
 		}
 	}
 
