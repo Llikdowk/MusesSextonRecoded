@@ -20,7 +20,6 @@ public class CharacterController : MonoBehaviour {
 	private Vector3 _currentSpeed; // units/s (m/s)
 	private Vector3 _nextRelPosition = Vector3.zero;
 	private Vector3 _movementDirection = Vector3.zero;
-	private Vector3 _inputMovDir;
 	private ActionManager actions = ActionManager.GetInstance();
 
 	private bool IsGrounded {
@@ -52,9 +51,9 @@ public class CharacterController : MonoBehaviour {
 		Gravity *= GravityMultiplier;
 
 
-		actions.GetAction(ActionTag.MoveForward).WhileBehaviour = () =>
+		actions.GetAction(ActionTag.MoveForward).WhileBehaviour = () => {
 			_nextRelPosition += transform.forward * ForwardSpeed * Time.deltaTime;
-		;
+		};
 		actions.GetAction(ActionTag.MoveBack).WhileBehaviour = () => {
 			_nextRelPosition += -transform.forward * BackwardSpeed * Time.deltaTime;
 		};
@@ -76,11 +75,11 @@ public class CharacterController : MonoBehaviour {
 			_nextRelPosition += Gravity * _timeOnAir * Time.deltaTime;
 		}
 		Matrix4x4 M = _collider.transform.localToWorldMatrix;
-		Vector3 p1 = transform.position + M.MultiplyVector(_collider.center) +
+		Vector3 capsuleHead = transform.position + M.MultiplyVector(_collider.center) +
 		             transform.up * (_collider.height / 2.0f - _collider.radius);
-		Vector3 p2 = transform.position + M.MultiplyVector(_collider.center) -
+		Vector3 capsuleFeet = transform.position + M.MultiplyVector(_collider.center) -
 		             transform.up * (_collider.height / 2.0f - _collider.radius);
-		RaycastHit[] floorHits = Physics.CapsuleCastAll(p1, p2, _collider.radius, -Vector3.up, SkinWidth, _layerMaskAllButPlayer);
+		RaycastHit[] floorHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet, _collider.radius, -Vector3.up, SkinWidth, _layerMaskAllButPlayer);
 		if (floorHits.Length == 0) IsGrounded = false;
 
 		foreach (RaycastHit hit in floorHits) {
@@ -100,16 +99,27 @@ public class CharacterController : MonoBehaviour {
 			_timeOnAir += Time.deltaTime;
 		}
 
-		
-		RaycastHit[] wallHits = Physics.CapsuleCastAll(p1, p2, _collider.radius, _inputMovDir, SkinWidth * 2.0f, _layerMaskAllButPlayer);
+
+		Vector3 stepOffset = transform.up * _collider.radius / 4.0f; // TODO parametrice
+		RaycastHit[] wallHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, transform.forward, SkinWidth * 4.0f, _layerMaskAllButPlayer); 
 		foreach(RaycastHit hit in wallHits) {
+			Debug.Log(Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal)));
 			if (hit.point == Vector3.zero) {
-				transform.position += -_inputMovDir * (_nextRelPosition.magnitude + SkinWidth / 2.0f); //(transform.position - hit.point);
+				transform.position += hit.normal * (_nextRelPosition.magnitude + SkinWidth / 2.0f); //(transform.position - hit.point);
 			}
-			else if (hit.distance > SkinWidth / 2.0f) {
+			else if (Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal)) > 0.9f) { // TODO parametrice 
+				continue;
+			}
+			else if (hit.distance > SkinWidth / 2.0f && hit.distance < SkinWidth) {
 				Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
-				transform.position += (hit.distance - SkinWidth/2.0f) * -_inputMovDir; //(transform.position - hit.point);
+				transform.position += (1 - Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal))) * ((hit.distance - SkinWidth/2.0f) * - transform.forward); //(transform.position - hit.point);
+				actions.GetAction(ActionTag.MoveForward).WhileBehaviour = () => { };
 			}
+		}
+
+		if (wallHits.Length == 0) {
+			actions.GetAction(ActionTag.MoveForward).WhileBehaviour = () =>
+				_nextRelPosition += transform.forward * ForwardSpeed * Time.deltaTime;
 		}
 		
 
