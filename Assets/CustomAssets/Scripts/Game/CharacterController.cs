@@ -6,8 +6,8 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour {
 
 	public Vector3 Gravity = Physics.gravity;
-	[Range(0, 0.2f)]
-	public float SkinWidth = 0.15f;
+	public float GravityMultiplier = 1.0f;
+	[Range(0, 0.5f)] public float SkinWidth = 0.15f;
 	public float ForwardSpeed = 1.0f;
 	public float BackwardSpeed = 1.0f;
 	public float LeftSpeed = 1.0f;
@@ -21,6 +21,7 @@ public class CharacterController : MonoBehaviour {
 	private Vector3 _lastPosition;
 	private Vector3 _currentSpeed; // units/s (m/s)
 	private Vector3 _nextRelPosition = Vector3.zero;
+	private float _pushbackForce = 1.5f;
 
 	private bool IsGrounded {
 		get { return _isGrounded; }
@@ -32,7 +33,7 @@ public class CharacterController : MonoBehaviour {
 		}
 	}
 
-	private bool _isGrounded; //= false;
+	private bool _isGrounded = false;
 
 	//private GameObject _debugSphere1;
 	//private GameObject _debugSphere2;
@@ -61,109 +62,44 @@ public class CharacterController : MonoBehaviour {
 		actions.GetAction(ActionTag.MoveRight).WhileBehaviour = () => {
 			_nextRelPosition += transform.right * RightSpeed * Time.deltaTime;
 		};
+		Gravity *= GravityMultiplier;
 	}
 
-	//Responsive Strategy
-	public void OldUpdate() {
-		
-		_currentSpeed = (transform.position - _lastPosition) / Time.deltaTime;
-		_lastPosition = transform.position;
-		if (!IsGrounded) {
-			transform.position += Gravity * /*_timeOnAir */ Time.deltaTime;
-		}
 
-		Matrix4x4 M = _collider.transform.localToWorldMatrix;
-		Vector3 p1 = transform.position + M.MultiplyVector(_collider.center) + transform.up * (_collider.height/2.0f - _collider.radius);
-		Vector3 p2 = transform.position + M.MultiplyVector(_collider.center) - transform.up * (_collider.height/2.0f - _collider.radius);
-		Collider[] colliders = Physics.OverlapCapsule(p1, p2, _collider.radius, _layerMaskAllButPlayer);
-		_feet = p2;// - transform.up * _collider.radius;
-
-		//_debugSphere1.transform.position = p1;
-		//_debugSphere2.transform.position = p2;
-
-		string s = "";
-		float raycastMargin = 0.1f;
-		Ray raycast = new Ray(_feet + raycastMargin * transform.up, -transform.up);
-		Debug.DrawRay(raycast.origin, raycast.direction, Color.magenta);
-
-		Ray[] wallRaycast = new Ray[8];
-		wallRaycast[0] = new Ray(_feet, transform.forward);
-		wallRaycast[1] = new Ray(_feet, -transform.forward);
-		wallRaycast[2] = new Ray(_feet, transform.right);
-		wallRaycast[3] = new Ray(_feet, -transform.right);
-
-		// fixme disposable hack: not working properly and poorly optimized
-		wallRaycast[4] = new Ray(_feet, transform.forward + transform.right);
-		wallRaycast[5] = new Ray(_feet, -transform.forward + transform.right);
-		wallRaycast[6] = new Ray(_feet, -transform.right + transform.forward);
-		wallRaycast[7] = new Ray(_feet, -transform.right - transform.forward);
-		foreach (Ray r in wallRaycast) {
-			Debug.DrawRay(r.origin, r.direction, Color.magenta);
-		}
-
-		RaycastHit hit;
-		foreach (Collider collider in colliders) {
-			s += collider.name + " ";
-
-			if (collider.Raycast(raycast, out hit, 10.0f)) {
-			Debug.DrawRay(transform.position, collider.ClosestPointOnBounds(hit.point) - transform.position, Color.red);
-				if (hit.distance <= SkinWidth) continue;
-				Debug.DrawRay(raycast.origin, raycast.direction, Color.cyan);
-				Vector3 dir = -raycast.direction;
-				Vector3 dif = raycast.origin - hit.point;
-				if (hit.distance > _collider.radius + SkinWidth) { 
-					transform.position += _collider.radius * dir - dif; 
-				}
-				else {
-					IsGrounded = true;
-					transform.position += (_collider.radius + SkinWidth/2.0f) * dir - dif;
-
-				}
-			}
-
-			foreach (Ray wallRay in wallRaycast) {
-				if (collider.Raycast(wallRay, out hit, 1.0f)) {
-					if (hit.distance <= SkinWidth) continue;
-					Debug.DrawRay(wallRay.origin, wallRay.direction, Color.cyan);
-					if (hit.distance <= _collider.radius) {
-						Vector3 dir = -wallRay.direction;
-						Vector3 dif = wallRay.origin - hit.point;
-						transform.position += (_collider.radius + SkinWidth / 2.0f) * dir - dif;
-					}
-				}
-			}
-
-	
-		}
-		
-		if (colliders.Length == 0) _isGrounded = false;
-
-		if (!IsGrounded) {
-			_timeOnAir += Time.deltaTime;
-		}
-	}
-
-	// PREDICTIVE Strategy
 	public void Update() {
 		_currentSpeed = _nextRelPosition / Time.deltaTime;
 		transform.position += _nextRelPosition;
 		_nextRelPosition = Vector3.zero;
-		//_nextRelPosition += Gravity * Time.deltaTime;
+		if (!IsGrounded) {
+			_nextRelPosition += Gravity * _timeOnAir * Time.deltaTime;
+		}
 
 		Matrix4x4 M = _collider.transform.localToWorldMatrix;
-		Vector3 p1 = transform.position + M.MultiplyVector(_collider.center) + transform.up * (_collider.height/2.0f - _collider.radius);
-		Vector3 p2 = transform.position + M.MultiplyVector(_collider.center) - transform.up * (_collider.height/2.0f - _collider.radius);
-		RaycastHit[] hits = Physics.CapsuleCastAll(p1, p2, _collider.radius, _nextRelPosition, _nextRelPosition.sqrMagnitude, _layerMaskAllButPlayer);
+		Vector3 p1 = transform.position + M.MultiplyVector(_collider.center) +
+		             transform.up * (_collider.height / 2.0f - _collider.radius);
+		Vector3 p2 = transform.position + M.MultiplyVector(_collider.center) -
+		             transform.up * (_collider.height / 2.0f - _collider.radius);
+		RaycastHit[] hits = Physics.CapsuleCastAll(p1, p2, _collider.radius, -Vector3.up, SkinWidth, _layerMaskAllButPlayer);
+		if (hits.Length == 0) IsGrounded = false;
 
 		foreach (RaycastHit hit in hits) {
 			// overlapping collision
 			if (hit.point == Vector3.zero) {
-				transform.position += hit.normal * 9.81f * Time.deltaTime;
+				transform.position += hit.normal * (_nextRelPosition.magnitude) + hit.normal * SkinWidth / 2.0f;
+				IsGrounded = true;
 			}
 			else {
-				Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
+				Debug.Log("distance: " + hit.distance);
+				if (hit.distance > SkinWidth / 2.0f) {
+					Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
+					transform.position += (hit.distance - SkinWidth/2.0f) * -Vector3.up; //(transform.position - hit.point);
+					IsGrounded = true;
+				}
 			}
+		}
 
+		if (!IsGrounded) {
+			_timeOnAir += Time.deltaTime;
 		}
 	}
 

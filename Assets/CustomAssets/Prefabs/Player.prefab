@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4139878440087328}
   - component: {fileID: 114283957191764414}
   - component: {fileID: 114339939323260716}
+  - component: {fileID: 114483045532122856}
   - component: {fileID: 114917159112282994}
   - component: {fileID: 136995954625932830}
   m_Layer: 8
@@ -42,7 +43,6 @@ GameObject:
   - component: {fileID: 92484441151758112}
   - component: {fileID: 124580714881258792}
   - component: {fileID: 81187682020227276}
-  - component: {fileID: 114329332817212112}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -136,18 +136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dce719bdadd5724ebe79290c9264695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114329332817212112
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1318661995506684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9e2c3593b0353842b78c9d52cc92dd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sensitivity: 100
 --- !u!114 &114339939323260716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -160,6 +148,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensitivity: 100
+--- !u!114 &114483045532122856
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1015523596763308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e2c3593b0353842b78c9d52cc92dd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sensitivity: 100
+  VerticalRange: 0.9
 --- !u!114 &114917159112282994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -172,7 +173,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Gravity: {x: 0, y: -9.81, z: 0}
-  SkinWidth: 0.01
+  GravityMultiplier: 2
+  SkinWidth: 0.056
   ForwardSpeed: 5
   BackwardSpeed: 5
   LeftSpeed: 5
@@ -191,7 +193,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1015523596763308}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2.72
