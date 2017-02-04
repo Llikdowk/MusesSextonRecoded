@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114339939323260716}
   - component: {fileID: 114483045532122856}
   - component: {fileID: 114917159112282994}
+  - component: {fileID: 114486211729582720}
   - component: {fileID: 136995954625932830}
   m_Layer: 8
   m_Name: Player
@@ -57,7 +58,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1015523596763308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.17, y: 4.73, z: 1.77}
+  m_LocalPosition: {x: 28.834082, y: 213.59, z: 115.38809}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4791768322742770}
@@ -161,6 +162,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sensitivity: 100
   VerticalRange: 0.9
+--- !u!114 &114486211729582720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1015523596763308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 282271f4ec53f2641889a68c414650a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForwardSpeed: 5
+  BackwardSpeed: 5
+  LeftSpeed: 5
+  RightSpeed: 5
 --- !u!114 &114917159112282994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -175,10 +191,8 @@ MonoBehaviour:
   Gravity: {x: 0, y: -9.81, z: 0}
   GravityMultiplier: 2
   SkinWidth: 0.056
-  ForwardSpeed: 5
-  BackwardSpeed: 5
-  LeftSpeed: 5
-  RightSpeed: 5
+  SlopeInclinationAllowance: 0.1
+  StepAllowance: 0
 --- !u!124 &124580714881258792
 Behaviour:
   m_ObjectHideFlags: 1

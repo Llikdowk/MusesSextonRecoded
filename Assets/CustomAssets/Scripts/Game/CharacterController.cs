@@ -13,10 +13,9 @@ namespace Game {
 		private CapsuleCollider _collider;
 		private int _layerMaskAllButPlayer;
 		private float _timeOnAir = 0.0f;
-		private Vector3 _nextRelPosition = Vector3.zero;
-		private Vector3 _movementDirection = Vector3.zero;
+		private CharacterMovement _charMovement;
 
-		private ActionManager actions = ActionManager.GetInstance();
+		private readonly ActionManager _actions = ActionManager.GetInstance();
 
 		private bool IsGrounded {
 			get { return _isGrounded; }
@@ -32,23 +31,17 @@ namespace Game {
 
 
 		public void Start() {
-
 			int player = 1 << LayerMaskManager.GetInstance().GetLayer(Layer.Player);
 			_layerMaskAllButPlayer = ~player;
 			_collider = GetComponent<CapsuleCollider>();
-
-			Gravity *= GravityMultiplier;
-
+			_charMovement = GetComponent<CharacterMovement>();
 		}
 
 
 		public void Update() {
-			_movementDirection = _nextRelPosition.normalized;
-			Debug.DrawRay(transform.position, _movementDirection, Color.cyan);
-			transform.position += _nextRelPosition;
-			_nextRelPosition = Vector3.zero;
+			Debug.DrawRay(transform.position, _charMovement.MovementDirection, Color.cyan);
 			if (!IsGrounded) {
-				_nextRelPosition += Gravity * _timeOnAir * Time.deltaTime;
+				_charMovement.AddForce(Gravity, _timeOnAir * Time.deltaTime);
 			}
 			Matrix4x4 M = _collider.transform.localToWorldMatrix;
 			Vector3 capsuleHead = transform.position + M.MultiplyVector(_collider.center) +
@@ -62,8 +55,7 @@ namespace Game {
 			CheckWalls(capsuleHead, capsuleFeet, transform.right, ActionTag.MoveRight);
 			CheckWalls(capsuleHead, capsuleFeet, -transform.right, ActionTag.MoveLeft);
 
-
-
+			//CheckFloor
 			RaycastHit[] floorHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet, _collider.radius, -Vector3.up, SkinWidth,
 				_layerMaskAllButPlayer);
 			if (floorHits.Length == 0) IsGrounded = false;
@@ -71,12 +63,12 @@ namespace Game {
 			foreach (RaycastHit hit in floorHits) {
 				// overlapping collision
 				if (hit.point == Vector3.zero) {
-					transform.position += hit.normal * (_nextRelPosition.magnitude + SkinWidth / 2.0f);
+					_charMovement.AddForce(hit.normal, _charMovement.StepMovement.magnitude + SkinWidth / 2.0f);
 					IsGrounded = true;
 				}
 				else if (hit.distance > SkinWidth / 2.0f) {
 					Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
-					transform.position += (hit.distance - SkinWidth / 2.0f) * -Vector3.up; //(transform.position - hit.point);
+					_charMovement.AddForce(Vector3.down, hit.distance - SkinWidth/2.0f);
 					IsGrounded = true;
 				}
 			}
@@ -84,34 +76,29 @@ namespace Game {
 			if (!IsGrounded) {
 				_timeOnAir += Time.deltaTime;
 			}
-
-
-
-
 		}
 
-		void CheckWalls(Vector3 capsuleHead, Vector3 capsuleFeet, Vector3 dir, ActionTag actionType) {
+		private void CheckWalls(Vector3 capsuleHead, Vector3 capsuleFeet, Vector3 dir, ActionTag actionType) {
 			Vector3 stepOffset = transform.up * StepAllowance;
 			RaycastHit[] wallHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, dir,
 				4 * SkinWidth, _layerMaskAllButPlayer);
 			foreach (RaycastHit hit in wallHits) {
 				if (hit.point == Vector3.zero) {
-					transform.position += hit.normal * (_nextRelPosition.magnitude + SkinWidth / 2.0f);
+					_charMovement.AddForce(hit.normal, _charMovement.StepMovement.magnitude + SkinWidth / 2.0f);
 				}
 				else if (Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal)) >= (1 - SlopeInclinationAllowance)) {
 					continue;
 				}
 				else if (hit.distance > SkinWidth / 2.0f && hit.distance < SkinWidth) {
 					Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
-					transform.position += (1 - Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal))) *
-					                      ((hit.distance - SkinWidth / 2.0f) * -dir);
-					Action moveForward = actions.GetAction(actionType);
+					_charMovement.AddForce(-dir, (1 - Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal))) * ((hit.distance - SkinWidth / 2.0f)));
+					Action moveForward = _actions.GetAction(actionType);
 					moveForward.WhileBehaviour = Action.nop;
 				}
 			}
 
 			if (wallHits.Length == 0) {
-				Action action = actions.GetAction(actionType);
+				Action action = _actions.GetAction(actionType);
 				action.WhileBehaviour = action.DefaultWhileBehaviour;
 			}
 
