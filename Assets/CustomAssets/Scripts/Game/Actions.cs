@@ -13,10 +13,11 @@ namespace Game {
 
 		public readonly ActionTag tag;
 		public List<KeyCode> Keys = new List<KeyCode>(2);
+
 		public ActionDelegate StartBehaviour = nop;
 		public ActionDelegate WhileBehaviour = nop;
 		public ActionDelegate FinishBehaviour = nop;
-
+		public float TimeActionActive;
 
 		public void DefineAllDefaults(ActionDelegate start, ActionDelegate during, ActionDelegate finish) {
 			StartBehaviour = start;
