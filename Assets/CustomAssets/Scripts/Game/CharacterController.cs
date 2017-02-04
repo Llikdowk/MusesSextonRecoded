@@ -58,7 +58,7 @@ namespace Game {
 			CheckWalls(capsuleHead, capsuleFeet, -transform.right, ActionTag.MoveLeft);
 
 			//CheckFloor
-			RaycastHit[] floorHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet, _collider.radius, -Vector3.up, SkinWidth,
+			RaycastHit[] floorHits = Physics.SphereCastAll(capsuleFeet, _collider.radius, -Vector3.up, SkinWidth,
 				_layerMaskAllButPlayer);
 			if (floorHits.Length == 0) IsGrounded = false;
 
@@ -101,7 +101,7 @@ namespace Game {
 
 			if (wallHits.Length == 0) {
 				Action action = _actions.GetAction(actionType);
-				action.WhileBehaviour = action.DefaultWhileBehaviour;
+				action.WhileBehaviour = action.DefaultWhileBehaviour; // TODO: extract this to CharacterMovement: you shouldn't have to know anything about the character movement implementation in this component
 			}
 
 		}

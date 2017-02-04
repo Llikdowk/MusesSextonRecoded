@@ -27,7 +27,7 @@ namespace Game {
 		private readonly ActionManager _actions = ActionManager.GetInstance();
 
 
-		public void Start() {
+		public void Start() { // TODO fixme: diagonal movement is faster
 
 			Action actionForward = _actions.GetAction(ActionTag.MoveForward);
 			actionForward.WhileBehaviour = actionForward.DefaultWhileBehaviour = () => {
