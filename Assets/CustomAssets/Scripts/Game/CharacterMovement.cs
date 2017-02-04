@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Game.CustomInput;
+using UnityEngine;
 
 namespace Game {
+	[RequireComponent(typeof(InputController))]
 	class CharacterMovement : MonoBehaviour {
-
 
 		public float ForwardSpeed = 5.0f;
 		public float BackwardSpeed = 5.0f;

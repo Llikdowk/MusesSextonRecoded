@@ -2,6 +2,8 @@
 using UnityEngine;
 
 namespace Game {
+	[RequireComponent(typeof(CharacterMovement))]
+	[RequireComponent(typeof(CapsuleCollider))]
 	public class CharacterController : MonoBehaviour {
 
 		public Vector3 Gravity = Physics.gravity;
