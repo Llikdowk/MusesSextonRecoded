@@ -190,9 +190,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gravity: {x: 0, y: -9.81, z: 0}
   GravityMultiplier: 2
-  SkinWidth: 0.056
-  SlopeInclinationAllowance: 0.1
-  StepAllowance: 0
+  SkinWidth: 0.076
+  SlopeInclinationAllowance: 0.331
+  StepAllowance: 0.075
 --- !u!124 &124580714881258792
 Behaviour:
   m_ObjectHideFlags: 1
