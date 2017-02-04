@@ -782,6 +782,11 @@ Prefab:
       propertyPath: RightSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114917159112282994, guid: fa6833343ffc34142894b3eecf68948b,
+        type: 2}
+      propertyPath: SkinWidth
+      value: 0.056
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa6833343ffc34142894b3eecf68948b, type: 2}
   m_IsPrefabParent: 0

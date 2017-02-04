@@ -17,6 +17,11 @@ namespace Game {
 		public ActionDelegate StartBehaviour = nop;
 		public ActionDelegate WhileBehaviour = nop;
 		public ActionDelegate FinishBehaviour = nop;
+
+		public ActionDelegate DefaultStartBehaviour = nop;
+		public ActionDelegate DefaultWhileBehaviour = nop;
+		public ActionDelegate DefaultFinishBehaviour = nop;
+
 		public float TimeActionActive;
 
 		public void DefineAllDefaults(ActionDelegate start, ActionDelegate during, ActionDelegate finish) {

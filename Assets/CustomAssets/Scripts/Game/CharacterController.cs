@@ -9,6 +9,8 @@ public class CharacterController : MonoBehaviour {
 	public Vector3 Gravity = Physics.gravity;
 	public float GravityMultiplier = 1.0f;
 	[Range(0, 0.5f)] public float SkinWidth = 0.15f;
+	[Range(0, 1.0f)] public float SlopeInclinationAllowance = 0.1f;
+	[Range(0, 1.0f)] public float StepAllowance = 0.0f;
 	public float ForwardSpeed = 1.0f;
 	public float BackwardSpeed = 1.0f;
 	public float LeftSpeed = 1.0f;
@@ -50,25 +52,35 @@ public class CharacterController : MonoBehaviour {
 
 		Gravity *= GravityMultiplier;
 
+		float speedUp = 6.0f;
 
-		actions.GetAction(ActionTag.MoveForward).WhileBehaviour = () => {
-			_nextRelPosition += transform.forward * ForwardSpeed * Time.deltaTime;
+		Action actionForward = actions.GetAction(ActionTag.MoveForward);
+		actionForward.WhileBehaviour = actionForward.DefaultWhileBehaviour = () => {
+			_nextRelPosition += transform.forward * Mathf.Lerp(0, ForwardSpeed, actionForward.TimeActionActive * speedUp) * Time.deltaTime;
 		};
-		actions.GetAction(ActionTag.MoveBack).WhileBehaviour = () => {
-			_nextRelPosition += -transform.forward * BackwardSpeed * Time.deltaTime;
+		
+		Action actionBack = actions.GetAction(ActionTag.MoveBack);
+		actionBack.WhileBehaviour = actionBack.DefaultWhileBehaviour = () => {
+			_nextRelPosition += -transform.forward * Mathf.Lerp(0, BackwardSpeed, actionBack.TimeActionActive * speedUp) * Time.deltaTime;
 		};
-		actions.GetAction(ActionTag.MoveLeft).WhileBehaviour = () => {
-			_nextRelPosition += -transform.right * LeftSpeed * Time.deltaTime;
+
+		Action actionLeft = actions.GetAction(ActionTag.MoveLeft);
+		actionLeft.WhileBehaviour = actionLeft.DefaultWhileBehaviour = () => {
+			_nextRelPosition += -transform.right * Mathf.Lerp(0, LeftSpeed, actionLeft.TimeActionActive * speedUp) * Time.deltaTime;
 		};
-		actions.GetAction(ActionTag.MoveRight).WhileBehaviour = () => {
-			_nextRelPosition += transform.right * RightSpeed * Time.deltaTime;
+
+		Action actionRight = actions.GetAction(ActionTag.MoveRight);
+		actionRight.WhileBehaviour = actionRight.DefaultWhileBehaviour = () => {
+			_nextRelPosition += transform.right * Mathf.Lerp(0, RightSpeed, actionRight.TimeActionActive * speedUp) * Time.deltaTime;
 		};
+		
 	}
 
 
 	public void Update() {
 		_currentSpeed = _nextRelPosition / Time.deltaTime;
 		_movementDirection = _nextRelPosition.normalized;
+		Debug.DrawRay(transform.position, _movementDirection, Color.cyan);
 		transform.position += _nextRelPosition;
 		_nextRelPosition = Vector3.zero;
 		if (!IsGrounded) {
@@ -79,6 +91,15 @@ public class CharacterController : MonoBehaviour {
 		             transform.up * (_collider.height / 2.0f - _collider.radius);
 		Vector3 capsuleFeet = transform.position + M.MultiplyVector(_collider.center) -
 		             transform.up * (_collider.height / 2.0f - _collider.radius);
+
+
+		CheckWalls(capsuleHead, capsuleFeet, transform.forward, ActionTag.MoveForward);
+		CheckWalls(capsuleHead, capsuleFeet, -transform.forward, ActionTag.MoveBack);
+		CheckWalls(capsuleHead, capsuleFeet, transform.right, ActionTag.MoveRight);
+		CheckWalls(capsuleHead, capsuleFeet, -transform.right, ActionTag.MoveLeft);
+
+
+
 		RaycastHit[] floorHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet, _collider.radius, -Vector3.up, SkinWidth, _layerMaskAllButPlayer);
 		if (floorHits.Length == 0) IsGrounded = false;
 
@@ -100,41 +121,34 @@ public class CharacterController : MonoBehaviour {
 		}
 
 
-		Vector3 stepOffset = transform.up * _collider.radius / 4.0f; // TODO parametrice
-		RaycastHit[] wallHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, transform.forward, SkinWidth * 4.0f, _layerMaskAllButPlayer); 
+
+
+	}
+
+	void CheckWalls(Vector3 capsuleHead, Vector3 capsuleFeet, Vector3 dir, ActionTag actionType) {
+		Vector3 stepOffset = transform.up * StepAllowance; //0.0f;//_collider.radius / 4.0f; // TODO parametrice
+		RaycastHit[] wallHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, dir, 4*SkinWidth, _layerMaskAllButPlayer);
 		foreach(RaycastHit hit in wallHits) {
-			Debug.Log(Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal)));
+			//Debug.Log(Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal)));
 			if (hit.point == Vector3.zero) {
 				transform.position += hit.normal * (_nextRelPosition.magnitude + SkinWidth / 2.0f); //(transform.position - hit.point);
 			}
-			else if (Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal)) > 0.9f) { // TODO parametrice 
+			else if (Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal)) >= (1 - SlopeInclinationAllowance)) { // TODO parametrice 
 				continue;
 			}
 			else if (hit.distance > SkinWidth / 2.0f && hit.distance < SkinWidth) {
 				Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
-				transform.position += (1 - Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal))) * ((hit.distance - SkinWidth/2.0f) * - transform.forward); //(transform.position - hit.point);
-				actions.GetAction(ActionTag.MoveForward).WhileBehaviour = () => { };
+				transform.position += (1 - Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal))) * ((hit.distance - SkinWidth/2.0f) * - dir); //(transform.position - hit.point);
+				Action moveForward = actions.GetAction(actionType);
+				moveForward.WhileBehaviour = Action.nop;
 			}
 		}
 
 		if (wallHits.Length == 0) {
-			actions.GetAction(ActionTag.MoveForward).WhileBehaviour = () =>
-				_nextRelPosition += transform.forward * ForwardSpeed * Time.deltaTime;
+			Action action = actions.GetAction(actionType);
+			action.WhileBehaviour = action.DefaultWhileBehaviour;
 		}
 		
-
-		/*
-		foreach (RaycastHit hit in wallHits) {
-			if (hit.point == Vector3.zero) {
-				transform.position += (hit.distance - SkinWidth/2.0f * 10.0f) * -hit.normal; //(transform.position - hit.point);
-			}
-			else { // if (hit.distance > SkinWidth / 2.0f) {
-				Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
-				transform.position += (hit.distance - SkinWidth/2.0f * 10.0f) * -hit.normal; //(transform.position - hit.point);
-			}
-		}
-		*/
-
 	}
 
 }
