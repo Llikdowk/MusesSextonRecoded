@@ -1,6 +1,4 @@
-﻿
-using System.Net;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.CustomInput {
 	public class LookVertical : MonoBehaviour {
