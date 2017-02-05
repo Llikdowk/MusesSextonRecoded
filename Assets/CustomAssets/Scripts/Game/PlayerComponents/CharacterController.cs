@@ -62,9 +62,10 @@ namespace Game.PlayerComponents {
 			//CheckFloor
 			RaycastHit[] floorHits = Physics.SphereCastAll(capsuleFeet, _collider.radius, -Vector3.up, SkinWidth,
 				_layerMaskAllButPlayer);
-			if (floorHits.Length == 0) IsGrounded = false;
-
+			int collidersFound = 0;
 			foreach (RaycastHit hit in floorHits) {
+				if (hit.collider.isTrigger) continue;
+				++collidersFound;
 				// overlapping collision
 				if (hit.point == Vector3.zero) {
 					_charMovement.AddForce(hit.normal, _charMovement.StepMovement.magnitude + SkinWidth / 2.0f);
@@ -77,16 +78,23 @@ namespace Game.PlayerComponents {
 				}
 			}
 
+			if (collidersFound == 0) {
+				IsGrounded = false;
+			}
+
 			if (!IsGrounded) {
 				_timeOnAir += Time.deltaTime;
 			}
 		}
 
 		private void CheckWalls(Vector3 capsuleHead, Vector3 capsuleFeet, Vector3 dir, ActionTag actionType) {
+			int collidersFound = 0;
 			Vector3 stepOffset = transform.up * StepAllowance;
 			RaycastHit[] wallHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, dir,
 				4 * SkinWidth, _layerMaskAllButPlayer);
 			foreach (RaycastHit hit in wallHits) {
+				if (hit.collider.isTrigger) continue;
+				++collidersFound;
 				if (hit.point == Vector3.zero) {
 					_charMovement.AddForce(hit.normal, _charMovement.StepMovement.magnitude + SkinWidth / 2.0f);
 				}
@@ -101,7 +109,7 @@ namespace Game.PlayerComponents {
 				}
 			}
 
-			if (wallHits.Length == 0) {
+			if (collidersFound == 0) {
 				Action action = _actions.GetAction(actionType);
 				action.Enable();
 			}

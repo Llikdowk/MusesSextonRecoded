@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ForwardSpeed: 5
-  BackwardSpeed: 0
+  BackwardSpeed: 5
   LeftSpeed: 5
   RightSpeed: 5
   SpeedUp: 6
