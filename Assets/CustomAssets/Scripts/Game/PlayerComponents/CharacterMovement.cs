@@ -24,10 +24,11 @@ namespace Game.PlayerComponents {
 		}
 		private Vector3 _stepMovement;
 
-		private readonly ActionManager _actions = ActionManager.GetInstance();
+		private ActionManager _actions;
 
 
 		public void Start() { // TODO fixme: diagonal movement is faster
+			_actions = Player.GetInstance().Actions;
 
 			Action actionForward = _actions.GetAction(ActionTag.MoveForward);
 			actionForward.WhileBehaviour = actionForward.DefaultWhileBehaviour = () => {

@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿using Game.PlayerComponents;
+using UnityEngine;
 
 namespace Game.CustomInput {
 
 	public class InputController : MonoBehaviour {
 
-		private readonly ActionManager _actionMng = ActionManager.GetInstance();
+		private ActionManager _actionMng;
+
+		public void Start() {
+			_actionMng = Player.GetInstance().Actions;
+		}
 
 		public void Update() { // Executed before anything else (check ScriptOrder)
 

@@ -11,7 +11,7 @@ namespace Game {
 		public delegate void ActionDelegate();
 		public static readonly ActionDelegate nop = () => { };
 
-		public readonly ActionTag tag;
+		public readonly ActionTag Tag;
 		public List<KeyCode> Keys = new List<KeyCode>(2);
 
 		public ActionDelegate StartBehaviour = nop;
@@ -40,7 +40,7 @@ namespace Game {
 		}
 
 		public Action(ActionTag tag, KeyCode k1) {
-			this.tag = tag;
+			this.Tag = tag;
 			Keys.Add(k1);
 		}
 
@@ -53,27 +53,16 @@ namespace Game {
 
 	public class ActionManager {
 		public List<Action> Actions { get { return _actions; } }
-		public bool AllowActions = true;
 		private readonly List<Action> _actions = new List<Action>();
 
-		private static ActionManager _instance;
-		public static ActionManager GetInstance() {
-			return _instance ?? (_instance = new ActionManager());
-		}
-
-		private ActionManager() {
-
-			_actions.Add(new Action(ActionTag.MoveForward, KeyCode.W));
-			_actions.Add(new Action(ActionTag.MoveLeft, KeyCode.A));
-			_actions.Add(new Action(ActionTag.MoveBack, KeyCode.S));
-			_actions.Add(new Action(ActionTag.MoveRight, KeyCode.D));
-			_actions.Add(new Action(ActionTag.Use, KeyCode.E));
-		}
-
 		public Action GetAction(ActionTag tag) {
-			return _actions.Find(action => action.tag == tag);
+			return _actions.Find(action => action.Tag == tag);
 		}
 
+		public ActionManager AddAction(Action action) {
+			_actions.Add(action);
+			return this;
+		}
 
 	}
 }

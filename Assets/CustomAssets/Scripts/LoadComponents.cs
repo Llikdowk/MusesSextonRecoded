@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Cubiquity;
-using Game;
 using UnityEngine.UI;
 
 public class LoadComponents : MonoBehaviour {
@@ -11,8 +9,6 @@ public class LoadComponents : MonoBehaviour {
 	public Camera UICamera;
 
 	private float _originalTimeScale;
-	private readonly ActionManager _actions = ActionManager.GetInstance();
-	private readonly List<GameObject> _startEnabledComponents = new List<GameObject>();
 	private bool _hasClicked = false;
 
 	public void Awake() {
@@ -20,7 +16,6 @@ public class LoadComponents : MonoBehaviour {
 		Terrain.enabled = true;
 		_originalTimeScale = Time.timeScale;
 		Time.timeScale = 0.0f;
-		_actions.AllowActions = false;
 	}
 
 	public void Start() {
@@ -36,7 +31,6 @@ public class LoadComponents : MonoBehaviour {
 			enabled = false;
 			TitleImage.gameObject.SetActive(false);
 			FallbackImage.gameObject.SetActive(false);
-			_actions.AllowActions = true;
 		}
 		else {
 			if (Input.GetKeyDown(KeyCode.Mouse0)) {

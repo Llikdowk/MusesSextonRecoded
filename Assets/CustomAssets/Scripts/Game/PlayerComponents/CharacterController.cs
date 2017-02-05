@@ -16,7 +16,7 @@ namespace Game.PlayerComponents {
 		private float _timeOnAir = 0.0f;
 		private CharacterMovement _charMovement;
 
-		private readonly ActionManager _actions = ActionManager.GetInstance();
+		private ActionManager _actions;
 
 		private bool IsGrounded {
 			get { return _isGrounded; }
@@ -32,6 +32,7 @@ namespace Game.PlayerComponents {
 
 
 		public void Start() {
+			_actions = Player.GetInstance().Actions;
 			int player = 1 << LayerMaskManager.GetInstance().GetLayer(Layer.Player);
 			_layerMaskAllButPlayer = ~player;
 			_collider = GetComponent<CapsuleCollider>();
