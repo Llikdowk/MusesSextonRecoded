@@ -30,7 +30,7 @@ namespace Game.PlayerComponents {
 				.AddAction(new Action(ActionTag.MoveLeft, KeyCode.A))
 				.AddAction(new Action(ActionTag.MoveBack, KeyCode.S))
 				.AddAction(new Action(ActionTag.MoveRight, KeyCode.D))
-				.AddAction(new Action(ActionTag.Use, KeyCode.Mouse0))
+				.AddAction(new Action(ActionTag.Use, KeyCode.Mouse0, KeyCode.E))
 				.AddAction(new Action(ActionTag.Run, KeyCode.LeftShift))
 			;
 		}

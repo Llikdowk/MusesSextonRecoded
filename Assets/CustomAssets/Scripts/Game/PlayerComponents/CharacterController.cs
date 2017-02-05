@@ -64,7 +64,10 @@ namespace Game.PlayerComponents {
 				_layerMaskAllButPlayer);
 			int collidersFound = 0;
 			foreach (RaycastHit hit in floorHits) {
-				if (hit.collider.isTrigger) continue;
+				if (hit.collider.isTrigger) {
+					//hit.collider.SendMessage("OnTriggerEnter", _collider, SendMessageOptions.DontRequireReceiver);
+					continue;
+				}
 				++collidersFound;
 				// overlapping collision
 				if (hit.point == Vector3.zero) {
@@ -93,7 +96,10 @@ namespace Game.PlayerComponents {
 			RaycastHit[] wallHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, dir,
 				4 * SkinWidth, _layerMaskAllButPlayer);
 			foreach (RaycastHit hit in wallHits) {
-				if (hit.collider.isTrigger) continue;
+				if (hit.collider.isTrigger) {
+					//hit.collider.SendMessage("OnTriggerEnter", _collider, SendMessageOptions.DontRequireReceiver);
+					continue;
+				}
 				++collidersFound;
 				if (hit.point == Vector3.zero) {
 					_charMovement.AddForce(hit.normal, _charMovement.StepMovement.magnitude + SkinWidth / 2.0f);
