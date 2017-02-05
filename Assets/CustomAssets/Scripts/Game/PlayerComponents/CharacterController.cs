@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.PlayerComponents {
 	[RequireComponent(typeof(CharacterMovement))]
@@ -57,6 +58,7 @@ namespace Game.PlayerComponents {
 			CheckWalls(capsuleHead, capsuleFeet, transform.right, ActionTag.MoveRight);
 			CheckWalls(capsuleHead, capsuleFeet, -transform.right, ActionTag.MoveLeft);
 
+
 			//CheckFloor
 			RaycastHit[] floorHits = Physics.SphereCastAll(capsuleFeet, _collider.radius, -Vector3.up, SkinWidth,
 				_layerMaskAllButPlayer);
@@ -94,13 +96,14 @@ namespace Game.PlayerComponents {
 				else if (hit.distance > SkinWidth / 2.0f && hit.distance < SkinWidth) {
 					Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
 					_charMovement.AddForce(-dir, (1 - Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal))) * ((hit.distance - SkinWidth / 2.0f)));
-					Action moveForward = _actions.GetAction(actionType);
-					//moveForward.WhileBehaviour = Action.nop;
+					Action action = _actions.GetAction(actionType);
+					action.Disable();
 				}
 			}
 
 			if (wallHits.Length == 0) {
 				Action action = _actions.GetAction(actionType);
+				action.Enable();
 				//action.WhileBehaviour = action.DefaultWhileBehaviour; // TODO: extract this to CharacterMovement: you shouldn't have to know anything about the character movement implementation in this component
 			}
 

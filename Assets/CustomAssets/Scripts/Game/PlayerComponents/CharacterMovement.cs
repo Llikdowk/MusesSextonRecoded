@@ -27,13 +27,12 @@ namespace Game.PlayerComponents {
 		private Vector3 _stepMovement;
 
 		public void Start() { 
-			_input = new SmoothMovement(SpeedUp, SpeedDown);
+			//_input = new SmoothMovement(SpeedUp, SpeedDown);
+			_input = new RawMovement();
 			_input.SetMovement();
 		}
 
 		public void AddForce(Vector3 dir, float force) {
-		}
-		public void AddRelativeForce(Vector3 dir, float force) {
 			_stepMovement += dir * force;
 		}
 

@@ -21,7 +21,7 @@ namespace Game.PlayerComponents {
 				_selfMovement.z += 1.0f;
 			};
 			actionForward.FinishBehaviour = () => {
-				_selfMovement.z -= 1.0f;
+				_selfMovement.z = 0.0f;
 			};
 
 			Action actionBack = actions.GetAction(ActionTag.MoveBack);
@@ -29,7 +29,7 @@ namespace Game.PlayerComponents {
 				_selfMovement.z += -1.0f;
 			};
 			actionBack.FinishBehaviour = () => {
-				_selfMovement.z -= -1.0f;
+				_selfMovement.z = 0.0f;
 			};
 
 			Action actionLeft = actions.GetAction(ActionTag.MoveLeft);
@@ -37,7 +37,7 @@ namespace Game.PlayerComponents {
 				_selfMovement.x += -1.0f;
 			};
 			actionLeft.FinishBehaviour = () => {
-				_selfMovement.x -= -1.0f;
+				_selfMovement.x = 0.0f;
 			};
 
 			Action actionRight = actions.GetAction(ActionTag.MoveRight);
@@ -45,7 +45,7 @@ namespace Game.PlayerComponents {
 				_selfMovement.x += 1.0f;
 			};
 			actionRight.FinishBehaviour = () => {
-				_selfMovement.x -= 1.0f;
+				_selfMovement.x = 0.0f;
 			};
 		}
 	}
