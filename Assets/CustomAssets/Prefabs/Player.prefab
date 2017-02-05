@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4139878440087328}
   - component: {fileID: 114283957191764414}
   - component: {fileID: 114339939323260716}
-  - component: {fileID: 114483045532122856}
   - component: {fileID: 114917159112282994}
   - component: {fileID: 114486211729582720}
   - component: {fileID: 136995954625932830}
+  - component: {fileID: 114347505803629462}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -57,14 +57,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1015523596763308}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.834082, y: 213.59, z: 115.38809}
+  m_LocalRotation: {x: -0, y: 0.8940377, z: -0, w: 0.44799176}
+  m_LocalPosition: {x: 28.834082, y: 22.609, z: 115.38809}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4791768322742770}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 126.770004, z: 0}
 --- !u!4 &4791768322742770
 Transform:
   m_ObjectHideFlags: 1
@@ -148,8 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b10476afc2f2cb14785b5ae0812bc05c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 100
---- !u!114 &114483045532122856
+  XSensitivity: 100
+  YSensitivity: 100
+  VerticalRange: 0.9
+  Smooth: 0
+--- !u!114 &114347505803629462
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -157,11 +160,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1015523596763308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9e2c3593b0353842b78c9d52cc92dd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 209989739a850124b8ca7b6f575221b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sensitivity: 100
-  VerticalRange: 0.9
+  Movement: {fileID: 0}
+  Controller: {fileID: 0}
 --- !u!114 &114486211729582720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -170,13 +173,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1015523596763308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 282271f4ec53f2641889a68c414650a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 921f4fa59e084304d9f6afe5609866d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForwardSpeed: 5
-  BackwardSpeed: 5
-  LeftSpeed: 5
-  RightSpeed: 5
+  Gravity: {x: 0, y: -9.81, z: 0}
+  GravityMultiplier: 2
+  SkinWidth: 0.012
+  SlopeInclinationAllowance: 0.326
+  StepAllowance: 0.05
 --- !u!114 &114917159112282994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -185,14 +189,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1015523596763308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b5d4448557da4b4aa5353b15fc0a70a, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e9bce7f8e342f54282791e9e71492af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Gravity: {x: 0, y: -9.81, z: 0}
-  GravityMultiplier: 2
-  SkinWidth: 0.076
-  SlopeInclinationAllowance: 0.331
-  StepAllowance: 0.075
+  ForwardSpeed: 5
+  BackwardSpeed: 0
+  LeftSpeed: 5
+  RightSpeed: 5
+  SpeedUp: 6
+  SpeedDown: 6
+  RunMultiplier: 1.5
 --- !u!124 &124580714881258792
 Behaviour:
   m_ObjectHideFlags: 1
