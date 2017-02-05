@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
+using Game.PlayerComponents;
 using UnityEngine;
 
 namespace Game {
 
-	public enum ActionTag {
-		Use, MoveForward, MoveLeft, MoveRight, MoveBack
-	}
 
 	public class Action {
 		public delegate void ActionDelegate();

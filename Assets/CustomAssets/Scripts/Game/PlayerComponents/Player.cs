@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 
 namespace Game.PlayerComponents {
+	public enum ActionTag {
+		Use, MoveForward, MoveLeft, MoveRight, MoveBack, Run
+	}
+
 	[RequireComponent(typeof(CharacterMovement))]
 	[RequireComponent(typeof(CharacterController))]
 	public class Player : MonoBehaviour {
@@ -26,7 +30,9 @@ namespace Game.PlayerComponents {
 				.AddAction(new Action(ActionTag.MoveLeft, KeyCode.A))
 				.AddAction(new Action(ActionTag.MoveBack, KeyCode.S))
 				.AddAction(new Action(ActionTag.MoveRight, KeyCode.D))
-				.AddAction(new Action(ActionTag.Use, KeyCode.Mouse0));
+				.AddAction(new Action(ActionTag.Use, KeyCode.Mouse0))
+				.AddAction(new Action(ActionTag.Run, KeyCode.LeftShift))
+			;
 		}
 	}
 }

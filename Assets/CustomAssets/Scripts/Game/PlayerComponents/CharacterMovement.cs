@@ -16,6 +16,7 @@ namespace Game.PlayerComponents {
 		public float RightSpeed = 5.0f;
 		public float SpeedUp = 1.0f;
 		public float SpeedDown = 1.0f;
+		public float RunMultiplier = 1.5f;
 		public Vector3 SelfMovement { get { return _input.SelfMovement; } }
 		public Vector3 WorldMovement { get { return transform.localToWorldMatrix.MultiplyVector(_input.SelfMovement); } }
 		public Vector3 SelfDir { get { return _input.SelfMovement.normalized; } }
@@ -30,6 +31,19 @@ namespace Game.PlayerComponents {
 			_input = new SmoothMovement(SpeedUp, SpeedDown);
 			//_input = new RawMovement();
 			_input.SetMovement();
+			Action run =  Player.GetInstance().Actions.GetAction(ActionTag.Run);
+			run.StartBehaviour = () => {
+				ForwardSpeed *= RunMultiplier;
+				BackwardSpeed *= RunMultiplier;
+				LeftSpeed *= RunMultiplier;
+				RightSpeed *= RunMultiplier;
+			};
+			run.FinishBehaviour = run.ForceFinishBehaviour = () => {
+				ForwardSpeed /= RunMultiplier;
+				BackwardSpeed /= RunMultiplier;
+				LeftSpeed /= RunMultiplier;
+				RightSpeed /= RunMultiplier;
+			};
 		}
 
 		public void AddForce(Vector3 dir, float force) {
@@ -40,8 +54,11 @@ namespace Game.PlayerComponents {
 			transform.position += _stepMovement;
 			_stepMovement = Vector3.zero;
 
-			Vector3 v = WorldMovement.sqrMagnitude < 1.0f ? WorldMovement : WorldDir;
-			_stepMovement += v * ForwardSpeed * Time.deltaTime;
+			Vector3 dposSelf = SelfMovement.sqrMagnitude < 1.0f ? SelfMovement : SelfDir;
+			Vector3 dvelSelf = Vector3.zero;
+			dvelSelf.x += dposSelf.x * (dposSelf.x > 0 ? RightSpeed : LeftSpeed);
+			dvelSelf.z += dposSelf.z * (dposSelf.z > 0 ? ForwardSpeed : BackwardSpeed);
+			_stepMovement += transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 		}
 	}
 
