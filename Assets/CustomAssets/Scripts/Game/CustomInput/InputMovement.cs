@@ -20,7 +20,7 @@ namespace Game.PlayerComponents {
 			actionForward.StartBehaviour = () => {
 				_selfMovement.z += 1.0f;
 			};
-			actionForward.FinishBehaviour = () => {
+			actionForward.FinishBehaviour = actionForward.ForceFinishBehaviour = () => {
 				_selfMovement.z = 0.0f;
 			};
 
@@ -28,7 +28,7 @@ namespace Game.PlayerComponents {
 			actionBack.StartBehaviour = () => {
 				_selfMovement.z += -1.0f;
 			};
-			actionBack.FinishBehaviour = () => {
+			actionBack.FinishBehaviour = actionBack.ForceFinishBehaviour = () => {
 				_selfMovement.z = 0.0f;
 			};
 
@@ -36,7 +36,7 @@ namespace Game.PlayerComponents {
 			actionLeft.StartBehaviour = () => {
 				_selfMovement.x += -1.0f;
 			};
-			actionLeft.FinishBehaviour = () => {
+			actionLeft.FinishBehaviour = actionLeft.ForceFinishBehaviour = () => {
 				_selfMovement.x = 0.0f;
 			};
 
@@ -44,7 +44,7 @@ namespace Game.PlayerComponents {
 			actionRight.StartBehaviour = () => {
 				_selfMovement.x += 1.0f;
 			};
-			actionRight.FinishBehaviour = () => {
+			actionRight.FinishBehaviour = actionRight.ForceFinishBehaviour = () => {
 				_selfMovement.x = 0.0f;
 			};
 		}
@@ -75,6 +75,7 @@ namespace Game.PlayerComponents {
 					}
 				};
 			};
+			actionForward.ForceFinishBehaviour = () => _selfMovement.z = 0.0f;
 
 			Action actionBack = actions.GetAction(ActionTag.MoveBack);
 			actionBack.WhileBehaviour = () => {
@@ -88,6 +89,7 @@ namespace Game.PlayerComponents {
 					}
 				};
 			};
+			actionBack.ForceFinishBehaviour = () => _selfMovement.z = 0.0f;
 
 			Action actionLeft = actions.GetAction(ActionTag.MoveLeft);
 			actionLeft.WhileBehaviour = () => {
@@ -101,6 +103,7 @@ namespace Game.PlayerComponents {
 					}
 				};
 			};
+			actionLeft.ForceFinishBehaviour = () => _selfMovement.x = 0.0f;
 
 			Action actionRight = actions.GetAction(ActionTag.MoveRight);
 			actionRight.WhileBehaviour = () => {
@@ -114,6 +117,7 @@ namespace Game.PlayerComponents {
 					}
 				};
 			};
+			actionRight.ForceFinishBehaviour = () => _selfMovement.x = 0.0f;
 		}
 	}
 }

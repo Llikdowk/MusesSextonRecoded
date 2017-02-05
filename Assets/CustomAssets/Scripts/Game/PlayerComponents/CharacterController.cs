@@ -104,7 +104,6 @@ namespace Game.PlayerComponents {
 			if (wallHits.Length == 0) {
 				Action action = _actions.GetAction(actionType);
 				action.Enable();
-				//action.WhileBehaviour = action.DefaultWhileBehaviour; // TODO: extract this to CharacterMovement: you shouldn't have to know anything about the character movement implementation in this component
 			}
 
 		}

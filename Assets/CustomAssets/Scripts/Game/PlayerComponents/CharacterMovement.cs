@@ -27,8 +27,8 @@ namespace Game.PlayerComponents {
 		private Vector3 _stepMovement;
 
 		public void Start() { 
-			//_input = new SmoothMovement(SpeedUp, SpeedDown);
-			_input = new RawMovement();
+			_input = new SmoothMovement(SpeedUp, SpeedDown);
+			//_input = new RawMovement();
 			_input.SetMovement();
 		}
 

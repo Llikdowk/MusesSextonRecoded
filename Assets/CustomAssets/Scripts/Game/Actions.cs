@@ -9,7 +9,7 @@ namespace Game {
 
 	public class Action {
 		public delegate void ActionDelegate();
-		public static readonly ActionDelegate nop = () => { };
+		public static readonly ActionDelegate nop = () => {};
 
 		public readonly ActionTag Tag;
 		public List<KeyCode> Keys { get { return _enabled ? _keys : _emptyKeys; } }
@@ -36,6 +36,8 @@ namespace Game {
 			get { return _enabled ? _notPressedBehaviour : nop; }
 			set { _notPressedBehaviour = value; }
 		}
+
+		public ActionDelegate ForceFinishBehaviour = nop;
 
 		private ActionDelegate _startBehaviour = nop;
 		private ActionDelegate _whileBehaviour = nop;
@@ -68,6 +70,8 @@ namespace Game {
 		}
 
 		public void Enable() {
+			if (_enabled) return;
+
 			_enabled = true;
 			foreach (KeyCode k in _keys) {
 				if (Input.GetKey(k)) {
@@ -78,7 +82,9 @@ namespace Game {
 		}
 
 		public void Disable() {
-			FinishBehaviour();
+			if (!_enabled) return;
+
+			ForceFinishBehaviour();
 			_enabled = false;
 		}
 
