@@ -17,21 +17,17 @@ namespace Game {
 		public ActionDelegate StartBehaviour = nop;
 		public ActionDelegate WhileBehaviour = nop;
 		public ActionDelegate FinishBehaviour = nop;
+		public ActionDelegate NotPressedBehaviour = nop;
 
-		public ActionDelegate DefaultStartBehaviour = nop;
-		public ActionDelegate DefaultWhileBehaviour = nop;
-		public ActionDelegate DefaultFinishBehaviour = nop;
-
-		public float TimeActionActive;
+		public float TimeActionActive { get { return FinalizationTime - ActivationTime; } }
+		public float TimeActionInactive { get { return Time.time - FinalizationTime; } }
+		public float ActivationTime;
+		public float FinalizationTime;
 
 		public void DefineAllDefaults(ActionDelegate start, ActionDelegate during, ActionDelegate finish) {
 			StartBehaviour = start;
 			WhileBehaviour = during;
 			FinishBehaviour = finish;
-
-			DefaultStartBehaviour = start;
-			DefaultWhileBehaviour = during;
-			DefaultFinishBehaviour = finish;
 		}
 
 		public Action SetAllNop() {

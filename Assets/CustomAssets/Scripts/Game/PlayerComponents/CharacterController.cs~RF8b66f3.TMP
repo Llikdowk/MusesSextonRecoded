@@ -41,7 +41,7 @@ namespace Game.PlayerComponents {
 
 
 		public void Update() {
-			Debug.DrawRay(transform.position, _charMovement.WorldDir, Color.cyan);
+			Debug.DrawRay(transform.position, _charMovement.Direction, Color.cyan);
 			if (!IsGrounded) {
 				_charMovement.AddForce(Gravity, _timeOnAir * Time.deltaTime);
 			}
@@ -95,13 +95,13 @@ namespace Game.PlayerComponents {
 					Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
 					_charMovement.AddForce(-dir, (1 - Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal))) * ((hit.distance - SkinWidth / 2.0f)));
 					Action moveForward = _actions.GetAction(actionType);
-					//moveForward.WhileBehaviour = Action.nop;
+					moveForward.WhileBehaviour = Action.nop;
 				}
 			}
 
 			if (wallHits.Length == 0) {
 				Action action = _actions.GetAction(actionType);
-				//action.WhileBehaviour = action.DefaultWhileBehaviour; // TODO: extract this to CharacterMovement: you shouldn't have to know anything about the character movement implementation in this component
+				action.WhileBehaviour = action.DefaultWhileBehaviour; // TODO: extract this to CharacterMovement: you shouldn't have to know anything about the character movement implementation in this component
 			}
 
 		}
