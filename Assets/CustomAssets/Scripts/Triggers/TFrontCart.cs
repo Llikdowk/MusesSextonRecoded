@@ -15,11 +15,11 @@ namespace Triggers {
 			_player = Player.GetInstance();
 		}
 
-		private void ToggleWalkDrive() {
+		private void ToggleWalkDrive(GameObject cart) {
 			PlayerState currentState = _player.CurrentState;
 
 			if (currentState.GetType() == typeof(WalkState)) {
-				_player.CurrentState = new DriveCartState();
+				_player.CurrentState = new DriveCartState(cart);
 			} 
 			else if (currentState.GetType() == typeof(DriveCartState)) {
 				_player.CurrentState = new WalkState();
@@ -32,7 +32,7 @@ namespace Triggers {
 			Debug.Log("ontriggerentered");
 			Action use = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
 			_backupUseBehaviour = use.GetAllFunctions();
-			use.StartBehaviour = ToggleWalkDrive;
+			use.StartBehaviour = () => { ToggleWalkDrive(transform.parent.gameObject); };
 		}
 
 		public void OnTriggerExit(Collider other) {

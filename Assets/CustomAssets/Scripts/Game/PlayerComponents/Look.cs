@@ -4,9 +4,10 @@ using UnityEngine;
 namespace Game.PlayerComponents {
 	public class Look : MonoBehaviour {
 
-		[Range(0.0f, 200.0f)] public float XSensitivity = 100.0f;
-		[Range(0.0f, 200.0f)] public float YSensitivity = 100.0f;
-		[Range(0.0f, 1.0f)] public float VerticalRange = 0.9f;
+		[Range(0, 1)] public float XSensitivity = 0.5f;
+		[Range(0, 1)] public float YSensitivity = 0.5f;
+		[Range(0, 90)] public float VerticalRangeDegrees = 90.0f;
+
 		public bool Smooth = false;
 		private Camera _camera;
 
@@ -15,22 +16,24 @@ namespace Game.PlayerComponents {
 		}
 
 		public void Update() {
+			float xSensitivity = XSensitivity * 200.0f;
+			float ySensitivity = YSensitivity * 200.0f;
+
 			const string horizontalAxisName = "Mouse X";
 			float axisValue = Smooth ? Input.GetAxis(horizontalAxisName) : Input.GetAxisRaw(horizontalAxisName);
-			float speed = axisValue * Time.deltaTime * XSensitivity;
+			float speed = axisValue * Time.deltaTime * xSensitivity;
 			transform.Rotate(0, speed, 0, Space.Self);
-
+			//TODO horizontal clip
 
 			const string verticalAxisName = "Mouse Y";
 			axisValue = Smooth ? Input.GetAxis(verticalAxisName) : Input.GetAxisRaw(verticalAxisName);
-			speed = axisValue * Time.deltaTime * YSensitivity;
+			speed = axisValue * Time.deltaTime * ySensitivity;
 
-			_camera.transform.Rotate(-speed, 0, 0, Space.Self);
-			float d = Vector3.Dot(_camera.transform.forward, transform.forward);
-			if (d < 1 - VerticalRange) {
-				_camera.transform.Rotate(speed, 0, 0, Space.Self);
+			Quaternion rotation = Quaternion.AngleAxis(speed, Vector3.left) * _camera.transform.localRotation;
+			float angle = rotation.eulerAngles.x;
+			if ((angle < VerticalRangeDegrees || angle > 360.0f - VerticalRangeDegrees) && rotation.eulerAngles.y < 179.0f) {
+				_camera.transform.localRotation = rotation;
 			}
 		}
-
 	}
 }

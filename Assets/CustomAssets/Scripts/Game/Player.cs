@@ -23,17 +23,14 @@ namespace Game.PlayerComponents {
 	}
 
 	public class WalkState : PlayerState {
-		public WalkState() { Run(); }
-		public void Run() {
+		public WalkState() {
 			Movement.SetWalkBehaviour();
 		}
 	}
 
 	public class DriveCartState : PlayerState {
-		public DriveCartState() { Run(); }
-
-		public void Run() {
-			Movement.SetNullBehaviour();
+		public DriveCartState(GameObject cart) {
+			Movement.SetCartBehaviour(cart);
 		}
 	}
 

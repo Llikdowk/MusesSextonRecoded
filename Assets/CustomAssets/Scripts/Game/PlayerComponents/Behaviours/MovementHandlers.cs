@@ -55,9 +55,9 @@ namespace Game.PlayerComponents.Behaviours {
 
 	public class SmoothMovementHandler : MovementHandler {
 
-		private readonly SmoothCfg _config;
+		private readonly AccelerationConfig _config;
 
-		public SmoothMovementHandler(SmoothCfg config) {
+		public SmoothMovementHandler(AccelerationConfig config) {
 			this._config = config;
 		}
 
