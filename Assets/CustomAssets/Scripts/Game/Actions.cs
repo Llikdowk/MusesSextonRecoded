@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Game {
 
+	public delegate void ActionDelegate();
 	
 	public class Action<T> {
-		public delegate void ActionDelegate();
 		public static readonly ActionDelegate nop = () => {};
 
 		public readonly T Tag;

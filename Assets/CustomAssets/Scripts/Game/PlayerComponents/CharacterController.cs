@@ -53,7 +53,7 @@ namespace Game.PlayerComponents {
 			                      transform.up * (_collider.height / 2.0f - _collider.radius);
 
 
-			CheckWalls(capsuleHead, capsuleFeet, transform.forward, PlayerAction.MoveForward); // TODO would be nice to have this independant of Actions
+			CheckWalls(capsuleHead, capsuleFeet, transform.forward, PlayerAction.MoveForward); // TODO would be nice to have this independant of Action
 			CheckWalls(capsuleHead, capsuleFeet, -transform.forward, PlayerAction.MoveBack);
 			CheckWalls(capsuleHead, capsuleFeet, transform.right, PlayerAction.MoveRight);
 			CheckWalls(capsuleHead, capsuleFeet, -transform.right, PlayerAction.MoveLeft);
