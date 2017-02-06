@@ -47,17 +47,6 @@ namespace Game {
 		private readonly List<KeyCode> _keys = new List<KeyCode>(2);
 		private readonly List<KeyCode> _emptyKeys = new List<KeyCode>(0);
 
-		public void DefineAllDefaults(ActionDelegate start, ActionDelegate during, ActionDelegate finish) {
-			StartBehaviour = start;
-			WhileBehaviour = during;
-			FinishBehaviour = finish;
-		}
-
-		public Action<T> SetAllNop() {
-			DefineAllDefaults(nop, nop, nop);
-			return this;
-		}
-
 		public Action(T tag) {
 			this.Tag = tag;
 		}

@@ -2,7 +2,7 @@
 using Game.PlayerComponents;
 using UnityEngine;
 
-namespace Game.CustomInput {
+namespace Game.PlayerComponents {
 
 	public class InputController : MonoBehaviour {
 
@@ -13,7 +13,6 @@ namespace Game.CustomInput {
 		 }
 
 		public InputAction[] InputConfig;
-
 		private ActionManager<PlayerAction> _actions;
 
 

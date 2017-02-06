@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace Game.CustomInput {
+namespace Game.PlayerComponents {
 	public class Look : MonoBehaviour {
 
 		[Range(0.0f, 200.0f)] public float XSensitivity = 100.0f;

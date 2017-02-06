@@ -3,7 +3,7 @@
 namespace Game.PlayerComponents {
 	using Action = Action<PlayerAction>;
 	
-	public abstract class InputMovement {
+	public abstract class MovementHandler {
 
 		public Vector3 SelfMovement {
 			get { return _selfMovement; }
@@ -14,7 +14,7 @@ namespace Game.PlayerComponents {
 	}
 
 
-	public class RawMovement : InputMovement {
+	public class RawMovementHandler : MovementHandler {
 
 		public override void SetMovement() {
 			ActionManager<PlayerAction> actions = Player.GetInstance().Actions;
@@ -54,11 +54,11 @@ namespace Game.PlayerComponents {
 	}
 
 
-	public class SmoothMovement : InputMovement {
+	public class SmoothMovementHandler : MovementHandler {
 
 		private readonly float _speedUp, _speedDown;
 
-		public SmoothMovement(float speedUp, float speedDown) {
+		public SmoothMovementHandler(float speedUp, float speedDown) {
 			_speedUp = speedUp;
 			_speedDown = speedDown;
 		}
