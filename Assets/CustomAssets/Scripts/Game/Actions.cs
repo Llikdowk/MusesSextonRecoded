@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.PlayerComponents;
 using UnityEngine;
 
 namespace Game {
 
-
-	public class Action {
+	
+	public class Action<T> {
 		public delegate void ActionDelegate();
 		public static readonly ActionDelegate nop = () => {};
 
-		public readonly ActionTag Tag;
+		public readonly T Tag;
 		public List<KeyCode> Keys { get { return _enabled ? _keys : _emptyKeys; } }
 
 		public float TimeActionActive { get { return FinalizationTime - ActivationTime; } }
@@ -52,26 +53,25 @@ namespace Game {
 			FinishBehaviour = finish;
 		}
 
-		public Action SetAllNop() {
+		public Action<T> SetAllNop() {
 			DefineAllDefaults(nop, nop, nop);
 			return this;
 		}
 
-		public Action(ActionTag tag, KeyCode k1) {
+		public Action(T tag) {
 			this.Tag = tag;
-			Keys.Add(k1);
 		}
 
-		public Action(ActionTag type, KeyCode k1, KeyCode k2) 
-			: this(type, k1) { 
-			Keys.Add(k2);
+		public Action<T> AddKey(KeyCode k) {
+			Keys.Add(k);
+			return this;
 		}
 
 		public void Enable() {
 			if (_enabled) return;
 
 			_enabled = true;
-			foreach (KeyCode k in _keys) {
+			foreach (KeyCode k in _keys) { // TODO: extract to ContinueFromForcedFinishedBehaviour delegate
 				if (Input.GetKey(k)) {
 					StartBehaviour();
 					break;
@@ -88,17 +88,22 @@ namespace Game {
 
 	}
 
-	public class ActionManager {
-		public List<Action> Actions { get { return _actions; } }
-		private readonly List<Action> _actions = new List<Action>();
+	public class ActionManager<TEnum> where TEnum : struct, IConvertible, IComparable {
+		public List<Action<TEnum>> Actions { get { return _actions; } }
+		private readonly List<Action<TEnum>> _actions = new List<Action<TEnum>>();
 
-		public Action GetAction(ActionTag tag) {
-			return _actions.Find(action => action.Tag == tag);
+		public Action<TEnum> GetAction(TEnum tag) {
+			return _actions.Find(action => action.Tag.CompareTo(tag) == 0);
 		}
 
-		public ActionManager AddAction(Action action) {
+		public ActionManager() {
+			foreach (TEnum tag in Enum.GetValues(typeof(TEnum))) {
+				AddAction(new Action<TEnum>(tag));
+			}
+		}
+
+		private void AddAction(Action<TEnum> action) {
 			_actions.Add(action);
-			return this;
 		}
 
 	}

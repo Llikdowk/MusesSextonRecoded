@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
 namespace Game.PlayerComponents {
+	using Action = Action<PlayerAction>;
+	
 	public abstract class InputMovement {
+
 		public Vector3 SelfMovement {
 			get { return _selfMovement; }
 		}
@@ -14,9 +17,9 @@ namespace Game.PlayerComponents {
 	public class RawMovement : InputMovement {
 
 		public override void SetMovement() {
-			ActionManager actions = Player.GetInstance().Actions;
+			ActionManager<PlayerAction> actions = Player.GetInstance().Actions;
 
-			Action actionForward = actions.GetAction(ActionTag.MoveForward);
+			Action actionForward = actions.GetAction(PlayerAction.MoveForward);
 			actionForward.StartBehaviour = () => {
 				_selfMovement.z += 1.0f;
 			};
@@ -24,7 +27,7 @@ namespace Game.PlayerComponents {
 				_selfMovement.z = 0.0f;
 			};
 
-			Action actionBack = actions.GetAction(ActionTag.MoveBack);
+			Action actionBack = actions.GetAction(PlayerAction.MoveBack);
 			actionBack.StartBehaviour = () => {
 				_selfMovement.z += -1.0f;
 			};
@@ -32,7 +35,7 @@ namespace Game.PlayerComponents {
 				_selfMovement.z = 0.0f;
 			};
 
-			Action actionLeft = actions.GetAction(ActionTag.MoveLeft);
+			Action actionLeft = actions.GetAction(PlayerAction.MoveLeft);
 			actionLeft.StartBehaviour = () => {
 				_selfMovement.x += -1.0f;
 			};
@@ -40,7 +43,7 @@ namespace Game.PlayerComponents {
 				_selfMovement.x = 0.0f;
 			};
 
-			Action actionRight = actions.GetAction(ActionTag.MoveRight);
+			Action actionRight = actions.GetAction(PlayerAction.MoveRight);
 			actionRight.StartBehaviour = () => {
 				_selfMovement.x += 1.0f;
 			};
@@ -61,9 +64,9 @@ namespace Game.PlayerComponents {
 		}
 
 		public override void SetMovement() {
-			ActionManager actions = Player.GetInstance().Actions;
+			ActionManager<PlayerAction> actions = Player.GetInstance().Actions;
 
-			Action actionForward = actions.GetAction(ActionTag.MoveForward);
+			Action actionForward = actions.GetAction(PlayerAction.MoveForward);
 			actionForward.WhileBehaviour = () => {
 				_selfMovement.z = Mathf.Min(_selfMovement.z + _speedUp * Time.deltaTime, 1.0f);
 			};
@@ -77,7 +80,7 @@ namespace Game.PlayerComponents {
 			};
 			actionForward.ForceFinishBehaviour = () => _selfMovement.z = 0.0f;
 
-			Action actionBack = actions.GetAction(ActionTag.MoveBack);
+			Action actionBack = actions.GetAction(PlayerAction.MoveBack);
 			actionBack.WhileBehaviour = () => {
 				_selfMovement.z = Mathf.Max(_selfMovement.z - _speedUp * Time.deltaTime, -1.0f);
 			};
@@ -91,7 +94,7 @@ namespace Game.PlayerComponents {
 			};
 			actionBack.ForceFinishBehaviour = () => _selfMovement.z = 0.0f;
 
-			Action actionLeft = actions.GetAction(ActionTag.MoveLeft);
+			Action actionLeft = actions.GetAction(PlayerAction.MoveLeft);
 			actionLeft.WhileBehaviour = () => {
 				_selfMovement.x = Mathf.Max(_selfMovement.x - _speedUp * Time.deltaTime, -1.0f);
 			};
@@ -105,7 +108,7 @@ namespace Game.PlayerComponents {
 			};
 			actionLeft.ForceFinishBehaviour = () => _selfMovement.x = 0.0f;
 
-			Action actionRight = actions.GetAction(ActionTag.MoveRight);
+			Action actionRight = actions.GetAction(PlayerAction.MoveRight);
 			actionRight.WhileBehaviour = () => {
 				_selfMovement.x = Mathf.Min(_selfMovement.x + _speedUp * Time.deltaTime, 1.0f);
 			};

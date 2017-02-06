@@ -1,4 +1,5 @@
-﻿using Game.PlayerComponents;
+﻿using Game;
+using Game.PlayerComponents;
 using UnityEngine;
 
 namespace Triggers {
@@ -16,7 +17,7 @@ namespace Triggers {
 			if (other.tag != TagManager.Get(Tag.Player)) return; 
 
 			Debug.Log("ontriggerentered");
-			Player.GetInstance().Actions.GetAction(ActionTag.Use)
+			Player.GetInstance().Actions.GetAction(PlayerAction.Use)
 				.StartBehaviour = SetUse;
 		}
 

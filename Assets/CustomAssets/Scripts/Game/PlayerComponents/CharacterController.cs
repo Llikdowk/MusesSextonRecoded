@@ -17,7 +17,7 @@ namespace Game.PlayerComponents {
 		private float _timeOnAir = 0.0f;
 		private CharacterMovement _charMovement;
 
-		private ActionManager _actions;
+		private ActionManager<PlayerAction> _actions;
 
 		private bool IsGrounded {
 			get { return _isGrounded; }
@@ -53,10 +53,10 @@ namespace Game.PlayerComponents {
 			                      transform.up * (_collider.height / 2.0f - _collider.radius);
 
 
-			CheckWalls(capsuleHead, capsuleFeet, transform.forward, ActionTag.MoveForward); // TODO would be nice to have this independant of Actions
-			CheckWalls(capsuleHead, capsuleFeet, -transform.forward, ActionTag.MoveBack);
-			CheckWalls(capsuleHead, capsuleFeet, transform.right, ActionTag.MoveRight);
-			CheckWalls(capsuleHead, capsuleFeet, -transform.right, ActionTag.MoveLeft);
+			CheckWalls(capsuleHead, capsuleFeet, transform.forward, PlayerAction.MoveForward); // TODO would be nice to have this independant of Actions
+			CheckWalls(capsuleHead, capsuleFeet, -transform.forward, PlayerAction.MoveBack);
+			CheckWalls(capsuleHead, capsuleFeet, transform.right, PlayerAction.MoveRight);
+			CheckWalls(capsuleHead, capsuleFeet, -transform.right, PlayerAction.MoveLeft);
 
 
 			//CheckFloor
@@ -90,7 +90,7 @@ namespace Game.PlayerComponents {
 			}
 		}
 
-		private void CheckWalls(Vector3 capsuleHead, Vector3 capsuleFeet, Vector3 dir, ActionTag actionType) {
+		private void CheckWalls(Vector3 capsuleHead, Vector3 capsuleFeet, Vector3 dir, PlayerAction playerActionType) {
 			int collidersFound = 0;
 			Vector3 stepOffset = transform.up * StepAllowance;
 			RaycastHit[] wallHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, dir,
@@ -110,13 +110,13 @@ namespace Game.PlayerComponents {
 				else if (hit.distance > SkinWidth / 2.0f && hit.distance < SkinWidth) {
 					Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
 					_charMovement.AddForce(-dir, (1 - Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal))) * ((hit.distance - SkinWidth / 2.0f)));
-					Action action = _actions.GetAction(actionType);
+					var action = _actions.GetAction(playerActionType);
 					action.Disable();
 				}
 			}
 
 			if (collidersFound == 0) {
-				Action action = _actions.GetAction(actionType);
+				var action = _actions.GetAction(playerActionType);
 				action.Enable();
 			}
 

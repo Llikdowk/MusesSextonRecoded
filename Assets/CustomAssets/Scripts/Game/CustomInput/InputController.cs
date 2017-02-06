@@ -5,15 +5,23 @@ namespace Game.CustomInput {
 
 	public class InputController : MonoBehaviour {
 
-		private ActionManager _actionMng;
+		private ActionManager<PlayerAction> _actions;
 
 		public void Start() {
-			_actionMng = Player.GetInstance().Actions;
+			_actions = Player.GetInstance().Actions;
+
+			_actions.GetAction(PlayerAction.MoveForward).AddKey(KeyCode.W);
+			_actions.GetAction(PlayerAction.MoveLeft).AddKey(KeyCode.A);
+			_actions.GetAction(PlayerAction.MoveBack).AddKey(KeyCode.S);
+			_actions.GetAction(PlayerAction.MoveRight).AddKey(KeyCode.D);
+			_actions.GetAction(PlayerAction.Use).AddKey(KeyCode.Mouse0).AddKey(KeyCode.E);
+			_actions.GetAction(PlayerAction.Run).AddKey(KeyCode.LeftShift);
+
 		}
 
 		public void Update() { // Executed before anything else (check ScriptOrder)
 
-			foreach (Action action in _actionMng.Actions) {
+			foreach (Action<PlayerAction> action in _actions.Actions) {
 				foreach (KeyCode k in action.Keys) {
 					if (UnityEngine.Input.GetKeyDown(k)) {
 						action.StartBehaviour();

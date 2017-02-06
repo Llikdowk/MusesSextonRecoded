@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
+
 namespace Game.PlayerComponents {
-	public enum ActionTag {
+
+	public enum PlayerAction {
 		Use, MoveForward, MoveLeft, MoveRight, MoveBack, Run
 	}
 
@@ -13,7 +15,7 @@ namespace Game.PlayerComponents {
 
 		[HideInInspector] public CharacterMovement Movement;
 		[HideInInspector] public CharacterController Controller;
-		public ActionManager Actions = new ActionManager();
+		public ActionManager<PlayerAction> Actions = new ActionManager<PlayerAction>();
 
 		public void Awake() {
 			if (_instance != null && _instance != this) {
@@ -24,15 +26,6 @@ namespace Game.PlayerComponents {
 			_instance = this;
 			Movement = GetComponent<CharacterMovement>();
 			Controller = GetComponent<CharacterController>();
-
-			Actions
-				.AddAction(new Action(ActionTag.MoveForward, KeyCode.W))
-				.AddAction(new Action(ActionTag.MoveLeft, KeyCode.A))
-				.AddAction(new Action(ActionTag.MoveBack, KeyCode.S))
-				.AddAction(new Action(ActionTag.MoveRight, KeyCode.D))
-				.AddAction(new Action(ActionTag.Use, KeyCode.Mouse0, KeyCode.E))
-				.AddAction(new Action(ActionTag.Run, KeyCode.LeftShift))
-			;
 		}
 	}
 }

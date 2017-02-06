@@ -31,7 +31,7 @@ namespace Game.PlayerComponents {
 			_input = new SmoothMovement(SpeedUp, SpeedDown);
 			//_input = new RawMovement();
 			_input.SetMovement();
-			Action run =  Player.GetInstance().Actions.GetAction(ActionTag.Run);
+			var run =  Player.GetInstance().Actions.GetAction(PlayerAction.Run);
 			run.StartBehaviour = () => {
 				ForwardSpeed *= RunMultiplier;
 				BackwardSpeed *= RunMultiplier;
