@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.PlayerComponents.Behaviours;
+using UnityEngine;
 
 
 namespace Game.PlayerComponents {
@@ -22,19 +23,17 @@ namespace Game.PlayerComponents {
 	}
 
 	public class WalkState : PlayerState {
-		public WalkState() { Start(); }
-		public void Start() {
-			Debug.Log("WalkState start");
-			Movement.BackwardSpeed = 5.0f;
+		public WalkState() { Run(); }
+		public void Run() {
+			Movement.SetWalkBehaviour();
 		}
 	}
 
 	public class DriveCartState : PlayerState {
-		public DriveCartState() { Start(); }
+		public DriveCartState() { Run(); }
 
-		public void Start() {
-			Debug.Log("DriveCart start");
-			Movement.BackwardSpeed = 0.0f;
+		public void Run() {
+			Movement.SetNullBehaviour();
 		}
 	}
 
@@ -58,6 +57,9 @@ namespace Game.PlayerComponents {
 			_instance = this;
 			Movement = GetComponent<CharacterMovement>();
 			Controller = GetComponent<CharacterController>();
+		}
+
+		public void Start() {
 			CurrentState = new WalkState();
 		}
 	}

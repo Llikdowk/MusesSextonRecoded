@@ -13,7 +13,7 @@ namespace Game {
 		public readonly T Tag;
 		public List<KeyCode> Keys { get { return _enabled ? _keys : _emptyKeys; } }
 
-		public float TimeActionActive { get { return FinalizationTime - ActivationTime; } }
+		public float TimeActionActive;
 		public float TimeActionInactive { get { return Time.time - FinalizationTime; } }
 		public float ActivationTime;
 		public float FinalizationTime;
@@ -34,6 +34,22 @@ namespace Game {
 		public ActionDelegate NotPressedBehaviour {
 			get { return _enabled ? _notPressedBehaviour : nop; }
 			set { _notPressedBehaviour = value; }
+		}
+
+		public Action<T> Reset() {
+			StartBehaviour = WhileBehaviour = FinishBehaviour = NotPressedBehaviour = nop;
+			return this;
+		}
+
+		public ActionDelegate[] GetAllFunctions() {
+			return new[] {StartBehaviour, WhileBehaviour, FinishBehaviour, NotPressedBehaviour};
+		}
+
+		public void SetAllFunctions(ActionDelegate[] functions) {
+			StartBehaviour = functions[0];
+			WhileBehaviour = functions[1];
+			FinishBehaviour = functions[2];
+			ForceFinishBehaviour = functions[3];
 		}
 
 		public ActionDelegate ForceFinishBehaviour = nop;

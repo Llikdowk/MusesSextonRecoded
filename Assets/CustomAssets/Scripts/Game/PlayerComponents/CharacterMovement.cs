@@ -1,67 +1,67 @@
-﻿using UnityEngine;
+﻿using System;
+using Game.PlayerComponents.Behaviours;
+using UnityEngine;
 
 namespace Game.PlayerComponents {
+
+	[Serializable]
+	public class MovementConfig {
+		public float ForwardSpeed = 5.0f;
+		public float BackwardSpeed = 5.0f;
+		public float LeftSpeed = 5.0f;
+		public float RightSpeed = 5.0f;
+	}
+
+	[Serializable]
+	public class SmoothCfg {
+		public float SpeedUp = 6.0f;
+		public float SpeedDown = 6.0f;
+	}
+
+	[Serializable]
+	public class SuperConfig {
+		public MovementConfig WalkMovement;
+		public MovementConfig RunMovement;
+		public SmoothCfg SmoothAcceleration;
+	}
 
 
 	[RequireComponent(typeof(InputController))]
 	public class CharacterMovement : MonoBehaviour {
 
-		private MovementHandler _movement;
+		public SuperConfig Config;
+		public MovementBehaviour MovementBehaviour;
 
 		public bool Smooth = true;
-		public float ForwardSpeed = 5.0f; // setters have to communicate with MovementBehaviour
-		public float BackwardSpeed = 5.0f;
-		public float LeftSpeed = 5.0f;
-		public float RightSpeed = 5.0f;
-		public float SpeedUp = 1.0f;
-		public float SpeedDown = 1.0f;
-		public float RunMultiplier = 1.5f;
-		public Vector3 SelfMovement { get { return _movement.SelfMovement; } }
-		public Vector3 WorldMovement { get { return transform.localToWorldMatrix.MultiplyVector(_movement.SelfMovement); } }
-		public Vector3 SelfDir { get { return _movement.SelfMovement.normalized; } }
-		public Vector3 WorldDir { get { return transform.localToWorldMatrix.MultiplyVector(SelfDir); } }
 
 		public Vector3 StepMovement {
-			get { return _stepMovement; }
+			get { return MovementBehaviour.StepMovement; }
 		}
-		private Vector3 _stepMovement;
+		public Vector3 SelfMovement { get { return MovementBehaviour.SelfMovement; } }
+		public Vector3 WorldMovement { get { return MovementBehaviour.WorldMovement; } }
+		public Vector3 SelfDir { get { return MovementBehaviour.SelfDir; } }
+		public Vector3 WorldDir { get { return MovementBehaviour.WorldDir; } }
 
-		public void Start() {
-			if (Smooth) {
-				_movement = new SmoothMovementHandler(SpeedUp, SpeedDown);
-			}
-			else {
-				_movement = new RawMovementHandler();
-			}
-			_movement.SetMovement();
-			var run =  Player.GetInstance().Actions.GetAction(PlayerAction.Run);
-			run.StartBehaviour = () => {
-				ForwardSpeed *= RunMultiplier;
-				BackwardSpeed *= RunMultiplier;
-				LeftSpeed *= RunMultiplier;
-				RightSpeed *= RunMultiplier;
-			};
-			run.FinishBehaviour = run.ForceFinishBehaviour = () => {
-				ForwardSpeed /= RunMultiplier;
-				BackwardSpeed /= RunMultiplier;
-				LeftSpeed /= RunMultiplier;
-				RightSpeed /= RunMultiplier;
-			};
+
+		public void SetWalkBehaviour() {
+			MovementBehaviour = new WalkMovementBehaviour(transform, Config);
 		}
+		public void SetNullBehaviour() {
+			MovementBehaviour = new NullMovementBehaviour(transform);
+		}
+
 
 		public void AddForce(Vector3 dir, float force) {
-			_stepMovement += dir * force;
+			MovementBehaviour.AddForce(dir, force);
+		}
+
+		public void Awake() {
+			MovementBehaviour = new NullMovementBehaviour(transform);
 		}
 
 		public void Update() {
-			transform.position += _stepMovement;
-			_stepMovement = Vector3.zero;
+			MovementBehaviour.Step();
 
-			Vector3 dposSelf = SelfMovement.sqrMagnitude < 1.0f ? SelfMovement : SelfDir;
-			Vector3 dvelSelf = Vector3.zero;
-			dvelSelf.x += dposSelf.x * (dposSelf.x > 0 ? RightSpeed : LeftSpeed);
-			dvelSelf.z += dposSelf.z * (dposSelf.z > 0 ? ForwardSpeed : BackwardSpeed);
-			_stepMovement += transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 		}
 	}
 

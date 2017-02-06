@@ -59,6 +59,7 @@ namespace Game.PlayerComponents {
 
 					if (UnityEngine.Input.GetKey(k)) {
 						action.WhileBehaviour();
+						action.TimeActionActive += Time.deltaTime;
 						break;
 					}
 
@@ -66,6 +67,7 @@ namespace Game.PlayerComponents {
 						action.FinishBehaviour();
 						action.ActivationTime = Time.time;
 						action.FinalizationTime = Time.time;
+						action.TimeActionActive = 0.0f;
 						break;
 					}
 
