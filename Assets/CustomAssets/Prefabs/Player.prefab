@@ -25,9 +25,10 @@ GameObject:
   - component: {fileID: 114486211729582720}
   - component: {fileID: 136995954625932830}
   - component: {fileID: 114347505803629462}
+  - component: {fileID: 54648296522685858}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,6 +113,21 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
+--- !u!54 &54648296522685858
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1015523596763308}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!81 &81187682020227276
 AudioListener:
   m_ObjectHideFlags: 1
@@ -137,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dce719bdadd5724ebe79290c9264695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputConfig: []
 --- !u!114 &114339939323260716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,7 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gravity: {x: 0, y: -9.81, z: 0}
   GravityMultiplier: 2
-  SkinWidth: 0.012
+  SkinWidth: 0.056
   SlopeInclinationAllowance: 0.326
   StepAllowance: 0.05
 --- !u!114 &114917159112282994
