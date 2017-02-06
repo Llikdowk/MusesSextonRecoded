@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - camera
-  - terrain
-  - landmark
   - coffin
   layers:
   - Default

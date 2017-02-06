@@ -10,10 +10,6 @@ public class LayerMaskManager {
 	private static LayerMaskManager _instance;
 	private readonly Dictionary<string, int> _map;
 
-	public static LayerMaskManager GetInstance() {
-		return _instance ?? (_instance = new LayerMaskManager());
-	}
-
 	private LayerMaskManager() {
 		_map = new Dictionary<string, int>();
 		foreach (Layer item in Enum.GetValues(typeof(Layer))) {
@@ -21,13 +17,14 @@ public class LayerMaskManager {
 		}
 	}
 
-	public void AddLayer(Layer layer) {
+	private void AddLayer(Layer layer) {
 		string name = layer.ToString();
 		_map.Add(name, LayerMask.NameToLayer(name));
 	}
 
-	public int GetLayer(Layer layer) {
-		return _map[layer.ToString()];
+	public static int Get(Layer layer) {
+		if (_instance == null) _instance = new LayerMaskManager();
+		return _instance._map[layer.ToString()];
 	}
 
 }

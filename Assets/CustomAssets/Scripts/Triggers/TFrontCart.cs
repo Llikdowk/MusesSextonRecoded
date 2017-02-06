@@ -13,7 +13,7 @@ namespace Triggers {
 		}
 
 		public void OnTriggerEnter(Collider other) {
-			if (other.tag != "Player") return; // TODO use TAG manager 
+			if (other.tag != TagManager.Get(Tag.Player)) return; 
 
 			Debug.Log("ontriggerentered");
 			Player.GetInstance().Actions.GetAction(ActionTag.Use)
@@ -21,7 +21,7 @@ namespace Triggers {
 		}
 
 		public void OnTriggerExit(Collider other) {
-			if (other.tag != "Player") return;
+			if (other.tag != TagManager.Get(Tag.Player)) return;
 
 			Debug.Log("ontriggerexit");
 		}

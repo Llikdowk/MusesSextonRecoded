@@ -34,7 +34,7 @@ namespace Game.PlayerComponents {
 
 		public void Start() {
 			_actions = Player.GetInstance().Actions;
-			int player = 1 << LayerMaskManager.GetInstance().GetLayer(Layer.Player);
+			int player = 1 << LayerMaskManager.Get(Layer.Player);
 			_layerMaskAllButPlayer = ~player;
 			_collider = GetComponent<CapsuleCollider>();
 			_charMovement = GetComponent<CharacterMovement>();
@@ -53,7 +53,7 @@ namespace Game.PlayerComponents {
 			                      transform.up * (_collider.height / 2.0f - _collider.radius);
 
 
-			CheckWalls(capsuleHead, capsuleFeet, transform.forward, ActionTag.MoveForward);
+			CheckWalls(capsuleHead, capsuleFeet, transform.forward, ActionTag.MoveForward); // TODO would be nice to have this independant of Actions
 			CheckWalls(capsuleHead, capsuleFeet, -transform.forward, ActionTag.MoveBack);
 			CheckWalls(capsuleHead, capsuleFeet, transform.right, ActionTag.MoveRight);
 			CheckWalls(capsuleHead, capsuleFeet, -transform.right, ActionTag.MoveLeft);
