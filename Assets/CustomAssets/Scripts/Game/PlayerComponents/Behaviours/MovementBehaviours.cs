@@ -106,25 +106,35 @@ namespace Game.PlayerComponents.Behaviours {
 			Debug.Log(SelfMovement);
 			Ray ray = new Ray(_cartTransform.position, -_cartTransform.forward);
 			RaycastHit hit;
-			Debug.DrawRay(ray.origin, ray.direction * 10, Color.magenta);
-			if (Physics.Raycast(ray, out hit, 10, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
-					_moveBackAction.Disable();
+			float cartLength = 7.5f; // TODO parametrice this distance (10) (maybe using a bounding box?)
+			Debug.DrawRay(ray.origin, ray.direction * cartLength, Color.magenta); 
+			if (Physics.Raycast(ray, out hit, cartLength, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
+				_moveBackAction.Disable();
 			}
 			else {
 				_moveBackAction.Enable();
 			}
 			
-
 			_cartTransform.position = Vector3.Lerp(_transform.position - _transform.forward * _cartConfig.DistanceToPlayer, 
 				_cartTransform.position, _cartConfig.MovementLag);
-			//_cartTransform.LookAt(_transform);
-			_cartTransform.LookAt(
-				Vector3.Lerp(_transform.position, _cartTransform.forward + _cartTransform.position, _cartConfig.LookLag), Vector3.up);
-			_transform.position += _stepMovement;
-			_stepMovement = Vector3.zero;
+			ray = new Ray(_cartTransform.position, -_cartTransform.up);
+			Debug.DrawRay(ray.origin, ray.direction, Color.magenta);
+			if (Physics.Raycast(ray, out hit, 0.5f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
+				_cartTransform.localPosition += Vector3.up * (hit.distance + 0.25f); // halfHeight of cart
+			}
+
 
 			Vector3 dvelSelf = Vector3.zero;
-			dvelSelf.z += SelfMovement.z * (SelfMovement.z > 0 ? _cartConfig.ForwardSpeed : 1);
+			dvelSelf.z += SelfMovement.z * (SelfMovement.z > 0 ? _cartConfig.ForwardSpeed : 1); // TODO config with backward speed
+
+			_cartTransform.LookAt(
+				Vector3.Lerp(
+					_cartTransform.forward + _cartTransform.position,
+					_transform.position, 
+					(1.0f - _cartConfig.LookLag) * Mathf.Abs(SelfMovement.z)),
+				Vector3.up);
+			_transform.position += _stepMovement;
+			_stepMovement = Vector3.zero;
 			
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 		}
