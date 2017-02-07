@@ -12,13 +12,17 @@ namespace Game.PlayerComponents {
 		public bool SmoothVerticalClipping = false;
 		[Range(0, 90)] public float VerticalRangeDegrees = 90.0f;
 		[Range(0, 1)] public float VerticalForceBack = 0.5f;
+		[Range(0, 1)] public float VerticalLag = 0.0f;
 
 		public bool SmoothHorizontalClipping = false;
 		[Range(0, 181)] public float HorizontalRangeDegrees = 181.0f;
 		[Range(0, 1)] public float HorizontalForceBack = 0.5f;
+		[Range(0, 1)] public float HorizontalLag = 0.0f;
 		public Transform FixedForward;
 
 		private Camera _camera;
+		private float _xSpeed;
+		private float _ySpeed;
 
 
 		public void Awake() {
@@ -38,9 +42,9 @@ namespace Game.PlayerComponents {
 
 			const string horizontalAxisName = "Mouse X";
 			float axisValue = SmoothInput ? Input.GetAxis(horizontalAxisName) : Input.GetAxisRaw(horizontalAxisName);
-			float speed = axisValue * Time.deltaTime * xSensitivity;
+			_xSpeed = Mathf.Lerp(axisValue * Time.deltaTime * xSensitivity, _xSpeed, HorizontalLag);
 
-			Quaternion rotation = Quaternion.AngleAxis(speed, Vector3.up) * transform.rotation;
+			Quaternion rotation = Quaternion.AngleAxis(_xSpeed, Vector3.up) * transform.rotation;
 			float angle = Quaternion.Angle(rotation, FixedForward.rotation);
 			if (SmoothHorizontalClipping) {
 				transform.rotation = Quaternion.Slerp(rotation, transform.rotation,
@@ -48,14 +52,14 @@ namespace Game.PlayerComponents {
 			}
 			else {
 				if (angle < HorizontalRangeDegrees) {
-					transform.rotation = rotation;
+					transform.rotation = Quaternion.Slerp(rotation, transform.rotation, HorizontalLag);
 				}
 			}
 
 			const string verticalAxisName = "Mouse Y";
 			axisValue = SmoothInput ? Input.GetAxis(verticalAxisName) : Input.GetAxisRaw(verticalAxisName);
-			speed = axisValue * Time.deltaTime * ySensitivity;
-			rotation = Quaternion.AngleAxis(speed, Vector3.left) * _camera.transform.localRotation;
+			_ySpeed = Mathf.Lerp(axisValue * Time.deltaTime * ySensitivity, _ySpeed, VerticalLag);
+			rotation = Quaternion.AngleAxis(_ySpeed, Vector3.left) * _camera.transform.localRotation;
 			angle = Quaternion.Angle(rotation, Quaternion.AngleAxis(0, transform.forward));
 			Debug.Log(angle);
 			if (SmoothVerticalClipping) {
