@@ -39,6 +39,7 @@ namespace Game.PlayerComponents.Behaviours {
 
 		private readonly MovementConfig _walkConfig;
 		private readonly MovementConfig _runConfig;
+		private MovementConfig _currentConfig;
 		private readonly Action<PlayerAction> _runAction;
 
 		public WalkMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
@@ -47,6 +48,10 @@ namespace Game.PlayerComponents.Behaviours {
 			_movement = new SmoothMovementHandler(config.WalkRunAcceleration);
 			_movement.SetMovement();
 			_runAction = Player.GetInstance().Actions.GetAction(PlayerAction.Run);
+			_currentConfig = _walkConfig;
+			_runAction.StartBehaviour = () => _currentConfig = _runConfig;
+			_runAction.FinishBehaviour = () => _currentConfig = _walkConfig;
+
 		}
 
 		public override void Step() {
@@ -55,14 +60,15 @@ namespace Game.PlayerComponents.Behaviours {
 
 			Vector3 dposSelf = SelfMovement.sqrMagnitude < 1.0f ? SelfMovement : SelfDir;
 			Vector3 dvelSelf = Vector3.zero;
-			var config = _runAction.TimeActionActive > 0.0f ? _runConfig : _walkConfig;
-			dvelSelf.x += dposSelf.x * (dposSelf.x > 0 ? config.RightSpeed : config.LeftSpeed);
-			dvelSelf.z += dposSelf.z * (dposSelf.z > 0 ? config.ForwardSpeed : config.BackwardSpeed);
+			dvelSelf.x += dposSelf.x * (dposSelf.x > 0 ? _currentConfig.RightSpeed : _currentConfig.LeftSpeed);
+			dvelSelf.z += dposSelf.z * (dposSelf.z > 0 ? _currentConfig.ForwardSpeed : _currentConfig.BackwardSpeed);
 			
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 		}
 
-		public override void Clear() {}
+		public override void Clear() {
+			_runAction.Reset();
+		}
 	}
 
 
@@ -71,7 +77,7 @@ namespace Game.PlayerComponents.Behaviours {
 		private readonly CartMovementConfig _cartConfig;
 		private readonly Transform _cartTransform;
 		private readonly List<Collider> _disabledColliders = new List<Collider>();
-		private int _layerMaskAllButPlayer;
+		private readonly int _layerMaskAllButPlayer;
 		private readonly Action<PlayerAction> _moveBackAction;
 
 		public CartMovementBehaviour(Transform transform, GameObject cart, SuperConfig config) : base(transform) {
@@ -85,7 +91,7 @@ namespace Game.PlayerComponents.Behaviours {
 					_disabledColliders.Add(c);
 				}
 			}
-			_layerMaskAllButPlayer = ~1 << LayerMaskManager.Get(Layer.Player);
+			_layerMaskAllButPlayer = ~ (1 << LayerMaskManager.Get(Layer.Player));
 			_moveBackAction = Player.GetInstance().Actions.GetAction(PlayerAction.MoveBack);
 		}
 
