@@ -71,6 +71,8 @@ namespace Game.PlayerComponents.Behaviours {
 		private readonly CartMovementConfig _cartConfig;
 		private readonly Transform _cartTransform;
 		private readonly List<Collider> _disabledColliders = new List<Collider>();
+		private int _layerMaskAllButPlayer;
+		private readonly Action<PlayerAction> _moveBackAction;
 
 		public CartMovementBehaviour(Transform transform, GameObject cart, SuperConfig config) : base(transform) {
 			_cartConfig = config.DriveCartMovement;
@@ -83,6 +85,8 @@ namespace Game.PlayerComponents.Behaviours {
 					_disabledColliders.Add(c);
 				}
 			}
+			_layerMaskAllButPlayer = ~1 << LayerMaskManager.Get(Layer.Player);
+			_moveBackAction = Player.GetInstance().Actions.GetAction(PlayerAction.MoveBack);
 		}
 
 		public override void Clear() {
@@ -92,6 +96,19 @@ namespace Game.PlayerComponents.Behaviours {
 		}
 
 		public override void Step() {
+
+			Debug.Log(SelfMovement);
+			Ray ray = new Ray(_cartTransform.position, -_cartTransform.forward);
+			RaycastHit hit;
+			Debug.DrawRay(ray.origin, ray.direction * 10, Color.magenta);
+			if (Physics.Raycast(ray, out hit, 10, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
+					_moveBackAction.Disable();
+			}
+			else {
+				_moveBackAction.Enable();
+			}
+			
+
 			_cartTransform.position = Vector3.Lerp(_transform.position - _transform.forward * _cartConfig.DistanceToPlayer, 
 				_cartTransform.position, _cartConfig.MovementLag);
 			//_cartTransform.LookAt(_transform);
@@ -101,7 +118,7 @@ namespace Game.PlayerComponents.Behaviours {
 			_stepMovement = Vector3.zero;
 
 			Vector3 dvelSelf = Vector3.zero;
-			dvelSelf.z += SelfMovement.z * (SelfMovement.z > 0 ? _cartConfig.ForwardSpeed : 0.0f);
+			dvelSelf.z += SelfMovement.z * (SelfMovement.z > 0 ? _cartConfig.ForwardSpeed : 1);
 			
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 		}

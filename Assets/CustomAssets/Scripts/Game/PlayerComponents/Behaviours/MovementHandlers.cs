@@ -76,7 +76,9 @@ namespace Game.PlayerComponents.Behaviours {
 					}
 				};
 			};
-			actionForward.ForceFinishBehaviour = () => _selfMovement.z = 0.0f;
+			actionForward.ForceFinishBehaviour = () => {
+				if (_selfMovement.z > 0) _selfMovement.z = 0.0f;
+			};
 
 			Action actionBack = actions.GetAction(PlayerAction.MoveBack).Reset();
 			actionBack.WhileBehaviour = () => {
@@ -90,7 +92,9 @@ namespace Game.PlayerComponents.Behaviours {
 					}
 				};
 			};
-			actionBack.ForceFinishBehaviour = () => _selfMovement.z = 0.0f;
+			actionBack.ForceFinishBehaviour = () => {
+				if (_selfMovement.z < 0) _selfMovement.z = 0.0f;
+			};
 
 			Action actionLeft = actions.GetAction(PlayerAction.MoveLeft).Reset();
 			actionLeft.WhileBehaviour = () => {
@@ -104,7 +108,9 @@ namespace Game.PlayerComponents.Behaviours {
 					}
 				};
 			};
-			actionLeft.ForceFinishBehaviour = () => _selfMovement.x = 0.0f;
+			actionLeft.ForceFinishBehaviour = () => {
+				if (_selfMovement.x < 0) _selfMovement.x = 0.0f;
+			};
 
 			Action actionRight = actions.GetAction(PlayerAction.MoveRight).Reset();
 			actionRight.WhileBehaviour = () => {
@@ -118,7 +124,9 @@ namespace Game.PlayerComponents.Behaviours {
 					}
 				};
 			};
-			actionRight.ForceFinishBehaviour = () => _selfMovement.x = 0.0f;
+			actionRight.ForceFinishBehaviour = () => {
+				if (_selfMovement.x > 0) _selfMovement.x = 0.0f;
+			};
 		}
 	}
 }

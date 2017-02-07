@@ -61,7 +61,6 @@ namespace Game.PlayerComponents {
 			_ySpeed = Mathf.Lerp(axisValue * Time.deltaTime * ySensitivity, _ySpeed, VerticalLag);
 			rotation = Quaternion.AngleAxis(_ySpeed, Vector3.left) * _camera.transform.localRotation;
 			angle = Quaternion.Angle(rotation, Quaternion.AngleAxis(0, transform.forward));
-			Debug.Log(angle);
 			if (SmoothVerticalClipping) {
 				_camera.transform.localRotation = Quaternion.Slerp(rotation, _camera.transform.localRotation,
 					VerticalForceBack * angle / VerticalRangeDegrees);
