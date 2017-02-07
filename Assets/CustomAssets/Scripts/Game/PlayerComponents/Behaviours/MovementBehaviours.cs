@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 namespace Game.PlayerComponents.Behaviours {
@@ -7,6 +6,7 @@ namespace Game.PlayerComponents.Behaviours {
 	public abstract class MovementBehaviour {
 		protected MovementHandler _movement = new RawMovementHandler();
 		protected Transform _transform;
+
 		public Vector3 StepMovement { get { return _stepMovement; } }
 		protected Vector3 _stepMovement;
 
@@ -24,14 +24,14 @@ namespace Game.PlayerComponents.Behaviours {
 		}
 
 		public abstract void Step();
-		public abstract void Clean();
+		public abstract void Clear();
 	}
 
 
 	public class NullMovementBehaviour : MovementBehaviour {
 		public NullMovementBehaviour(Transform transform) : base(transform) {}
 		public override void Step() {}
-		public override void Clean() {}
+		public override void Clear() {}
 	}
 
 
@@ -44,7 +44,7 @@ namespace Game.PlayerComponents.Behaviours {
 		public WalkMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
 			_walkConfig = config.WalkMovement;
 			_runConfig = config.RunMovement;
-			_movement = new SmoothMovementHandler(config.WalkAcceleration);
+			_movement = new SmoothMovementHandler(config.WalkRunAcceleration);
 			_movement.SetMovement();
 			_runAction = Player.GetInstance().Actions.GetAction(PlayerAction.Run);
 		}
@@ -62,7 +62,7 @@ namespace Game.PlayerComponents.Behaviours {
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 		}
 
-		public override void Clean() {}
+		public override void Clear() {}
 	}
 
 
@@ -85,7 +85,7 @@ namespace Game.PlayerComponents.Behaviours {
 			}
 		}
 
-		public override void Clean() {
+		public override void Clear() {
 			foreach (Collider c in _disabledColliders) {
 				c.enabled = true;
 			}
