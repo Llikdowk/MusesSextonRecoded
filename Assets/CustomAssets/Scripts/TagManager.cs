@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum Tag {
-	Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController
+	Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, // default
+	Landmark // custom
 }
 
 class TagManager {

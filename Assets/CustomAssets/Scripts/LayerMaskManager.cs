@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum Layer {
-	Player
+	Player, Outline
 }
 
 public class LayerMaskManager {

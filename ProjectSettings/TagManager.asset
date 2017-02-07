@@ -4,8 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - camera
   - coffin
+  - poemLetters
+  - orb
+  - Landmark
+  - landmark
   layers:
   - Default
   - TransparentFX
@@ -16,7 +19,7 @@ TagManager:
   - 
   - 
   - Player
-  - 
+  - Outline
   - 
   - 
   - 

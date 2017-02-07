@@ -33,8 +33,8 @@ namespace Utils {
 			float t = 0.0f;
 			while (t < 1.0f) {
 				Power = PowerTimeCurve.Evaluate(t);
-				float px = Mathf.PerlinNoise(0.0F, Time.time * WidthSpeed) * 2.0f - 1.0f;
-				float py = Mathf.PerlinNoise(Time.time * HeightSpeed, 0.0F) * 2.0f - 1.0f;
+				float px = Mathf.PerlinNoise(0.0f, Time.time * WidthSpeed) * 2.0f - 1.0f;
+				float py = Mathf.PerlinNoise(Time.time * HeightSpeed, 0.0f) * 2.0f - 1.0f;
 				float width = Power * WidthScale * px;
 				float height = Power * HeightScale * py;
 				transform.localPosition = new Vector3(width, height, 0);
