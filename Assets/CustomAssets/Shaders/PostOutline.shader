@@ -6,6 +6,7 @@ Shader "Custom/PostOutline"
     {
 		_MainTex("Main Texture", 2D) = "white" {}
 		_Color("Main Color", Color) = (1, 0, 1, 1)
+		_Thickness("Thickness", Int) = 9
 		
     }
     SubShader 
@@ -17,6 +18,7 @@ Shader "Custom/PostOutline"
      
             sampler2D _MainTex;
 			half4 _Color;
+			int _Thickness;
  
             //<SamplerName>_TexelSize is a float2 that says how much screen space a texel occupies.
             float2 _MainTex_TexelSize;
@@ -48,7 +50,7 @@ Shader "Custom/PostOutline"
             half4 frag(v2f i) : COLOR 
             {
                 //arbitrary number of iterations for now
-                int NumberOfIterations=9;
+                int NumberOfIterations = _Thickness;
  
                 //split texel size into smaller words
                 float TX_x=_MainTex_TexelSize.x;

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
-public class OutlinerPosteffect : MonoBehaviour {
+public class OutlinerPostEffect : MonoBehaviour {
 	public Color OutlineColor = Color.cyan;
+	public int Thickness = 9;
 
     private Shader _outlineShader;
 	private Shader _drawSimpleShader;
@@ -20,6 +21,7 @@ public class OutlinerPosteffect : MonoBehaviour {
 	    _layerMaskOnlyOutline = 1 << LayerMaskManager.Get(Layer.Outline);
 		_material = new Material(_outlineShader);
 	    _material.color = OutlineColor;
+	    _material.SetInt("_Thickness", Thickness);
     }
  
     public void OnRenderImage(RenderTexture source, RenderTexture destination) {
