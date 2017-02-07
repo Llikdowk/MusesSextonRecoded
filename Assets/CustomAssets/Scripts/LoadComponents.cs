@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Cubiquity;
 using UnityEngine.UI;
+using Utils;
 
 public class LoadComponents : MonoBehaviour {
 	public TerrainVolume Terrain;
@@ -35,7 +36,7 @@ public class LoadComponents : MonoBehaviour {
 		else {
 			if (Input.GetKeyDown(KeyCode.Mouse0)) {
 				_hasClicked = true;
-				StartCoroutine(Utils.FadeOut(TitleImage, 1.0f));
+				StartCoroutine(UI.FadeOut(TitleImage, 1.0f));
 				FallbackImage.gameObject.SetActive(true);
 			}
 		}
