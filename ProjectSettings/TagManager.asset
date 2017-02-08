@@ -4,11 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - coffin
   - poemLetters
   - orb
   - Landmark
-  - landmark
+  - Outlineable
+  - Coffin
   layers:
   - Default
   - TransparentFX

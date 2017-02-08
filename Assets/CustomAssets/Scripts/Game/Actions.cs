@@ -36,6 +36,8 @@ namespace Game {
 			set { _notPressedBehaviour = value; }
 		}
 
+		public ActionDelegate ForceFinishBehaviour = nop;
+
 		public Action<T> Reset() {
 			StartBehaviour = WhileBehaviour = FinishBehaviour = NotPressedBehaviour = nop;
 			return this;
@@ -52,7 +54,6 @@ namespace Game {
 			ForceFinishBehaviour = functions[3];
 		}
 
-		public ActionDelegate ForceFinishBehaviour = nop;
 
 		private ActionDelegate _startBehaviour = nop;
 		private ActionDelegate _whileBehaviour = nop;

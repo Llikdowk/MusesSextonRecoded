@@ -1,9 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours {
 	public class WalkRunMovementBehaviour : MovementBehaviour {
 		private MovementConfig _currentConfig;
 		private readonly Action<PlayerAction> _runAction;
+		private readonly Transform _cameraTransform;
+		private readonly int _layerMaskAllButPlayer;
+		private readonly List<GameObject> outlined = new List<GameObject>();
+		private readonly int _outlineLayer;
+		private readonly string _coffinTag;
 
 		public WalkRunMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
 			Player.GetInstance().Look.Config = config.WalkRunLook;
@@ -15,6 +21,10 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_currentConfig = walkConfig;
 			_runAction.StartBehaviour = () => _currentConfig = runConfig;
 			_runAction.FinishBehaviour = () => _currentConfig = walkConfig;
+			_cameraTransform = Player.GetInstance().Camera.transform;
+			_layerMaskAllButPlayer = ~(1 << LayerMaskManager.Get(Layer.Player));
+			_coffinTag = TagManager.Get(Tag.Coffin);
+			_outlineLayer = LayerMaskManager.Get(Layer.Outline);
 
 		}
 
@@ -28,6 +38,27 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			dvelSelf.z += dposSelf.z * (dposSelf.z > 0 ? _currentConfig.ForwardSpeed : _currentConfig.BackwardSpeed);
 
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
+
+			Ray ray = new Ray(_transform.position, _cameraTransform.forward);
+			RaycastHit hit;
+			
+			if (Physics.SphereCast(ray, 0.05f, out hit, 2.5f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
+				GameObject g = hit.collider.gameObject;
+				foreach (GameObject go in outlined) { // TODO clean this code
+					go.layer = LayerMaskManager.Get(Layer.Default);
+				}
+				outlined.Clear();
+				if (g.tag == _coffinTag) {
+					g.layer = _outlineLayer;
+					outlined.Add(g);
+				}
+			}
+			else {
+				foreach (GameObject go in outlined) {
+					go.layer = LayerMaskManager.Get(Layer.Default);
+				}
+				outlined.Clear();
+			}
 		}
 
 		public override void Clear() {

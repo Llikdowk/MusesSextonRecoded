@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Tag {
 	Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, // default
-	Landmark // custom
+	Landmark, Coffin // custom
 }
 
 class TagManager {

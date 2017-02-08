@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum Layer {
-	Player, Outline
+	Default, TransparentFX, IgnoreRaycast, Water, UI, // default
+	Player, Outline // custom
 }
 
 public class LayerMaskManager {
@@ -19,6 +20,9 @@ public class LayerMaskManager {
 
 	private void AddLayer(Layer layer) {
 		string name = layer.ToString();
+		if (layer == Layer.IgnoreRaycast) {
+			name = "Ignore Raycast";
+		}
 		_map.Add(name, LayerMask.NameToLayer(name));
 	}
 
