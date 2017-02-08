@@ -9,13 +9,23 @@ namespace Game.PlayerComponents.Behaviours {
 			get { return _selfMovement; }
 		}
 		protected Vector3 _selfMovement = Vector3.zero;
-		public abstract void SetMovement();
+		public abstract MovementHandler SetMovement();
 	}
 
+	public class NullMovementHandler : MovementHandler {
+		public override MovementHandler SetMovement() {
+			ActionManager<PlayerAction> actions = Player.GetInstance().Actions;
+			actions.GetAction(PlayerAction.MoveForward).Reset();
+			actions.GetAction(PlayerAction.MoveBack).Reset();
+			actions.GetAction(PlayerAction.MoveLeft).Reset();
+			actions.GetAction(PlayerAction.MoveRight).Reset();
+			return this;
+		}
+	}
 
 	public class RawMovementHandler : MovementHandler {
 
-		public override void SetMovement() {
+		public override MovementHandler SetMovement() {
 			ActionManager<PlayerAction> actions = Player.GetInstance().Actions;
 
 			Action actionForward = actions.GetAction(PlayerAction.MoveForward).Reset();
@@ -49,6 +59,8 @@ namespace Game.PlayerComponents.Behaviours {
 			actionRight.FinishBehaviour = actionRight.ForceFinishBehaviour = () => {
 				_selfMovement.x = 0.0f;
 			};
+
+			return this;
 		}
 	}
 
@@ -61,7 +73,7 @@ namespace Game.PlayerComponents.Behaviours {
 			this._config = config;
 		}
 
-		public override void SetMovement() {
+		public override MovementHandler SetMovement() {
 			ActionManager<PlayerAction> actions = Player.GetInstance().Actions;
 
 			Action actionForward = actions.GetAction(PlayerAction.MoveForward).Reset();
@@ -127,6 +139,8 @@ namespace Game.PlayerComponents.Behaviours {
 			actionRight.ForceFinishBehaviour = () => {
 				if (_selfMovement.x > 0) _selfMovement.x = 0.0f;
 			};
+
+			return this;
 		}
 	}
 }

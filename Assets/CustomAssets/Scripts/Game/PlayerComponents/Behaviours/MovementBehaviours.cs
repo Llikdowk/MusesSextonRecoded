@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 namespace Game.PlayerComponents.Behaviours {
 
 	public abstract class MovementBehaviour {
-		protected MovementHandler _movement = new RawMovementHandler();
+		protected MovementHandler _movement = new NullMovementHandler();
 		protected Transform _transform;
 
 		public Vector3 StepMovement { get { return _stepMovement; } }
@@ -35,22 +36,20 @@ namespace Game.PlayerComponents.Behaviours {
 	}
 
 
-	public class WalkMovementBehaviour : MovementBehaviour {
-
-		private readonly MovementConfig _walkConfig;
-		private readonly MovementConfig _runConfig;
+	public class WalkRunMovementBehaviour : MovementBehaviour {
 		private MovementConfig _currentConfig;
 		private readonly Action<PlayerAction> _runAction;
 
-		public WalkMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
-			_walkConfig = config.WalkMovement;
-			_runConfig = config.RunMovement;
+		public WalkRunMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
+			Player.GetInstance().Look.Config = config.WalkRunLook;
+			MovementConfig walkConfig = config.WalkMovement;
+			MovementConfig runConfig = config.RunMovement;
 			_movement = new SmoothMovementHandler(config.WalkRunAcceleration);
 			_movement.SetMovement();
 			_runAction = Player.GetInstance().Actions.GetAction(PlayerAction.Run);
-			_currentConfig = _walkConfig;
-			_runAction.StartBehaviour = () => _currentConfig = _runConfig;
-			_runAction.FinishBehaviour = () => _currentConfig = _walkConfig;
+			_currentConfig = walkConfig;
+			_runAction.StartBehaviour = () => _currentConfig = runConfig;
+			_runAction.FinishBehaviour = () => _currentConfig = walkConfig;
 
 		}
 
@@ -81,9 +80,10 @@ namespace Game.PlayerComponents.Behaviours {
 		private readonly Action<PlayerAction> _moveBackAction;
 
 		public CartMovementBehaviour(Transform transform, GameObject cart, SuperConfig config) : base(transform) {
+			Player.GetInstance().Look.Config = config.DriveCartLook;
+
 			_cartConfig = config.DriveCartMovement;
-			_movement = new SmoothMovementHandler(config.CartAcceleration);
-			_movement.SetMovement();
+			_movement = new SmoothMovementHandler(config.CartAcceleration).SetMovement();
 			_cartTransform = cart.transform;
 			foreach (Collider c in cart.GetComponentsInChildren<Collider>()) {
 				if (!c.isTrigger) {
@@ -93,6 +93,9 @@ namespace Game.PlayerComponents.Behaviours {
 			}
 			_layerMaskAllButPlayer = ~ (1 << LayerMaskManager.Get(Layer.Player));
 			_moveBackAction = Player.GetInstance().Actions.GetAction(PlayerAction.MoveBack);
+
+			Utils.Animation.SlerpForward(transform, cart.transform, _cartConfig.GoInsideTimeSeconds, () => { });
+		
 		}
 
 		public override void Clear() {
@@ -102,11 +105,12 @@ namespace Game.PlayerComponents.Behaviours {
 		}
 
 		public override void Step() {
+			_transform.position += _stepMovement;
+			_stepMovement = Vector3.zero;
 
-			Debug.Log(SelfMovement);
 			Ray ray = new Ray(_cartTransform.position, -_cartTransform.forward);
 			RaycastHit hit;
-			float cartLength = 7.5f; // TODO parametrice this distance (10) (maybe using a bounding box?)
+			float cartLength = 7.5f; // TODO parametrice this distance (maybe using a bounding box?)
 			Debug.DrawRay(ray.origin, ray.direction * cartLength, Color.magenta); 
 			if (Physics.Raycast(ray, out hit, cartLength, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
 				_moveBackAction.Disable();
@@ -114,29 +118,29 @@ namespace Game.PlayerComponents.Behaviours {
 			else {
 				_moveBackAction.Enable();
 			}
-			
-			_cartTransform.position = Vector3.Lerp(_transform.position - _transform.forward * _cartConfig.DistanceToPlayer, 
-				_cartTransform.position, _cartConfig.MovementLag);
-			ray = new Ray(_cartTransform.position, -_cartTransform.up);
-			Debug.DrawRay(ray.origin, ray.direction, Color.magenta);
-			if (Physics.Raycast(ray, out hit, 0.5f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
-				_cartTransform.localPosition += Vector3.up * (hit.distance + 0.25f); // halfHeight of cart
+
+
+			Vector3 newForward = Vector3.Slerp(_cartTransform.forward, _transform.forward, (1 - _cartConfig.LookLag) * Mathf.Abs(SelfMovement.z));
+			ray = new Ray(_cartTransform.position, Vector3.down);
+			if (Physics.Raycast(ray, out hit, 10.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
+				Vector3 cross = Vector3.Cross(_cartTransform.right, hit.normal);
+				newForward += Vector3.RotateTowards(_cartTransform.forward, cross, Time.deltaTime * _cartConfig.VerticalRotationStep, 0.0f);
 			}
+
+			_cartTransform.rotation = Quaternion.LookRotation(newForward);
 
 
 			Vector3 dvelSelf = Vector3.zero;
-			dvelSelf.z += SelfMovement.z * (SelfMovement.z > 0 ? _cartConfig.ForwardSpeed : 1); // TODO config with backward speed
-
-			_cartTransform.LookAt(
-				Vector3.Lerp(
-					_cartTransform.forward + _cartTransform.position,
-					_transform.position, 
-					(1.0f - _cartConfig.LookLag) * Mathf.Abs(SelfMovement.z)),
-				Vector3.up);
-			_transform.position += _stepMovement;
-			_stepMovement = Vector3.zero;
-			
+			dvelSelf.z += SelfMovement.z * (SelfMovement.z > 0 ? _cartConfig.ForwardSpeed : _cartConfig.BackwardSpeed);
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
+
+			_cartTransform.position = Vector3.Lerp(
+				_transform.position - _cartTransform.forward * _cartConfig.DistanceToPlayer, 
+				_cartTransform.position,
+				_cartConfig.MovementLag);
+
+
+
 		}
 		
 	}

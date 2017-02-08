@@ -46,7 +46,7 @@ namespace Game.PlayerComponents {
 		}
 		public void SetWalkBehaviour() {
 			Debug.Log("set WALK movBehaviour");
-			MovementBehaviour = new WalkMovementBehaviour(transform, Config);
+			MovementBehaviour = new WalkRunMovementBehaviour(transform, Config);
 		}
 		public void SetCartBehaviour(GameObject cart) {
 			Debug.Log("set CART movBehaviour");

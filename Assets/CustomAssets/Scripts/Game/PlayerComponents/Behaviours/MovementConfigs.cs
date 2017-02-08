@@ -13,9 +13,11 @@ namespace Game.PlayerComponents.Behaviours {
 
 	[Serializable]
 	public class CartMovementConfig {
+		[Range(0.01f, 2)] public float GoInsideTimeSeconds = 0.5f;
 		public float ForwardSpeed = 7.5f;
+		public float BackwardSpeed = 2.0f;
 		public float DistanceToPlayer = 1.0f;
-		public float RotationMultiplier = 1.0f;
+		public float VerticalRotationStep = 5.0f;
 
 		[Range(0, 1)] public float MovementLag = 0.9f;
 		[Range(0, 1)] public float LookLag = 0.9f;
@@ -27,14 +29,19 @@ namespace Game.PlayerComponents.Behaviours {
 		public float SpeedDown = 6.0f;
 	}
 
-
 	[Serializable]
 	public class SuperConfig {
+		// Walk & Run
+		public Look.LookConfig WalkRunLook;
 		public MovementConfig WalkMovement;
 		public MovementConfig RunMovement;
 		public AccelerationConfig WalkRunAcceleration;
+
+		// Cart
+		public Look.LookConfig DriveCartLook;
 		public CartMovementConfig DriveCartMovement;
 		public AccelerationConfig CartAcceleration;
+
 	}
 
 }

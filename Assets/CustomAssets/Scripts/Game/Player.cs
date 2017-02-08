@@ -43,6 +43,7 @@ namespace Game.PlayerComponents {
 
 		[HideInInspector] public CharacterMovement Movement;
 		[HideInInspector] public CharacterController Controller;
+		[HideInInspector] public Look Look;
 		public ActionManager<PlayerAction> Actions = new ActionManager<PlayerAction>();
 
 		public void Awake() {
@@ -54,6 +55,7 @@ namespace Game.PlayerComponents {
 			_instance = this;
 			Movement = GetComponent<CharacterMovement>();
 			Controller = GetComponent<CharacterController>();
+			Look = GetComponent<Look>();
 		}
 
 		public void Start() {
