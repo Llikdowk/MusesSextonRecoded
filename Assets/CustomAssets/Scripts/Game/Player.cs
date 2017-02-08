@@ -21,15 +21,21 @@ namespace Game.PlayerComponents {
 		protected CharacterMovement Movement;
 	}
 
-	public class WalkState : PlayerState {
-		public WalkState() {
-			Movement.SetWalkBehaviour();
+	public class WalkRunState : PlayerState {
+		public WalkRunState() {
+			Movement.SetWalkRunBehaviour();
 		}
 	}
 
 	public class DriveCartState : PlayerState {
 		public DriveCartState(GameObject cart) {
 			Movement.SetCartBehaviour(cart);
+		}
+	}
+
+	public class DragCoffinState : PlayerState {
+		public DragCoffinState() {
+			Movement.SetDragCoffinBehaviour();
 		}
 	}
 
@@ -61,7 +67,7 @@ namespace Game.PlayerComponents {
 		}
 
 		public void Start() {
-			CurrentState = new WalkState();
+			CurrentState = new WalkRunState();
 		}
 	}
 }

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Game;
+﻿using Game;
 using Game.PlayerComponents;
 using UnityEngine;
 
@@ -9,7 +8,6 @@ namespace Triggers {
 
 	public class TFrontCart : MonoBehaviour {
 
-		private ActionDelegate[] _backupUseBehaviour;
 		private Player _player;
 		private GameObject _model;
 
@@ -26,12 +24,12 @@ namespace Triggers {
 		private void ToggleWalkDrive(GameObject cart) {
 			PlayerState currentState = _player.CurrentState;
 
-			if (currentState.GetType() == typeof(WalkState)) {
+			if (currentState.GetType() == typeof(WalkRunState)) {
 				_player.CurrentState = new DriveCartState(cart);
 				RemoveOutline();
 			} 
 			else if (currentState.GetType() == typeof(DriveCartState)) {
-				_player.CurrentState = new WalkState();
+				_player.CurrentState = new WalkRunState();
 				AddOutline();
 			}
 		}
@@ -51,10 +49,8 @@ namespace Triggers {
 
 		public void OnTriggerEnter(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return; 
-			Debug.Log("ontriggerenter");
 
 			Action use = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
-			_backupUseBehaviour = use.GetAllFunctions();
 			use.StartBehaviour = () => {
 				ToggleWalkDrive(transform.parent.gameObject); 
 			};
@@ -64,11 +60,8 @@ namespace Triggers {
 
 		public void OnTriggerExit(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
-			Debug.Log("ontriggerexit");
 
-			Player.GetInstance().Actions.GetAction(PlayerAction.Use).SetAllFunctions(_backupUseBehaviour);
 			RemoveOutline();
-
 		}
 	}
 }

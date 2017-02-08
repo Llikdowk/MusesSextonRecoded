@@ -5,11 +5,13 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 	public class WalkRunMovementBehaviour : MovementBehaviour {
 		private MovementConfig _currentConfig;
 		private readonly Action<PlayerAction> _runAction;
+		private readonly Action<PlayerAction> _useAction;
 		private readonly Transform _cameraTransform;
 		private readonly int _layerMaskAllButPlayer;
 		private readonly List<GameObject> outlined = new List<GameObject>();
 		private readonly int _outlineLayer;
 		private readonly string _coffinTag;
+		private GameObject _potentialUseObj = null;
 
 		public WalkRunMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
 			Player.GetInstance().Look.Config = config.WalkRunLook;
@@ -17,15 +19,23 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			MovementConfig runConfig = config.RunMovement;
 			_movement = new SmoothMovementHandler(config.WalkRunAcceleration);
 			_movement.SetMovement();
-			_runAction = Player.GetInstance().Actions.GetAction(PlayerAction.Run);
 			_currentConfig = walkConfig;
-			_runAction.StartBehaviour = () => _currentConfig = runConfig;
-			_runAction.FinishBehaviour = () => _currentConfig = walkConfig;
 			_cameraTransform = Player.GetInstance().Camera.transform;
 			_layerMaskAllButPlayer = ~(1 << LayerMaskManager.Get(Layer.Player));
 			_coffinTag = TagManager.Get(Tag.Coffin);
 			_outlineLayer = LayerMaskManager.Get(Layer.Outline);
 
+			_runAction = Player.GetInstance().Actions.GetAction(PlayerAction.Run);
+			_runAction.StartBehaviour = () => _currentConfig = runConfig;
+			_runAction.FinishBehaviour = () => _currentConfig = walkConfig;
+			_useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
+
+			_useAction.StartBehaviour = () => {
+				if (_potentialUseObj == null) return;
+				if (_potentialUseObj.tag == _coffinTag) {
+					Player.GetInstance().CurrentState = new DragCoffinState();
+				}
+			};
 		}
 
 		public override void Step() {
@@ -39,9 +49,13 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 
+			Calcs();
+		}
+
+		protected virtual void Calcs() {
+
 			Ray ray = new Ray(_transform.position, _cameraTransform.forward);
 			RaycastHit hit;
-			
 			if (Physics.SphereCast(ray, 0.05f, out hit, 2.5f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
 				GameObject g = hit.collider.gameObject;
 				foreach (GameObject go in outlined) { // TODO clean this code
@@ -49,6 +63,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				}
 				outlined.Clear();
 				if (g.tag == _coffinTag) {
+					_potentialUseObj = g;
 					g.layer = _outlineLayer;
 					outlined.Add(g);
 				}
@@ -57,12 +72,15 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				foreach (GameObject go in outlined) {
 					go.layer = LayerMaskManager.Get(Layer.Default);
 				}
+				_potentialUseObj = null;
 				outlined.Clear();
 			}
+			
 		}
 
 		public override void Clear() {
 			_runAction.Reset();
 		}
 	}
+
 }
