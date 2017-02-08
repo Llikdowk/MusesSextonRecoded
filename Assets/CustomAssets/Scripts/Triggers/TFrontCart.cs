@@ -48,13 +48,13 @@ namespace Triggers {
 		}
 
 		public void OnTriggerEnter(Collider other) {
-			if (other.tag != TagManager.Get(Tag.Player)) return; 
+			if (other.tag != TagManager.Get(Tag.Player)) return;
+			if (Player.GetInstance().CurrentState.GetType() != typeof(WalkRunState)) return;
 
 			Action use = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
 			use.StartBehaviour = () => {
-				ToggleWalkDrive(transform.parent.gameObject); 
+				ToggleWalkDrive(transform.parent.gameObject);
 			};
-
 			AddOutline();
 		}
 

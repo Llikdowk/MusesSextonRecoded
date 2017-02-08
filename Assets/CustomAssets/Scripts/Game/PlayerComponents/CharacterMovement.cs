@@ -48,9 +48,9 @@ namespace Game.PlayerComponents {
 			Debug.Log("set WALK movBehaviour");
 			MovementBehaviour = new WalkRunMovementBehaviour(transform, Config);
 		}
-		public void SetDragCoffinBehaviour() {
+		public void SetDragCoffinBehaviour(GameObject coffin) {
 			Debug.Log("set DRAGCOFFIN movBehaviour");
-			MovementBehaviour = new DragCoffinBehaviour(transform, Config);
+			MovementBehaviour = new DragCoffinBehaviour(transform, coffin, Config);
 		}
 		public void SetCartBehaviour(GameObject cart) {
 			Debug.Log("set CART movBehaviour");

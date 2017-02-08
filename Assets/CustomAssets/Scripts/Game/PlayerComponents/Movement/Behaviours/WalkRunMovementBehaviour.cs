@@ -33,7 +33,10 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_useAction.StartBehaviour = () => {
 				if (_potentialUseObj == null) return;
 				if (_potentialUseObj.tag == _coffinTag) {
-					Player.GetInstance().CurrentState = new DragCoffinState();
+					foreach (GameObject go in outlined) {
+						go.layer = LayerMaskManager.Get(Layer.Default);
+					}
+					Player.GetInstance().CurrentState = new DragCoffinState(_potentialUseObj);
 				}
 			};
 		}

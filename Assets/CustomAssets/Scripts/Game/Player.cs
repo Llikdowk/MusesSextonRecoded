@@ -34,8 +34,8 @@ namespace Game.PlayerComponents {
 	}
 
 	public class DragCoffinState : PlayerState {
-		public DragCoffinState() {
-			Movement.SetDragCoffinBehaviour();
+		public DragCoffinState(GameObject coffin) {
+			Movement.SetDragCoffinBehaviour(coffin);
 		}
 	}
 
