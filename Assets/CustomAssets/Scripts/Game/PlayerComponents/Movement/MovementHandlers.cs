@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.PlayerComponents.Behaviours {
+namespace Game.PlayerComponents.Movement {
 	using Action = Action<PlayerAction>;
 	
 	public abstract class MovementHandler {

@@ -1,5 +1,4 @@
-﻿using Game.PlayerComponents.Behaviours;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace Game.PlayerComponents {

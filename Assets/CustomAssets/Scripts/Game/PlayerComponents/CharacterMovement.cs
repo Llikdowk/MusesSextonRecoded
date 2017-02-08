@@ -1,5 +1,5 @@
-﻿using System;
-using Game.PlayerComponents.Behaviours;
+﻿using Game.PlayerComponents.Movement;
+using Game.PlayerComponents.Movement.Behaviours;
 using UnityEngine;
 
 namespace Game.PlayerComponents {

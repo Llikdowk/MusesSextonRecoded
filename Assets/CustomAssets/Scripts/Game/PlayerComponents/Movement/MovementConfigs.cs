@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game.PlayerComponents.Behaviours {
+namespace Game.PlayerComponents.Movement {
 
 	[Serializable]
 	public class MovementConfig {
