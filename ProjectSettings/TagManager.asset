@@ -9,6 +9,8 @@ TagManager:
   - Landmark
   - Outlineable
   - Coffin
+  - camera
+  - landmark
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - 
   - Player
   - Outline
-  - 
+  - Outline2
   - 
   - 
   - 
