@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MiscComponents;
 using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours {
@@ -37,6 +38,13 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 						go.layer = LayerMaskManager.Get(Layer.Default);
 					}
 					_potentialUseObj.layer = LayerMaskManager.Get(Layer.DrawFront);
+					MarkableComponent m = _potentialUseObj.GetComponent<MarkableComponent>();
+					if (m != null) {
+						m.DisableMark();
+					}
+					else {
+						Debug.LogWarning("MarkComponent not found in gameObject <b>" + _potentialUseObj.gameObject.name + "</b>");
+					}
 					Player.GetInstance().CurrentState = new DragCoffinState(_potentialUseObj);
 				}
 			};

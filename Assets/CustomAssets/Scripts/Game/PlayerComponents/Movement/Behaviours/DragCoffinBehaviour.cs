@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using MiscComponents;
+using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours {
 
@@ -19,6 +20,16 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				Rigidbody rb = _coffin.GetComponent<Rigidbody>();
 				rb.isKinematic = false;
 				_coffin.layer = LayerMaskManager.Get(Layer.Default);
+
+				MarkableComponent m = _coffin.GetComponent<MarkableComponent>();
+				if (m == null) {
+					Debug.LogWarning("Object <b>" + _coffin.gameObject.name + "</b> could not be marked. (Missing MarkableComponent!)");
+				}
+				else {
+					//TODO: ADD GUARD -> enable only if not throwed into a hole
+					m.EnableMark();
+				}
+
 				Player.GetInstance().CurrentState = new WalkRunState();
 			};
 

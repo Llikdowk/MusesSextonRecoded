@@ -11,7 +11,12 @@
 
 		 ZWrite On
 		 ZTest False
-		 Tags {"Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "TransparentCutout"}
+		 Tags {
+			"Queue" = "Transparent" 
+			"IgnoreProjector" = "True" 
+			"RenderType" = "TransparentCutout" 
+			"DisableBatching" = "True"
+		 }
 		 Blend SrcAlpha OneMinusSrcAlpha
 
 	   Pass {
