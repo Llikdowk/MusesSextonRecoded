@@ -13,6 +13,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		public CartMovementBehaviour(Transform transform, GameObject cart, SuperConfig config) : base(transform) {
 			Player.GetInstance().Look.Config = config.DriveCartLook;
 
+			config.DriveCartLook.FixedForward = transform;
 			_cartConfig = config.DriveCartMovement;
 			_movement = new SmoothMovementHandler(config.CartAcceleration).SetMovement();
 			_cartTransform = cart.transform;
@@ -29,7 +30,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 		}
 
-		public override void Clear() {
+		public override void ResetModifiedState() {
 			foreach (Collider c in _disabledColliders) {
 				c.enabled = true;
 			}

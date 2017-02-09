@@ -23,7 +23,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 		public abstract void Step();
-		public abstract void Clear();
+		public abstract void ResetModifiedState();
 	}
 
 }

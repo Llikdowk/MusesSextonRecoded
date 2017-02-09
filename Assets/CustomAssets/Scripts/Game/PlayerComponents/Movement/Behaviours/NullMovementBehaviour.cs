@@ -9,7 +9,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		public override void Step() {
 		}
 
-		public override void Clear() {
+		public override void ResetModifiedState() {
 		}
 	}
 

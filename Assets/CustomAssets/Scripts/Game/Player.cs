@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Reflection;
+using Game.PlayerComponents.Movement;
+using Game.PlayerComponents.Movement.Behaviours;
+using UnityEngine;
 
 
 namespace Game.PlayerComponents {
@@ -15,43 +18,51 @@ namespace Game.PlayerComponents {
 
 	public abstract class PlayerState {
 		protected PlayerState() {
-			this.Movement = Player.GetInstance().Movement;
+			Movement = Player.GetInstance().Movement;
+			Transform = Player.GetInstance().transform;
+			Config = Player.GetInstance().Config;
 		}
 
 		protected CharacterMovement Movement;
+		protected Transform Transform;
+		protected SuperConfig Config;
 	}
 
 	public class WalkRunState : PlayerState {
 		public WalkRunState() {
-			Movement.SetWalkRunBehaviour();
+			Movement.MovementBehaviour = new WalkRunMovementBehaviour(Transform, Config);
 		}
 	}
 
 	public class DriveCartState : PlayerState {
 		public DriveCartState(GameObject cart) {
-			Movement.SetCartBehaviour(cart);
+			Movement.MovementBehaviour = new CartMovementBehaviour(Transform, cart, Config);
 		}
 	}
 
 	public class DragCoffinState : PlayerState {
 		public DragCoffinState(GameObject coffin) {
-			Movement.SetDragCoffinBehaviour(coffin);
+			Movement.MovementBehaviour = new DragCoffinBehaviour(Transform, coffin, Config);
 		}
 	}
 
-	[RequireComponent(typeof(CharacterMovement))]
 	[RequireComponent(typeof(CharacterController))]
 	public class Player : MonoBehaviour {
-		private static Player _instance;
-		public static Player GetInstance() {return _instance; }
-		public PlayerState CurrentState;
 
+		public PlayerState CurrentState;
+		public SuperConfig Config;
+
+		public MovementBehaviour behaviour;
+		
 		[HideInInspector] public CharacterMovement Movement;
 		[HideInInspector] public CharacterController Controller;
 		[HideInInspector] public Look Look;
 		[HideInInspector] public Camera Camera { get; private set; }
+		[HideInInspector] public ActionManager<PlayerAction> Actions = new ActionManager<PlayerAction>();
 
-		public ActionManager<PlayerAction> Actions = new ActionManager<PlayerAction>();
+
+		private static Player _instance;
+		public static Player GetInstance() {return _instance; }
 
 		public void Awake() {
 			if (_instance != null && _instance != this) {
@@ -60,7 +71,8 @@ namespace Game.PlayerComponents {
 			}
 
 			_instance = this;
-			Movement = GetComponent<CharacterMovement>();
+			Movement = gameObject.GetOrAddComponent<CharacterMovement>();
+			//behaviour = Movement.MovementBehaviour;
 			Controller = GetComponent<CharacterController>();
 			Look = GetComponent<Look>();
 			Camera = GetComponentInChildren<Camera>();

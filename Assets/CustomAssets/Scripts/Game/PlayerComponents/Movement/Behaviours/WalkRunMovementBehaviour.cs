@@ -13,7 +13,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		private readonly int _outlineLayer;
 		private readonly string _coffinTag;
 		private readonly string _terrainTag;
-		private readonly GameObject _terrain;
+		private readonly CarveTerrainVolumeComponent _terrainCarver;
 
 		public WalkRunMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
 			Player.GetInstance().Look.Config = config.WalkRunLook;
@@ -34,8 +34,10 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
 
 			string terrainName = "Terrain Volume";
-			_terrain = GameObject.Find(terrainName);
-			if (!_terrain) DebugMsg.GameObjectNotFound(Debug.LogError, terrainName); 
+			GameObject terrain = GameObject.Find(terrainName);
+			if (!terrain) DebugMsg.GameObjectNotFound(Debug.LogError, terrainName);
+			_terrainCarver = terrain.GetComponent<CarveTerrainVolumeComponent>();
+			if (!_terrainCarver) DebugMsg.ComponentNotFound(Debug.LogError, typeof(CarveTerrainVolumeComponent));
 		}
 
 		public override void Step() {
@@ -88,8 +90,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 		private void SetCarveHollowUse() {
-			_terrain.GetComponent<CarveTerrainVolumeComponent>().DoCarveAction(new Ray(_transform.position, _cameraTransform.forward));
-			Debug.Log("use carve action!");
+			_terrainCarver.DoCarveAction(new Ray(_transform.position, _cameraTransform.forward));
 		}
 
 		private void SetOutline(GameObject g) {
@@ -104,7 +105,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_outlined.Clear();
 		}
 
-		public override void Clear() { // TODO: check another solution -> reset all actions in the construction before anything else?
+		public override void ResetModifiedState() { 
 			_runAction.Reset();
 		}
 	}

@@ -62,7 +62,7 @@ public class ClickToDestroy : MonoBehaviour
 		}
 		else
 		{
-			// Clear the flag while we wait for a click.
+			// ResetModifiedState the flag while we wait for a click.
 			isMouseAlreadyDown = false;
 		}
 	}
