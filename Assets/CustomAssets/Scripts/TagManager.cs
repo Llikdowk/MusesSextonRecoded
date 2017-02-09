@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Tag {
 	Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, // default
-	Landmark, Coffin // custom
+	Landmark, Coffin, Terrain // custom
 }
 
 class TagManager {
@@ -23,8 +23,8 @@ class TagManager {
 		_map.Add(tag, name);
 	}
 
-	public static string Get(Tag layer) {
+	public static string Get(Tag tag) {
 		if (_instance == null) _instance = new TagManager();
-		return _instance._map[layer];
+		return _instance._map[tag];
 	}
 }

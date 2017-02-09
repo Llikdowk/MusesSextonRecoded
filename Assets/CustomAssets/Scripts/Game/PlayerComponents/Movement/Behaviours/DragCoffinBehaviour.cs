@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours {
 
-	public class DragCoffinBehaviour : WalkRunMovementBehaviour {
+	public class DragCoffinBehaviour : WalkRunMovementBehaviour { // TODO: change movement (slower)
 
 		private readonly GameObject _coffin;
 		private readonly Transform _slot;
@@ -23,7 +23,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 				MarkableComponent m = _coffin.GetComponent<MarkableComponent>();
 				if (m == null) {
-					Debug.LogWarning("Object <b>" + _coffin.gameObject.name + "</b> could not be marked. (Missing MarkableComponent!)");
+					Debug.LogWarning("Object <b>" + _coffin.gameObject.name + "</b> could not be marked. (Missing MarkableComponent!)"); // TODO extract to Error class
 				}
 				else {
 					//TODO: ADD GUARD -> enable only if not throwed into a hole
@@ -34,12 +34,12 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			};
 
 			_slot = Player.GetInstance().transform.Find("Camera/_slotCoffin");
-			if (_slot == null) Debug.LogError("Camera/_slotCoffin not found in PlayerGameobject");
+			if (_slot == null) Debug.LogError("Camera/_slotCoffin not found in PlayerGameobject"); // TODO extract to Error class
 			coffin.transform.parent = null;
 			//coffin.transform.parent = _slot; // UNITY BUG?! GameObject disappears and behaves undefinedly
 		}
 
-		protected override void Calcs() {
+		protected override void CheckForInteraction() {
 			_coffin.transform.position = _slot.position; // bug workaround
 			_coffin.transform.rotation = _slot.rotation;
 			//_coffin.transform.rotation = Quaternion.RotateTowards(_coffin.transform.rotation, _slot.transform.rotation,

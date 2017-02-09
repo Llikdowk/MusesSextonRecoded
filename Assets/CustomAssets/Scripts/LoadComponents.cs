@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Cubiquity;
+using UnityEditor.Animations;
 using UnityEngine.UI;
 using Utils;
 
@@ -28,6 +29,10 @@ public class LoadComponents : MonoBehaviour {
 
 	public void Update() {
 		if (Terrain.isMeshSyncronized && _hasClicked) {
+			string terrainTag = Terrain.tag;
+			foreach (Transform child in Terrain.GetComponentsInChildren<Transform>()) {
+				child.tag = terrainTag;
+			}
 			Time.timeScale = _originalTimeScale;
 			enabled = false;
 			TitleImage.gameObject.SetActive(false);

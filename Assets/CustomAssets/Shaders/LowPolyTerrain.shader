@@ -1,6 +1,5 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-
-Shader "waterShader" {
+﻿
+Shader "Custom/LowPolyTerrain" {
     Properties{
         _albedo("Albedo", Float) = 0
 

@@ -11,6 +11,7 @@ TagManager:
   - Coffin
   - camera
   - landmark
+  - Terrain
   layers:
   - Default
   - TransparentFX

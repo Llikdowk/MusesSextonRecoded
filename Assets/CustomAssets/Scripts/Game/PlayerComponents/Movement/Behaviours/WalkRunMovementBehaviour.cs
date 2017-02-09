@@ -9,10 +9,11 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		private readonly Action<PlayerAction> _useAction;
 		private readonly Transform _cameraTransform;
 		private readonly int _layerMaskAllButPlayer;
-		private readonly List<GameObject> outlined = new List<GameObject>();
+		private readonly List<GameObject> _outlined = new List<GameObject>();
 		private readonly int _outlineLayer;
 		private readonly string _coffinTag;
-		private GameObject _potentialUseObj = null;
+		private readonly string _terrainTag;
+		private readonly GameObject _terrain;
 
 		public WalkRunMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
 			Player.GetInstance().Look.Config = config.WalkRunLook;
@@ -24,6 +25,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_cameraTransform = Player.GetInstance().Camera.transform;
 			_layerMaskAllButPlayer = ~(1 << LayerMaskManager.Get(Layer.Player));
 			_coffinTag = TagManager.Get(Tag.Coffin);
+			_terrainTag = TagManager.Get(Tag.Terrain);
 			_outlineLayer = LayerMaskManager.Get(Layer.Outline);
 
 			_runAction = Player.GetInstance().Actions.GetAction(PlayerAction.Run);
@@ -31,10 +33,14 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_runAction.FinishBehaviour = () => _currentConfig = walkConfig;
 			_useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
 
+			_terrain = GameObject.Find("Terrain Volume");
+			if (!_terrain) Debug.LogError("Terrain not found!"); // TODO extract
+
+			/*
 			_useAction.StartBehaviour = () => {
 				if (_potentialUseObj == null) return;
 				if (_potentialUseObj.tag == _coffinTag) {
-					foreach (GameObject go in outlined) {
+					foreach (GameObject go in _outlined) {
 						go.layer = LayerMaskManager.Get(Layer.Default);
 					}
 					_potentialUseObj.layer = LayerMaskManager.Get(Layer.DrawFront);
@@ -47,7 +53,10 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 					}
 					Player.GetInstance().CurrentState = new DragCoffinState(_potentialUseObj);
 				}
+				else if (_potentialUseObj.tag == _terrainTag) {
+				}
 			};
+			*/
 		}
 
 		public override void Step() {
@@ -61,36 +70,62 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 
-			Calcs();
+			CheckForInteraction();
 		}
 
-		protected virtual void Calcs() {
+		protected virtual void CheckForInteraction() {
 
 			Ray ray = new Ray(_transform.position, _cameraTransform.forward);
 			RaycastHit hit;
 			if (Physics.SphereCast(ray, 0.05f, out hit, 2.5f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
 				GameObject g = hit.collider.gameObject;
-				foreach (GameObject go in outlined) { // TODO clean this code
-					go.layer = LayerMaskManager.Get(Layer.Default);
-				}
-				outlined.Clear();
+				CleanOutline();
 				if (g.tag == _coffinTag) {
-					_potentialUseObj = g;
-					g.layer = _outlineLayer;
-					outlined.Add(g);
+					SetOutline(g);
+					_useAction.StartBehaviour = () => SetDragCoffinUse(g);
+				} 
+				else if (g.tag == _terrainTag) {
+					_useAction.StartBehaviour = SetCarveHollowUse;
 				}
 			}
 			else {
-				foreach (GameObject go in outlined) {
-					go.layer = LayerMaskManager.Get(Layer.Default);
-				}
-				_potentialUseObj = null;
-				outlined.Clear();
+				CleanOutline();
 			}
 			
 		}
 
-		public override void Clear() {
+		private void SetDragCoffinUse(GameObject coffin) {
+
+			CleanOutline();
+			coffin.layer = LayerMaskManager.Get(Layer.DrawFront);
+			MarkableComponent m = coffin.GetComponent<MarkableComponent>();
+			if (m != null) {
+				m.DisableMark();
+			} else {
+				Debug.LogWarning("MarkComponent not found in gameObject <b>" + coffin.gameObject.name + "</b>"); // TODO extract to Error class
+			}
+			Player.GetInstance().CurrentState = new DragCoffinState(coffin);
+
+		}
+
+		private void SetCarveHollowUse() {
+			_terrain.GetComponent<CarveTerrainVolumeComponent>().DoCarveAction(new Ray(_transform.position, _cameraTransform.forward));
+			Debug.Log("use carve action!");
+		}
+
+		private void SetOutline(GameObject g) {
+			_outlined.Add(g);
+			g.layer = _outlineLayer;
+		}
+
+		private void CleanOutline() {
+			foreach (GameObject go in _outlined) { // TODO clean this code
+				go.layer = LayerMaskManager.Get(Layer.Default);
+			}
+			_outlined.Clear();
+		}
+
+		public override void Clear() { // TODO: check another solution -> reset all actions in the construction before anything else?
 			_runAction.Reset();
 		}
 	}
