@@ -18,8 +18,8 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				_coffin.GetComponent<Collider>().enabled = true;
 				Rigidbody rb = _coffin.GetComponent<Rigidbody>();
 				rb.isKinematic = false;
+				_coffin.layer = LayerMaskManager.Get(Layer.Default);
 				Player.GetInstance().CurrentState = new WalkRunState();
-				_coffin.layer = LayerMaskManager.Get(Layer.Outline);
 			};
 
 			_slot = Player.GetInstance().transform.Find("Camera/_slotCoffin");

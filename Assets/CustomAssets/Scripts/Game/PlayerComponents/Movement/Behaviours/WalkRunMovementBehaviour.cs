@@ -36,6 +36,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 					foreach (GameObject go in outlined) {
 						go.layer = LayerMaskManager.Get(Layer.Default);
 					}
+					_potentialUseObj.layer = LayerMaskManager.Get(Layer.DrawFront);
 					Player.GetInstance().CurrentState = new DragCoffinState(_potentialUseObj);
 				}
 			};

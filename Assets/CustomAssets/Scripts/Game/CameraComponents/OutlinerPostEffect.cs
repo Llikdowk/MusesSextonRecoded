@@ -30,7 +30,7 @@ namespace Game.CameraComponents {
 
 		public void OnRenderImage(RenderTexture source, RenderTexture destination) {
 			_outlinerCamera.CopyFrom(_mainCamera);
-			_outlinerCamera.clearFlags = CameraClearFlags.Color;
+			_outlinerCamera.clearFlags = CameraClearFlags.Color; // TODO: these params should be changed based on a MainCamera listener, not per frame
 			_outlinerCamera.backgroundColor = Color.black;
 			_outlinerCamera.cullingMask = _layerMaskOnlyOutline;
 			RenderTexture rt = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.ARGB32);
