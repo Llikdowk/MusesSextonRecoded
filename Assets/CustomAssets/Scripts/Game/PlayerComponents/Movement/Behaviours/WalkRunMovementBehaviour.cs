@@ -33,30 +33,9 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_runAction.FinishBehaviour = () => _currentConfig = walkConfig;
 			_useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
 
-			_terrain = GameObject.Find("Terrain Volume");
-			if (!_terrain) Debug.LogError("Terrain not found!"); // TODO extract
-
-			/*
-			_useAction.StartBehaviour = () => {
-				if (_potentialUseObj == null) return;
-				if (_potentialUseObj.tag == _coffinTag) {
-					foreach (GameObject go in _outlined) {
-						go.layer = LayerMaskManager.Get(Layer.Default);
-					}
-					_potentialUseObj.layer = LayerMaskManager.Get(Layer.DrawFront);
-					MarkableComponent m = _potentialUseObj.GetComponent<MarkableComponent>();
-					if (m != null) {
-						m.DisableMark();
-					}
-					else {
-						Debug.LogWarning("MarkComponent not found in gameObject <b>" + _potentialUseObj.gameObject.name + "</b>");
-					}
-					Player.GetInstance().CurrentState = new DragCoffinState(_potentialUseObj);
-				}
-				else if (_potentialUseObj.tag == _terrainTag) {
-				}
-			};
-			*/
+			string terrainName = "Terrain Volume";
+			_terrain = GameObject.Find(terrainName);
+			if (!_terrain) DebugMsg.GameObjectNotFound(Debug.LogError, terrainName); 
 		}
 
 		public override void Step() {
@@ -102,7 +81,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			if (m != null) {
 				m.DisableMark();
 			} else {
-				Debug.LogWarning("MarkComponent not found in gameObject <b>" + coffin.gameObject.name + "</b>"); // TODO extract to Error class
+				DebugMsg.ComponentNotFound(Debug.LogWarning, typeof(MarkableComponent));
 			}
 			Player.GetInstance().CurrentState = new DragCoffinState(coffin);
 

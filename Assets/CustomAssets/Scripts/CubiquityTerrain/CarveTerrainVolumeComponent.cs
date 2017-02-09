@@ -14,8 +14,7 @@ public class CarveTerrainVolumeComponent : MonoBehaviour {
 	public void Start() {
 		_terrainVolume = gameObject.GetComponent<TerrainVolume>();
 		if (_terrainVolume == null) {
-			Debug.LogError(
-				"This 'CarveTerrainVolumeComponent' script should be attached to a game object with a TerrainVolume component");
+			DebugMsg.ComponentNotFound(Debug.Log,typeof(CarveTerrainVolumeComponent));
 		}
 	}
 

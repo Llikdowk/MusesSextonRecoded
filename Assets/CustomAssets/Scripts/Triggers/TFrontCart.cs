@@ -25,7 +25,7 @@ namespace Triggers {
 				}
 			}
 			mark = transform.parent.gameObject.GetComponent<MarkableComponent>();
-			if (mark == null) Debug.LogWarning("MARK NOT FOUND"); // TODO: extract all messages like this to a external Error class
+			if (mark == null) DebugMsg.ComponentNotFound(Debug.LogWarning, typeof(MarkableComponent));
 
 
 		}

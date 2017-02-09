@@ -38,7 +38,7 @@ namespace Game.PlayerComponents {
 
 		public void Start() {
 			if (Config.FixedForward == null) {
-				Debug.LogWarning("Not Fixed Forward found: initialized with this object transform!");
+				DebugMsg.ComponentNotFound(Debug.LogWarning, typeof(Transform), "Initialized with <b>this</b> object transform instead.");
 				Config.FixedForward = transform;
 			}
 		}
