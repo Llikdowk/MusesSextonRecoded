@@ -39,7 +39,7 @@ namespace Triggers {
 			} 
 			else if (currentState.GetType() == typeof(DriveCartState)) {
 				_player.CurrentState = new WalkRunState();
-				AddOutline();
+				OnTriggerEnter(Player.GetInstance().GetComponent<Collider>());
 			}
 		}
 
@@ -73,6 +73,7 @@ namespace Triggers {
 
 		public void OnTriggerExit(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
+			if (Player.GetInstance().CurrentState.GetType() != typeof(WalkRunState)) return;
 
 			if (mark) mark.EnableMark();
 			Action use = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
