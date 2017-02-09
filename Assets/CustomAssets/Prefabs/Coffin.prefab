@@ -126,4 +126,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Color: {r: 0.05098039, g: 1, b: 0.0575253, a: 1}
   Icon: {fileID: 21300000, guid: 28f5c5dbd41979e45a0a0d0041ba6b68, type: 3}
-  Scale: {x: 1, y: 1}
+  Scale: {x: 1.25, y: 1.25}
+  StartEnabled: 0

@@ -1,5 +1,6 @@
 ﻿using Game;
 using Game.PlayerComponents;
+using MiscComponents;
 using UnityEngine;
 
 namespace Triggers {
@@ -10,6 +11,10 @@ namespace Triggers {
 
 		private Player _player;
 		private GameObject _model;
+		private MarkableComponent mark;
+
+		private ActionDelegate _useStartBehaviourBackup;
+
 
 		public void Start() {
 			_player = Player.GetInstance();
@@ -19,6 +24,10 @@ namespace Triggers {
 					break;
 				}
 			}
+			mark = transform.parent.gameObject.GetComponent<MarkableComponent>();
+			if (mark == null) Debug.LogWarning("MARK NOT FOUND"); // TODO: extract all messages like this to a external Error class
+
+
 		}
 
 		private void ToggleWalkDrive(GameObject cart) {
@@ -51,16 +60,23 @@ namespace Triggers {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
 			if (Player.GetInstance().CurrentState.GetType() != typeof(WalkRunState)) return;
 
+			if (mark) mark.DisableMark();
 			Action use = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
+			_useStartBehaviourBackup = use.StartBehaviour.Clone() as ActionDelegate;
+			if (_useStartBehaviourBackup == null) _useStartBehaviourBackup = Action.nop;
 			use.StartBehaviour = () => {
 				ToggleWalkDrive(transform.parent.gameObject);
 			};
+
 			AddOutline();
 		}
 
 		public void OnTriggerExit(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
 
+			if (mark) mark.EnableMark();
+			Action use = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
+			use.StartBehaviour = _useStartBehaviourBackup; // BUG fixme! disables all use actions in the future
 			RemoveOutline();
 		}
 	}
