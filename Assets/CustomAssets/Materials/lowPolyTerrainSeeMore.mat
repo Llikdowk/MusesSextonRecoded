@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: lowPolyTerrain
+  m_Name: lowPolyTerrainSeeMore
   m_Shader: {fileID: 4800000, guid: bf044478c23c46d40bde6df51267dade, type: 3}
   m_ShaderKeywords: BRUSH_MARKER_OFF
   m_LightmapFlags: 5
@@ -69,7 +69,7 @@ Material:
       second: 1
     - first:
         name: _fresnelConvexity
-      second: 0
+      second: 0.944
     - first:
         name: _fresnelIntensity
       second: 0.2

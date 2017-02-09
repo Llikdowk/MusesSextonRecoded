@@ -15,6 +15,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			Action<PlayerAction> useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
 			useAction.StartBehaviour = () => {
+				Debug.Log("USING DRAGCOFFIN!");
 				_coffin.transform.parent = null;
 				_coffin.GetComponent<Collider>().enabled = true;
 				Rigidbody rb = _coffin.GetComponent<Rigidbody>();
@@ -39,12 +40,13 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			//coffin.transform.parent = _slot; // UNITY BUG?! GameObject disappears and behaves undefinedly
 		}
 
-		protected override void CheckForInteraction() {
+		public override void Step() {
+			base.Step();
 			_coffin.transform.position = _slot.position; // bug workaround
 			_coffin.transform.rotation = _slot.rotation;
-			//_coffin.transform.rotation = Quaternion.RotateTowards(_coffin.transform.rotation, _slot.transform.rotation,
-			//	Time.deltaTime * 100.0f);
 		}
 
+		protected override void CheckForInteraction() {
+		}
 	}
 }

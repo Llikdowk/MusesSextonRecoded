@@ -77,6 +77,7 @@ namespace Game {
 			if (_enabled) return;
 
 			_enabled = true;
+
 			foreach (KeyCode k in _keys) { // TODO: extract to ContinueFromForcedFinishedBehaviour delegate
 				if (Input.GetKey(k)) {
 					StartBehaviour();
@@ -100,6 +101,12 @@ namespace Game {
 
 		public Action<TEnum> GetAction(TEnum tag) {
 			return _actions.Find(action => action.Tag.CompareTo(tag) == 0);
+		}
+
+		public void ResetAllActions() {
+			foreach (Action<TEnum> action in _actions) {
+				action.Reset();
+			}
 		}
 
 		public ActionManager() {

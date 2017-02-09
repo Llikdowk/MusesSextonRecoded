@@ -23,6 +23,10 @@ namespace Game.PlayerComponents {
 			Config = Player.GetInstance().Config;
 		}
 
+		public void CheckInternalInteraction(bool interaction) {
+			Movement.CheckInternalInteraction(interaction);
+		}
+
 		protected CharacterMovement Movement;
 		protected Transform Transform;
 		protected SuperConfig Config;
@@ -52,8 +56,7 @@ namespace Game.PlayerComponents {
 		public PlayerState CurrentState;
 		public SuperConfig Config;
 
-		public MovementBehaviour behaviour;
-		
+		// TODO: Movement should not be accessible from everywhere, its changes should be limited in PlayerState classes
 		[HideInInspector] public CharacterMovement Movement;
 		[HideInInspector] public CharacterController Controller;
 		[HideInInspector] public Look Look;
@@ -72,7 +75,6 @@ namespace Game.PlayerComponents {
 
 			_instance = this;
 			Movement = gameObject.GetOrAddComponent<CharacterMovement>();
-			//behaviour = Movement.MovementBehaviour;
 			Controller = GetComponent<CharacterController>();
 			Look = GetComponent<Look>();
 			Camera = GetComponentInChildren<Camera>();

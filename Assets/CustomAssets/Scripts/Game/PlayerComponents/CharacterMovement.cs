@@ -12,6 +12,7 @@ namespace Game.PlayerComponents {
 			set {
 				_movementBehaviour.ResetModifiedState();
 				_movementBehaviour = value;
+				_movementBehaviour.CanInteract = _canInteract;
 			}
 		}
 
@@ -24,6 +25,7 @@ namespace Game.PlayerComponents {
 		public Vector3 WorldMovement { get { return _movementBehaviour.WorldMovement; } }
 		public Vector3 SelfDir { get { return _movementBehaviour.SelfDir; } }
 		public Vector3 WorldDir { get { return _movementBehaviour.WorldDir; } }
+		private bool _canInteract = true;
 
 		public void Awake() {
 			_movementBehaviour = new NullMovementBehaviour(transform);
@@ -35,6 +37,11 @@ namespace Game.PlayerComponents {
 
 		public void AddForce(Vector3 dir, float force) {
 			_movementBehaviour.AddForce(dir, force);
+		}
+
+		public void CheckInternalInteraction(bool interaction) {
+			_canInteract = interaction;
+			_movementBehaviour.CanInteract = interaction;
 		}
 
 	}

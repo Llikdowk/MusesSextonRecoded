@@ -51,10 +51,17 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 
-			CheckForInteraction();
+			if (CanInteract) {
+				CheckForInteraction();
+			}
+			else {
+				CleanOutline();
+			}
 		}
 
+		private bool modified = false;
 		protected virtual void CheckForInteraction() {
+			if (!CanInteract) return;
 
 			Ray ray = new Ray(_transform.position, _cameraTransform.forward);
 			RaycastHit hit;
@@ -62,15 +69,25 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				GameObject g = hit.collider.gameObject;
 				CleanOutline();
 				if (g.tag == _coffinTag) {
+					modified = true;
 					SetOutline(g);
 					_useAction.StartBehaviour = () => SetDragCoffinUse(g);
 				} 
 				else if (g.tag == _terrainTag) {
+					modified = true;
 					_useAction.StartBehaviour = SetCarveHollowUse;
+				}
+				else {
+					modified = false;
+					_useAction.StartBehaviour = () => { };
 				}
 			}
 			else {
-				CleanOutline();
+				if (modified) {
+					modified = false;
+					_useAction.StartBehaviour = () => { };
+					CleanOutline();
+				}
 			}
 			
 		}
@@ -106,7 +123,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 		public override void ResetModifiedState() { 
-			_runAction.Reset();
+			//_runAction.Reset();
 		}
 	}
 

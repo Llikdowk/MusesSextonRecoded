@@ -13,7 +13,7 @@ namespace Triggers {
 		private GameObject _model;
 		private MarkableComponent mark;
 
-		private ActionDelegate _useStartBehaviourBackup;
+		//private ActionDelegate _useStartBehaviourBackup;
 
 
 		public void Start() {
@@ -28,19 +28,6 @@ namespace Triggers {
 			if (mark == null) DebugMsg.ComponentNotFound(Debug.LogWarning, typeof(MarkableComponent));
 
 
-		}
-
-		private void ToggleWalkDrive(GameObject cart) {
-			PlayerState currentState = _player.CurrentState;
-
-			if (currentState.GetType() == typeof(WalkRunState)) {
-				_player.CurrentState = new DriveCartState(cart);
-				RemoveOutline();
-			} 
-			else if (currentState.GetType() == typeof(DriveCartState)) {
-				_player.CurrentState = new WalkRunState();
-				OnTriggerEnter(Player.GetInstance().GetComponent<Collider>());
-			}
 		}
 
 		private void AddOutline() {
@@ -58,26 +45,27 @@ namespace Triggers {
 
 		public void OnTriggerEnter(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
-			if (Player.GetInstance().CurrentState.GetType() != typeof(WalkRunState)) return;
 
 			if (mark) mark.DisableMark();
-			Action use = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
-			_useStartBehaviourBackup = use.StartBehaviour.Clone() as ActionDelegate;
-			if (_useStartBehaviourBackup == null) _useStartBehaviourBackup = Action.nop;
-			use.StartBehaviour = () => {
-				ToggleWalkDrive(transform.parent.gameObject);
-			};
+			if (Player.GetInstance().CurrentState.GetType() == typeof(WalkRunState)) {
+				Player.GetInstance().CurrentState.CheckInternalInteraction(false);
 
-			AddOutline();
+				if (Player.GetInstance().CurrentState.GetType() == typeof(WalkRunState)) {
+					AddOutline();
+					Action use = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
+					use.StartBehaviour = () => {
+						RemoveOutline();
+						Player.GetInstance().CurrentState = new DriveCartState(transform.parent.gameObject);
+					};
+				}
+			}
 		}
 
 		public void OnTriggerExit(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
-			if (Player.GetInstance().CurrentState.GetType() != typeof(WalkRunState)) return;
 
+			Player.GetInstance().CurrentState.CheckInternalInteraction(true);
 			if (mark) mark.EnableMark();
-			Action use = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
-			use.StartBehaviour = _useStartBehaviourBackup; // BUG fixme! disables all use actions in the future
 			RemoveOutline();
 		}
 	}
