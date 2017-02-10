@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Audio;
 using MiscComponents;
 using UnityEngine;
 
@@ -41,6 +42,9 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 		public override void Step() {
+			if (_stepMovement != Vector3.zero) {
+				AudioController.GetInstance().PlaySteps();
+			}
 			_transform.position += _stepMovement;
 			_stepMovement = Vector3.zero;
 

@@ -39,7 +39,6 @@
             <destination>{2d65e7a3-449d-4086-82e2-ddc9054bbfc1}</destination>
             <destination>{338863c6-4f64-4cd0-b9a1-912b13522900}</destination>
             <destination>{6421b274-06a9-4138-9bc3-f16fc32320f4}</destination>
-            <destination>{a7435fa4-e0f9-4eb2-9494-dd9354f79048}</destination>
         </relationship>
         <relationship name="banks">
             <destination>{a130db2e-0862-43a2-954e-e9e203513732}</destination>
@@ -154,11 +153,6 @@
         <relationship name="automationCurves">
             <destination>{9da66a1f-435b-442a-929e-dca01f82bed9}</destination>
         </relationship>
-    </object>
-    <object class="GameParameter" id="{a7435fa4-e0f9-4eb2-9494-dd9354f79048}">
-        <property name="name">
-            <value>Wind</value>
-        </property>
     </object>
     <object class="EventMixerMaster" id="{4e35abad-f126-4192-805f-5341a325f574}">
         <relationship name="effectChain">

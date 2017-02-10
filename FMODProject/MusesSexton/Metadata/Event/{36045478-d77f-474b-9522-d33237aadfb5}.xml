@@ -82,7 +82,7 @@
     </object>
     <object class="GameParameter" id="{cb17095c-1a4c-4238-adf2-f9e3cb54449b}">
         <property name="name">
-            <value>Wind</value>
+            <value>Volume</value>
         </property>
         <relationship name="automationCurves">
             <destination>{e10719ac-c76b-4fc3-8b01-2ca8ff9231b7}</destination>

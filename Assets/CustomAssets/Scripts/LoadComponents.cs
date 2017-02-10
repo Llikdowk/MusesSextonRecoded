@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Audio;
+using UnityEngine;
 using Cubiquity;
 using UnityEditor.Animations;
 using UnityEngine.UI;
@@ -25,6 +26,7 @@ public class LoadComponents : MonoBehaviour {
 		TitleImage.enabled = true;
 		FallbackImage.gameObject.SetActive(true);
 		FallbackImage.enabled = true;
+		AudioController.GetInstance().FadeInWind();
 	}
 
 	public void Update() {
@@ -37,12 +39,14 @@ public class LoadComponents : MonoBehaviour {
 			enabled = false;
 			TitleImage.gameObject.SetActive(false);
 			FallbackImage.gameObject.SetActive(false);
+			AudioController.GetInstance().FadeInMusic1();
 		}
 		else {
 			if (Input.GetKeyDown(KeyCode.Mouse0)) {
 				_hasClicked = true;
 				StartCoroutine(UI.FadeOut(TitleImage, 1.0f));
 				FallbackImage.gameObject.SetActive(true);
+				AudioController.GetInstance().PlayBell();
 			}
 		}
 	}
