@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.09.00">
+    <object class="AudioFile" id="{f9e8b86b-70b0-4efb-bc3d-4b6290422a6c}">
+        <property name="assetPath">
+            <value>Resources/cart loop.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>9.660725623582767</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{be8f607d-f1ac-4799-a400-fac4eb9736d3}</destination>
+        </relationship>
+    </object>
+</objects>

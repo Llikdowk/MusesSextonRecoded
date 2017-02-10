@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.09.00">
+    <object class="AudioFile" id="{18caf19a-a06e-4603-aeb0-4afaf3220b25}">
+        <property name="assetPath">
+            <value>Resources/BELL.wav</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>17.460226757369615</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{be8f607d-f1ac-4799-a400-fac4eb9736d3}</destination>
+        </relationship>
+    </object>
+</objects>
