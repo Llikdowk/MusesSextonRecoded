@@ -20,11 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4139878440087328}
   - component: {fileID: 114283957191764414}
-  - component: {fileID: 114339939323260716}
   - component: {fileID: 114917159112282994}
+  - component: {fileID: 114545315750014830}
   - component: {fileID: 114486211729582720}
-  - component: {fileID: 136995954625932830}
   - component: {fileID: 114347505803629462}
+  - component: {fileID: 136995954625932830}
   - component: {fileID: 54648296522685858}
   m_Layer: 8
   m_Name: Player
@@ -45,9 +45,27 @@ GameObject:
   - component: {fileID: 92484441151758112}
   - component: {fileID: 124580714881258792}
   - component: {fileID: 81187682020227276}
+  - component: {fileID: 114484996876410282}
+  - component: {fileID: 114672368536113020}
+  - component: {fileID: 114225689323701260}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1660152362159942
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4435854465233632}
+  m_Layer: 8
+  m_Name: _slotCoffin
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,6 +84,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 126.770004, z: 0}
+--- !u!4 &4435854465233632
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660152362159942}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.55999947, z: 1.2700002}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4791768322742770}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &4791768322742770
 Transform:
   m_ObjectHideFlags: 1
@@ -75,7 +106,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4435854465233632}
   m_Father: {fileID: 4139878440087328}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -97,13 +129,13 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294966271
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -142,6 +174,17 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1318661995506684}
   m_Enabled: 1
+--- !u!114 &114225689323701260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1318661995506684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8c7ac177cf1cb4892ea8298c9ebec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114283957191764414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,25 +193,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1015523596763308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dce719bdadd5724ebe79290c9264695, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f12d0b13ff265542b5ab902b222d3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   InputConfig: []
---- !u!114 &114339939323260716
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1015523596763308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b10476afc2f2cb14785b5ae0812bc05c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  XSensitivity: 100
-  YSensitivity: 100
-  VerticalRange: 0.9
-  Smooth: 0
 --- !u!114 &114347505803629462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -180,8 +208,104 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209989739a850124b8ca7b6f575221b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Config:
+    WalkRunLook:
+      SmoothInput: 0
+      XSensitivity: 0.5
+      YSensitivity: 0.5
+      SensitivityMultiplicator: 200
+      SmoothVerticalClipping: 0
+      VerticalRangeDegrees: 90
+      VerticalForceBack: 0.5
+      VerticalLag: 0
+      SmoothHorizontalClipping: 0
+      HorizontalRangeDegrees: 181
+      HorizontalForceBack: 0.5
+      HorizontalLag: 0
+      FixedForward: {fileID: 0}
+    WalkMovement:
+      ForwardSpeed: 5
+      BackwardSpeed: 5
+      LeftSpeed: 5
+      RightSpeed: 5
+    RunMovement:
+      ForwardSpeed: 5
+      BackwardSpeed: 5
+      LeftSpeed: 5
+      RightSpeed: 5
+    WalkRunAcceleration:
+      SpeedUp: 6
+      SpeedDown: 6
+    DriveCartLook:
+      SmoothInput: 0
+      XSensitivity: 0.5
+      YSensitivity: 0.5
+      SensitivityMultiplicator: 200
+      SmoothVerticalClipping: 0
+      VerticalRangeDegrees: 90
+      VerticalForceBack: 0.5
+      VerticalLag: 0
+      SmoothHorizontalClipping: 0
+      HorizontalRangeDegrees: 181
+      HorizontalForceBack: 0.5
+      HorizontalLag: 0
+      FixedForward: {fileID: 0}
+    DriveCartMovement:
+      GoInsideTimeSeconds: 0.5
+      ForwardSpeed: 7.5
+      BackwardSpeed: 2
+      DistanceToPlayer: 1
+      VerticalRotationStep: 5
+      MovementLag: 0.9
+      LookLag: 0.9
+    CartAcceleration:
+      SpeedUp: 6
+      SpeedDown: 6
   Movement: {fileID: 0}
   Controller: {fileID: 0}
+  Look: {fileID: 0}
+--- !u!114 &114484996876410282
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1318661995506684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f86798f0f2a9e4d8e3cdde7fd5a4a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PowerTimeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0.00641042
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.9893162
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  Power: 1
+  DurationSeconds: 0
+  ForceCloseSpeedMultiplier: 5
+  HeightScale: 1
+  HeightSpeed: 1
+  WidthScale: 1
+  WidthSpeed: 1
 --- !u!114 &114486211729582720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,9 +319,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gravity: {x: 0, y: -9.81, z: 0}
   GravityMultiplier: 2
-  SkinWidth: 0.056
+  VerticalSkinWidth: 0.15
+  HorizontalSkinWidth: 0.15
   SlopeInclinationAllowance: 0.326
   StepAllowance: 0.05
+--- !u!114 &114545315750014830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1015523596763308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c78a97b4997cd8448c12030c6ddc1ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Config:
+    SmoothInput: 0
+    XSensitivity: 0.5
+    YSensitivity: 0.5
+    SensitivityMultiplicator: 200
+    SmoothVerticalClipping: 0
+    VerticalRangeDegrees: 90
+    VerticalForceBack: 0.5
+    VerticalLag: 0
+    SmoothHorizontalClipping: 0
+    HorizontalRangeDegrees: 181
+    HorizontalForceBack: 0.5
+    HorizontalLag: 0
+    FixedForward: {fileID: 0}
+--- !u!114 &114672368536113020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1318661995506684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f02f700044bfb04ba121bc0c44b7ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OutlineColor: {r: 0, g: 1, b: 1, a: 0.0627451}
+  Thickness: 6
 --- !u!114 &114917159112282994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -209,13 +372,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e9bce7f8e342f54282791e9e71492af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForwardSpeed: 5
-  BackwardSpeed: 5
-  LeftSpeed: 5
-  RightSpeed: 5
-  SpeedUp: 6
-  SpeedDown: 6
-  RunMultiplier: 1.5
 --- !u!124 &124580714881258792
 Behaviour:
   m_ObjectHideFlags: 1

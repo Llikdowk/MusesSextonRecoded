@@ -74,13 +74,13 @@ namespace Game.PlayerComponents {
 			}
 
 			_instance = this;
+		}
+
+		public void Start() {
 			Movement = gameObject.GetOrAddComponent<CharacterMovement>();
 			Controller = GetComponent<CharacterController>();
 			Look = GetComponent<Look>();
 			Camera = GetComponentInChildren<Camera>();
-		}
-
-		public void Start() {
 			CurrentState = new WalkRunState();
 		}
 	}

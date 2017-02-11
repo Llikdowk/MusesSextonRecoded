@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Audio;
+using Boo.Lang.Runtime.DynamicDispatching;
 using MiscComponents;
 using UnityEngine;
 
@@ -36,13 +37,17 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			string terrainName = "Terrain Volume";
 			GameObject terrain = GameObject.Find(terrainName);
-			if (!terrain) DebugMsg.GameObjectNotFound(Debug.LogError, terrainName);
-			_terrainCarver = terrain.GetComponent<CarveTerrainVolumeComponent>();
-			if (!_terrainCarver) DebugMsg.ComponentNotFound(Debug.LogError, typeof(CarveTerrainVolumeComponent));
+			if (!terrain) {
+				DebugMsg.GameObjectNotFound(Debug.LogError, terrainName);
+			}
+			else {
+				_terrainCarver = terrain.GetComponent<CarveTerrainVolumeComponent>();
+				if (!_terrainCarver) DebugMsg.ComponentNotFound(Debug.LogError, typeof(CarveTerrainVolumeComponent));
+			}
 		}
 
 		public override void Step() {
-			if (Mathf.Abs(_stepMovement.z) > 0.01f) { 
+			if (SelfMovement != Vector3.zero) { 
 				AudioController.GetInstance().PlaySteps();
 			}
 			_transform.position += _stepMovement;

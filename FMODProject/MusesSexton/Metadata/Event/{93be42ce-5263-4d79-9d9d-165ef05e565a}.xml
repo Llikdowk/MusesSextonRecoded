@@ -132,7 +132,6 @@
     </object>
     <object class="MultiSound" id="{8dbcedd2-c1e5-4021-9adb-54576f984b88}">
         <relationship name="sounds">
-            <destination>{094c23b2-45e1-4dbb-9ed8-5c7607d8652a}</destination>
             <destination>{d9c3c590-df6c-4aa6-b51b-62791b6f5125}</destination>
             <destination>{c5594ba6-521f-47f2-8698-aaba8731d392}</destination>
             <destination>{77bda6d1-9889-45b0-9d4c-6949616496b9}</destination>
@@ -172,15 +171,11 @@
     <object class="MixerBusEffectChain" id="{c97e30fc-a8ed-4d4e-91e0-71c96c3b3d14}">
         <relationship name="effects">
             <destination>{17738ccd-fcea-4a0a-a8be-b7514b490ef7}</destination>
+            <destination>{a36915d1-c87e-4987-b18b-d5073558e648}</destination>
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{32075eba-fa54-4664-a062-cb52c3a7eb2e}"/>
     <object class="MixerBusFader" id="{5b171322-6bf8-454f-b818-3ed477e7bffb}"/>
-    <object class="SingleSound" id="{094c23b2-45e1-4dbb-9ed8-5c7607d8652a}">
-        <relationship name="audioFile">
-            <destination>{612c0830-1a35-41b2-9c30-f30b75d33306}</destination>
-        </relationship>
-    </object>
     <object class="SingleSound" id="{d9c3c590-df6c-4aa6-b51b-62791b6f5125}">
         <relationship name="audioFile">
             <destination>{964c3c14-c2eb-4dc9-88fa-d3ed8186d1c7}</destination>
@@ -218,7 +213,7 @@
             <value>0.0851341849290988</value>
         </property>
         <property name="value">
-            <value>-14.5</value>
+            <value>-0.0608711243</value>
         </property>
     </object>
     <object class="AutomationPoint" id="{d3eb664b-009d-4b9c-9993-dfe214c54e78}">
@@ -226,7 +221,7 @@
             <value>0.50825618188210475</value>
         </property>
         <property name="value">
-            <value>-14.5</value>
+            <value>0</value>
         </property>
         <property name="curveShape">
             <value>0.34539023</value>
@@ -257,5 +252,13 @@
         </property>
     </object>
     <object class="MixerBusFader" id="{17738ccd-fcea-4a0a-a8be-b7514b490ef7}"/>
+    <object class="MultibandEqEffect" id="{a36915d1-c87e-4987-b18b-d5073558e648}">
+        <property name="frequencyA">
+            <value>7647.40625</value>
+        </property>
+        <property name="qualityA">
+            <value>0.581413805</value>
+        </property>
+    </object>
     <object class="MixerBusFader" id="{a80148b8-3300-46a0-a5fb-8c007390711d}"/>
 </objects>
