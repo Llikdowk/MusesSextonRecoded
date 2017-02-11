@@ -42,7 +42,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 		public override void Step() {
-			if (_stepMovement != Vector3.zero) {
+			if (Mathf.Abs(_stepMovement.z) > 0.01f) { 
 				AudioController.GetInstance().PlaySteps();
 			}
 			_transform.position += _stepMovement;

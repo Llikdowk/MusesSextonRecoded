@@ -35,16 +35,19 @@ public class LoadComponents : MonoBehaviour {
 			foreach (Transform child in Terrain.GetComponentsInChildren<Transform>()) {
 				child.tag = terrainTag;
 			}
-			Time.timeScale = _originalTimeScale;
 			enabled = false;
-			TitleImage.gameObject.SetActive(false);
-			FallbackImage.gameObject.SetActive(false);
+			StartCoroutine(UI.FadeOut(FallbackImage, 1.5f, () => {
+				FallbackImage.gameObject.SetActive(false);
+				Time.timeScale = _originalTimeScale;
+			}));
 			AudioController.GetInstance().FadeInMusic1();
 		}
 		else {
 			if (Input.GetKeyDown(KeyCode.Mouse0)) {
 				_hasClicked = true;
-				StartCoroutine(UI.FadeOut(TitleImage, 1.0f));
+				StartCoroutine(UI.FadeOut(TitleImage, 3.0f, () => {
+					TitleImage.gameObject.SetActive(false);
+				}));
 				FallbackImage.gameObject.SetActive(true);
 				AudioController.GetInstance().PlayBell();
 			}
