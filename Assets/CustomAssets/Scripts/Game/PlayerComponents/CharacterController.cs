@@ -23,17 +23,6 @@ namespace Game.PlayerComponents {
 		private CharacterMovement _charMovement;
 
 		private ActionManager<PlayerAction> _actions;
-
-		private bool IsGrounded {
-			get { return _isGrounded; }
-			set {
-				_isGrounded = value;
-				if (_isGrounded) {
-					_timeOnAir = 0.0f;
-				}
-			}
-		}
-
 		private bool _isGrounded = false;
 
 
@@ -95,7 +84,7 @@ namespace Game.PlayerComponents {
 		public void Update() {
 			Debug.DrawRay(transform.position, _charMovement.WorldDir, Color.cyan);
 			Vector3 gravityForce = Vector3.zero;
-			if (!IsGrounded) {
+			if (!_isGrounded) {
 				gravityForce = Gravity * _timeOnAir * Time.deltaTime;
 				_timeOnAir += Time.deltaTime;
 			}
@@ -114,50 +103,28 @@ namespace Game.PlayerComponents {
 
 			//CheckFloor
 			int floorHitsCount = Physics.SphereCastNonAlloc(capsuleFeet, _collider.radius, -Vector3.up, floorHits, GrounderDistance, _layerMaskAllButPlayer);
-			int collidersFound = 0;
 
 			int triggerCount = ClassifyTriggers(ref floorHits, ref triggers, ref floorHitsCount);
-			Sort(ref floorHits, 0, floorHitsCount);
 			Debug.Log(triggerCount + " " + floorHitsCount);
 
-			for (int i = 0; i < floorHitsCount; ++i) { 
-				RaycastHit hit = floorHits[i];
-				if (hit.collider.isTrigger) {
-					//hit.collider.SendMessage("OnTriggerEnter", _collider, SendMessageOptions.DontRequireReceiver);
-					continue;
-				}
-				++collidersFound;
-				// overlapping collision
-				if (hit.point == Vector3.zero) {
+			if (floorHitsCount > 0) {
+				Sort(ref floorHits, 0, floorHitsCount);
+				RaycastHit nearHit = floorHits[0];
+				if (nearHit.point == Vector3.zero) {
 					transform.position = transform.position + -gravityForce + Vector3.up * VerticalSkinWidth / 2.0f;
-					IsGrounded = true;
-					break;
 				}
-				else if (hit.distance < VerticalSkinWidth) {
-					IsGrounded = true;
-					break;
+				else if (nearHit.distance > VerticalSkinWidth) {
+					Debug.DrawRay(transform.position, nearHit.point - transform.position, Color.magenta);
+					transform.position += Vector3.down * (nearHit.distance - VerticalSkinWidth / 2.0f);
 				}
-				else {
-					Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
-					transform.position += Vector3.down * (hit.distance - VerticalSkinWidth/2.0f);
-					IsGrounded = true;
-					break;
-				}
-			}
-
-
-
-
-			if (collidersFound == 0) {
-				IsGrounded = false;
-			}
-
-			if (!_isGrounded) {
-				transform.position += gravityForce;
-			}
-			else {
+				_isGrounded = true;
 				_timeOnAir = 0.0f;
 			}
+			else {
+				_isGrounded = false;
+				transform.position += gravityForce;
+			}
+
 
 		}
 
