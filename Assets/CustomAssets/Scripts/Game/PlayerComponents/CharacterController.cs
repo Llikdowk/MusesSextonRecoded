@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 namespace Game.PlayerComponents {
@@ -43,7 +45,35 @@ namespace Game.PlayerComponents {
 			_charMovement = GetComponent<CharacterMovement>();
 		}
 
+		private int CompareRayhits(RaycastHit x, RaycastHit y) {
+			return x.distance.CompareTo(y.distance);
+		}
 
+		// minor-to-major raycast distance ordered (insertion sort, faster than default quicksort for low capacity arrays)
+		private void Sort(ref RaycastHit[] hits, int start, int length) {
+			RaycastHit item, nextItem, targetItem, aux;
+			for (int i = start; i < length - 1; ++i) {
+				item = hits[i];
+				nextItem = hits[i + 1];
+				if (nextItem.distance < item.distance) {
+					for (int j = start; j <= i; ++j) {
+						targetItem = hits[j];
+						if (nextItem.distance < targetItem.distance) {
+							while (j <= i) {
+								aux = hits[j+1];
+								hits[j+1] = hits[j];
+								hits[j] = nextItem;
+								nextItem = aux;
+								++j;
+							}
+						}
+					}
+				} 
+			}
+		}
+
+		private const int MaxSimultaneousColliders = 32;
+		private RaycastHit[] floorHits = new RaycastHit[MaxSimultaneousColliders];
 		public void Update() {
 			Debug.DrawRay(transform.position, _charMovement.WorldDir, Color.cyan);
 			Vector3 gravityForce = Vector3.zero;
@@ -65,12 +95,12 @@ namespace Game.PlayerComponents {
 			
 
 			//CheckFloor
-			RaycastHit[] floorHits = Physics.SphereCastAll(capsuleFeet, _collider.radius, -Vector3.up, GrounderDistance,
-				//VerticalSkinWidth,
-				_layerMaskAllButPlayer);
+			int floorHitsCount = Physics.SphereCastNonAlloc(capsuleFeet, _collider.radius, -Vector3.up, floorHits, GrounderDistance, _layerMaskAllButPlayer);
 			int collidersFound = 0;
-			Array.Sort(floorHits, (x, y) => x.distance.CompareTo(y.distance));
-			foreach (RaycastHit hit in floorHits) {
+
+			Sort(ref floorHits, 0, floorHitsCount);
+			for (int i = 0; i < floorHitsCount; ++i) { 
+				RaycastHit hit = floorHits[i];
 				if (hit.collider.isTrigger) {
 					//hit.collider.SendMessage("OnTriggerEnter", _collider, SendMessageOptions.DontRequireReceiver);
 					continue;
@@ -78,9 +108,7 @@ namespace Game.PlayerComponents {
 				++collidersFound;
 				// overlapping collision
 				if (hit.point == Vector3.zero) {
-					//_charMovement.AddForce(hit.normal, _charMovement.StepMovement.magnitude + VerticalSkinWidth / 2.0f); // hit.normal is -ray.direction in this case
 					transform.position = transform.position + -gravityForce + Vector3.up * VerticalSkinWidth / 2.0f;
-						// * RecolocationSpeed;
 					IsGrounded = true;
 					break;
 				}
@@ -90,13 +118,14 @@ namespace Game.PlayerComponents {
 				}
 				else {
 					Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
-					//_charMovement.AddForce(Vector3.down, hit.distance - VerticalSkinWidth/2.0f);
-					//transform.position += Vector3.down * (hit.distance - VerticalSkinWidth / 2.0f);
 					transform.position += Vector3.down * (hit.distance - VerticalSkinWidth/2.0f);
 					IsGrounded = true;
 					break;
 				}
 			}
+
+
+
 
 			if (collidersFound == 0) {
 				IsGrounded = false;
