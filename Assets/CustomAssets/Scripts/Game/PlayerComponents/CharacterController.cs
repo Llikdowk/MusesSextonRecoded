@@ -49,6 +49,22 @@ namespace Game.PlayerComponents {
 			return x.distance.CompareTo(y.distance);
 		}
 
+		private int ClassifyTriggers(ref RaycastHit[] hits, ref RaycastHit[] triggers, ref int hitsLength) {
+			int triggerCount = 0;
+
+			for (int i = hitsLength-1; i >= 0; --i) {
+				if (hits[i].collider.isTrigger) {
+					for (int j = i; j < hitsLength - 1; ++j) {
+						hits[i] = hits[i + 1];
+					}
+					--hitsLength;
+					++triggerCount;
+				}
+			}
+
+			return triggerCount;
+		}
+
 		// minor-to-major raycast distance ordered (insertion sort, faster than default quicksort for low capacity arrays)
 		private void Sort(ref RaycastHit[] hits, int start, int length) {
 			RaycastHit item, nextItem, targetItem, aux;
@@ -72,8 +88,10 @@ namespace Game.PlayerComponents {
 			}
 		}
 
-		private const int MaxSimultaneousColliders = 32;
+		private const int MaxSimultaneousColliders = 16;
+		private const int MaxSimultaneousTriggers = 16;
 		private RaycastHit[] floorHits = new RaycastHit[MaxSimultaneousColliders];
+		private RaycastHit[] triggers = new RaycastHit[MaxSimultaneousTriggers];
 		public void Update() {
 			Debug.DrawRay(transform.position, _charMovement.WorldDir, Color.cyan);
 			Vector3 gravityForce = Vector3.zero;
@@ -98,7 +116,10 @@ namespace Game.PlayerComponents {
 			int floorHitsCount = Physics.SphereCastNonAlloc(capsuleFeet, _collider.radius, -Vector3.up, floorHits, GrounderDistance, _layerMaskAllButPlayer);
 			int collidersFound = 0;
 
+			int triggerCount = ClassifyTriggers(ref floorHits, ref triggers, ref floorHitsCount);
 			Sort(ref floorHits, 0, floorHitsCount);
+			Debug.Log(triggerCount + " " + floorHitsCount);
+
 			for (int i = 0; i < floorHitsCount; ++i) { 
 				RaycastHit hit = floorHits[i];
 				if (hit.collider.isTrigger) {
