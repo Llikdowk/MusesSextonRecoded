@@ -76,8 +76,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1015523596763308}
-  m_LocalRotation: {x: -0, y: 0.8940377, z: -0, w: 0.44799176}
-  m_LocalPosition: {x: 28.834082, y: 22.609, z: 115.38809}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.17, y: 4.73, z: 1.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4791768322742770}
@@ -319,10 +319,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gravity: {x: 0, y: -9.81, z: 0}
   GravityMultiplier: 2
-  VerticalSkinWidth: 0.15
+  VerticalSkinWidth: 0.072
   HorizontalSkinWidth: 0.15
-  SlopeInclinationAllowance: 0.326
-  StepAllowance: 0.05
+  SlopeInclinationAllowance: 0.415
+  StepAllowance: 0.106
+  GrounderDistance: 2
 --- !u!114 &114545315750014830
 MonoBehaviour:
   m_ObjectHideFlags: 1
