@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.PlayerComponents {
+	public enum CollisionMask {
+		None = 0x000, Forward = 0x0001, Back = 0x0010, Right = 0x0100, Left = 0x1000
+	}
+
 	[RequireComponent(typeof(CharacterMovement))]
 	[RequireComponent(typeof(CapsuleCollider))]
 	public class CharacterController : MonoBehaviour {
@@ -25,6 +25,11 @@ namespace Game.PlayerComponents {
 		private ActionManager<PlayerAction> _actions;
 		private bool _isGrounded = false;
 
+		private const int MaxSimultaneousColliders = 16;
+		private const int MaxSimultaneousTriggers = 16;
+		private RaycastHit[] _floorHits = new RaycastHit[MaxSimultaneousColliders];
+		private RaycastHit[] _triggers = new RaycastHit[MaxSimultaneousTriggers];
+		private uint _collisions;
 
 		public void Start() {
 			_actions = Player.GetInstance().Actions;
@@ -34,9 +39,6 @@ namespace Game.PlayerComponents {
 			_charMovement = GetComponent<CharacterMovement>();
 		}
 
-		private int CompareRayhits(RaycastHit x, RaycastHit y) {
-			return x.distance.CompareTo(y.distance);
-		}
 
 		private int ClassifyTriggers(ref RaycastHit[] hits, ref RaycastHit[] triggers, ref int hitsLength) {
 			int triggerCount = 0;
@@ -77,10 +79,6 @@ namespace Game.PlayerComponents {
 			}
 		}
 
-		private const int MaxSimultaneousColliders = 16;
-		private const int MaxSimultaneousTriggers = 16;
-		private RaycastHit[] floorHits = new RaycastHit[MaxSimultaneousColliders];
-		private RaycastHit[] triggers = new RaycastHit[MaxSimultaneousTriggers];
 		public void Update() {
 			Debug.DrawRay(transform.position, _charMovement.WorldDir, Color.cyan);
 			Vector3 gravityForce = Vector3.zero;
@@ -95,21 +93,20 @@ namespace Game.PlayerComponents {
 			                      transform.up * (_collider.height / 2.0f - _collider.radius);
 
 			
-			CheckWalls(capsuleHead, capsuleFeet, transform.forward, PlayerAction.MoveForward); // TODO would be nice to have this independant of Action
-			CheckWalls(capsuleHead, capsuleFeet, -transform.forward, PlayerAction.MoveBack);
-			CheckWalls(capsuleHead, capsuleFeet, transform.right, PlayerAction.MoveRight);
-			CheckWalls(capsuleHead, capsuleFeet, -transform.right, PlayerAction.MoveLeft);
-			
+			_collisions |= CheckWalls(capsuleHead, capsuleFeet, transform.forward, PlayerAction.MoveForward) << 0; // TODO would be nice to have this independant of Action
+			_collisions |= CheckWalls(capsuleHead, capsuleFeet, -transform.forward, PlayerAction.MoveBack) << 1;
+			_collisions |= CheckWalls(capsuleHead, capsuleFeet, transform.right, PlayerAction.MoveRight) << 2;
+			_collisions |= CheckWalls(capsuleHead, capsuleFeet, -transform.right, PlayerAction.MoveLeft) << 3;
 
 			//CheckFloor
-			int floorHitsCount = Physics.SphereCastNonAlloc(capsuleFeet, _collider.radius, -Vector3.up, floorHits, GrounderDistance, _layerMaskAllButPlayer);
+			int floorHitsCount = Physics.CapsuleCastNonAlloc(capsuleFeet, capsuleHead, _collider.radius, -Vector3.up, _floorHits, GrounderDistance, _layerMaskAllButPlayer);
 
-			int triggerCount = ClassifyTriggers(ref floorHits, ref triggers, ref floorHitsCount);
-			Debug.Log(triggerCount + " " + floorHitsCount);
+			int triggerCount = ClassifyTriggers(ref _floorHits, ref _triggers, ref floorHitsCount);
+			//Debug.Log(triggerCount + " " + floorHitsCount);
 
 			if (floorHitsCount > 0) {
-				Sort(ref floorHits, 0, floorHitsCount);
-				RaycastHit nearHit = floorHits[0];
+				Sort(ref _floorHits, 0, floorHitsCount);
+				RaycastHit nearHit = _floorHits[0];
 				if (nearHit.point == Vector3.zero) {
 					transform.position = transform.position + -gravityForce + Vector3.up * VerticalSkinWidth / 2.0f;
 				}
@@ -124,11 +121,14 @@ namespace Game.PlayerComponents {
 				_isGrounded = false;
 				transform.position += gravityForce;
 			}
-
-
 		}
 
-		private void CheckWalls(Vector3 capsuleHead, Vector3 capsuleFeet, Vector3 dir, PlayerAction playerActionType) {
+
+		public uint GetCollisions() {
+			return _collisions;
+		}
+
+		private uint CheckWalls(Vector3 capsuleHead, Vector3 capsuleFeet, Vector3 dir, PlayerAction playerActionType) {
 			int collidersFound = 0;
 			Vector3 stepOffset = transform.up * StepAllowance;
 			RaycastHit[] wallHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, dir,
@@ -158,6 +158,7 @@ namespace Game.PlayerComponents {
 				action.Enable();
 			}
 
+			return 1;
 		}
 
 	}

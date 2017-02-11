@@ -36,7 +36,7 @@ public class LoadComponents : MonoBehaviour {
 				child.tag = terrainTag;
 			}
 			enabled = false;
-			StartCoroutine(UI.FadeOut(FallbackImage, 1.5f, () => {
+			StartCoroutine(UI.FadeOut(FallbackImage, 0.5f, () => {
 				FallbackImage.gameObject.SetActive(false);
 				Time.timeScale = _originalTimeScale;
 			}));
