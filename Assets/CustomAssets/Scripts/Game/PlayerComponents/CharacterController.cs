@@ -38,20 +38,7 @@ namespace Game.PlayerComponents {
 			_collider = GetComponent<CapsuleCollider>();
 			_charMovement = GetComponent<CharacterMovement>();
 
-			//test();
 		}
-
-		
-		private void test() {
-
-			//float[] hits = {3, 4, 7, 3.5f};
-			float[] hits = {3, 2, 1, 1.5f, 3.5f, 7, 3.5f};
-			sortOfsort(ref hits, 0, 5);
-			
-			Debug.Log("endtest");
-
-		}
-		
 
 		private int DeleteTriggers(ref RaycastHit[] hits, ref int hitsLength) {
 			int triggerCount = 0;
@@ -68,27 +55,6 @@ namespace Game.PlayerComponents {
 
 			hitsLength = hitsLength - triggerCount;
 			return triggerCount;
-		}
-
-		private void sortOfsort(ref float[] hits, int start, int length) {
-			float item, nextItem, targetItem, aux;
-			for (int i = start; i < length - 1; ++i) {
-				item = hits[i];
-				nextItem = hits[i + 1];
-				if (nextItem < item) {
-					for (int j = start; j <= i; ++j) {
-						targetItem = hits[j];
-						if (nextItem < targetItem) {
-							while (j <= i + 1) {
-								aux = hits[j];
-								hits[j] = nextItem;
-								nextItem = aux;
-								++j;
-							}
-						}
-					}
-				}
-			}
 		}
 
 		// minor-to-major raycast distance ordered (insertion sort, faster than default quicksort for low capacity arrays)
@@ -128,23 +94,15 @@ namespace Game.PlayerComponents {
 
 			
 			
-			
-			_collisions |= CheckWalls(capsuleHead, capsuleFeet, transform.forward, PlayerAction.MoveForward) << 0; // TODO would be nice to have this independant of Action
-			_collisions |= CheckWalls(capsuleHead, capsuleFeet, -transform.forward, PlayerAction.MoveBack) << 1;
-			_collisions |= CheckWalls(capsuleHead, capsuleFeet, transform.right, PlayerAction.MoveRight) << 2;
-			_collisions |= CheckWalls(capsuleHead, capsuleFeet, -transform.right, PlayerAction.MoveLeft) << 3;
-			
 			//CheckFloor
-			int floorHitsCount = Physics.SphereCastNonAlloc(capsuleFeet, _collider.radius, -Vector3.up, _colliderHits, GrounderDistance, _layerMaskAllButPlayer);
-
-			int triggerCount = DeleteTriggers(ref _colliderHits, ref floorHitsCount);
-			//Debug.Log(triggerCount + " " + floorHitsCount);
+			int floorHitsCount = Physics.CapsuleCastNonAlloc(capsuleFeet, capsuleHead, _collider.radius, -Vector3.up,
+				_colliderHits, GrounderDistance, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
 
 			if (floorHitsCount > 0) {
 				Sort(ref _colliderHits, 0, floorHitsCount);
 				RaycastHit nearHit = _colliderHits[0];
 				if (nearHit.point == Vector3.zero) {
-					transform.position = transform.position + -gravityForce + Vector3.up * VerticalSkinWidth / 2.0f;
+					transform.position = transform.position + -gravityForce + nearHit.normal * VerticalSkinWidth / 2.0f; // hit.normal here is -ray.direction
 				}
 				else if (nearHit.distance > VerticalSkinWidth) {
 					Debug.DrawRay(transform.position, nearHit.point - transform.position, Color.magenta);
