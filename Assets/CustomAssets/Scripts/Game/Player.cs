@@ -50,6 +50,8 @@ namespace Game.PlayerComponents {
 		}
 	}
 
+
+
 	[RequireComponent(typeof(CharacterController))]
 	public class Player : MonoBehaviour {
 
@@ -64,23 +66,32 @@ namespace Game.PlayerComponents {
 		[HideInInspector] public ActionManager<PlayerAction> Actions = new ActionManager<PlayerAction>();
 
 
-		private static Player _instance;
-		public static Player GetInstance() {return _instance; }
+		private static Player _instance = null;
+
+		public static Player GetInstance() {
+			if (_instance == null) {
+				Debug.LogError("Player singleton called but it is not yet built");
+			}
+			return _instance;
+		}
 
 		public void Awake() {
-			if (_instance != null && _instance != this) {
-				Destroy(this.gameObject);
-				return;
-			}
+			if (_instance == null) {
+				_instance = this;
+				DontDestroyOnLoad(gameObject);
 
-			_instance = this;
+				Movement = GetComponent<CharacterMovement>();
+				Controller = GetComponent<CharacterController>();
+				Look = GetComponent<Look>();
+				Camera = GetComponentInChildren<Camera>();
+			}
+			else {
+				Debug.LogWarning("Player singleton instance destroyed!");
+				Destroy(gameObject);
+			}
 		}
 
 		public void Start() {
-			Movement = gameObject.GetOrAddComponent<CharacterMovement>();
-			Controller = GetComponent<CharacterController>();
-			Look = GetComponent<Look>();
-			Camera = GetComponentInChildren<Camera>();
 			CurrentState = new WalkRunState();
 		}
 	}

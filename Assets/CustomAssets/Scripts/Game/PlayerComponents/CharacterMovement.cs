@@ -26,7 +26,7 @@ namespace Game.PlayerComponents {
 		public Vector3 WorldDir { get { return _movementBehaviour.WorldDir; } }
 		private bool _canInteract = true;
 
-		public void Awake() {
+		public void Start() {
 			_movementBehaviour = new NullMovementBehaviour(transform);
 		}
 

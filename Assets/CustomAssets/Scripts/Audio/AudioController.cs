@@ -42,17 +42,20 @@ namespace Audio {
 		}
 
 		public void Awake() {
-			if (_instance != null && _instance != this) {
-				Destroy(gameObject);
-				return;
+			if (_instance == null) {
+				_instance = this;
+				DontDestroyOnLoad(gameObject);
+
+				_music = new FMODObject("event:/Music");
+				_music.Play();
+				_wind = new FMODObject("event:/Wind");
+				_bell = new FMODObject("event:/Bell");
+				_bell.SetParameter("Volume", Bell);
+				_steps = new FMODObject("event:/Steps");
 			}
-			_instance = this;
-			_music = new FMODObject("event:/Music");
-			_music.Play();
-			_wind = new FMODObject("event:/Wind");
-			_bell = new FMODObject("event:/Bell");
-			_bell.SetParameter("Volume", Bell);
-			_steps = new FMODObject("event:/Steps");
+			else {
+				Destroy(gameObject);
+			}
 
 		}
 

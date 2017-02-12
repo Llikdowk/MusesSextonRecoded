@@ -26,17 +26,18 @@ namespace Game.PlayerComponents {
 		}
 
 		[HideInInspector]
-		public LookConfig Config = new LookConfig();
+		public LookConfig Config;
 		private Camera _camera;
 		private float _xSpeed;
 		private float _ySpeed;
 
 
 		public void Awake() {
-			_camera = GetComponentInChildren<Camera>();
 		}
 
 		public void Start() {
+			Config = new LookConfig();
+			_camera = GetComponentInChildren<Camera>();
 			if (Config.FixedForward == null) {
 				DebugMsg.ComponentNotFound(Debug.LogWarning, typeof(Transform), "Initialized with <b>this</b> object transform instead.");
 				Config.FixedForward = transform;

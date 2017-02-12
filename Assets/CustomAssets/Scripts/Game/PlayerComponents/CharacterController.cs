@@ -136,7 +136,7 @@ namespace Game.PlayerComponents {
 						transform.position += hit.normal * (HorizontalSkinWidth/2.0f + _charMovement.WorldMovement.magnitude); // pushbackForce
 					}
 				}
-				//if (hit.distance < HorizontalSkinWidth) continue;
+				if (hit.distance < HorizontalSkinWidth) continue;
 
 				if (Vector3.Dot(transform.forward, hit.normal) <= tolerance) {
 					_collisions |= (uint) CollisionMask.Forward;
@@ -167,7 +167,7 @@ namespace Game.PlayerComponents {
 				}
 
 				if (hit.distance > HorizontalSkinWidth) {
-					transform.position += hit.normal * (hit.distance - HorizontalSkinWidth / 2.0f);
+					transform.position += -hit.normal * (hit.distance - HorizontalSkinWidth / 2.0f);
 				}
 			}
 			//Debug.Log(_collisions.ToString("X"));
