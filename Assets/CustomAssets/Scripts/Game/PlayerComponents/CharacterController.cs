@@ -82,6 +82,7 @@ namespace Game.PlayerComponents {
 
 		private Vector3 _direction;
 		private Vector3 _lastPosition;
+		public float tolerance0 = -0.9f;
 		public float tolerance = -0.4f;
 		public void Update() {
 			float _speed = (transform.position - _lastPosition).magnitude;
@@ -133,42 +134,45 @@ namespace Game.PlayerComponents {
 				RaycastHit hit = _colliderHits[i];
 				if (hit.point == Vector3.zero) {
 					if (Vector3.Dot(hit.normal, Vector3.up) < 0.8) { // SlopeLimit!
-						transform.position += hit.normal * (HorizontalSkinWidth/2.0f + _charMovement.WorldMovement.magnitude); // pushbackForce
+						transform.position += hit.normal * (_speed + HorizontalSkinWidth/2.0f); // hit.normal ~ -ray.distance
 					}
 				}
-				if (hit.distance < HorizontalSkinWidth) continue;
 
-				if (Vector3.Dot(transform.forward, hit.normal) <= tolerance) {
+				float dot = Vector3.Dot(transform.forward, hit.normal);
+				if (dot < tolerance0) {
 					_collisions |= (uint) CollisionMask.Forward;
 				}
 				else {
 					_collisions &= ~(uint) CollisionMask.Forward;
 				}
-
-				if (Vector3.Dot(-transform.forward, hit.normal) <= tolerance) {
+				dot = Vector3.Dot(-transform.forward, hit.normal);
+				if (dot < tolerance0) {
 					_collisions |= (uint) CollisionMask.Back;
 				}
 				else {
 					_collisions &= ~(uint) CollisionMask.Back;
 				}
 
-				if (Vector3.Dot(transform.right, hit.normal) <= tolerance) {
+				dot = Vector3.Dot(transform.right, hit.normal);
+				if (dot < tolerance0) {
+					if (dot > tolerance && ((_collisions & (uint)CollisionMask.Forward) > 0) || ((_collisions & (uint)CollisionMask.Back) > 0)) 
+						transform.position += -transform.right * Time.deltaTime;
 					_collisions |= (uint) CollisionMask.Right;
 				}
 				else {
 					_collisions &= ~(uint) CollisionMask.Right;
 				}
 
-				if (Vector3.Dot(-transform.right, hit.normal) <= tolerance) {
+				dot = Vector3.Dot(-transform.right, hit.normal);
+				if (dot < tolerance0) {
+					if (dot > tolerance && ((_collisions & (uint)CollisionMask.Forward) > 0) || ((_collisions & (uint)CollisionMask.Back) > 0)) 
+						transform.position += transform.right * Time.deltaTime;
 					_collisions |= (uint) CollisionMask.Left;
 				}
 				else {
 					_collisions &= ~(uint) CollisionMask.Left;
 				}
-
-				if (hit.distance > HorizontalSkinWidth) {
-					transform.position += -hit.normal * (hit.distance - HorizontalSkinWidth / 2.0f);
-				}
+				
 			}
 			//Debug.Log(_collisions.ToString("X"));
 			if (hitsCount == 0) {
