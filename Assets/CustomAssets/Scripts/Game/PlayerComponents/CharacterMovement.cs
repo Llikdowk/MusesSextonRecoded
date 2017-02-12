@@ -32,7 +32,7 @@ namespace Game.PlayerComponents {
 
 		public void Update() {
 
-			//CheckMovement();
+			CheckMovement();
 			_movementBehaviour.Step();
 		}
 
@@ -40,11 +40,11 @@ namespace Game.PlayerComponents {
 			CharacterController c = Player.GetInstance().Controller; // TODO: make member of this class and remove from player
 			ActionManager<PlayerAction> actions = Player.GetInstance().Actions;
 			uint collisions = c.GetCollisions();
-			Debug.Log(collisions);
+			Debug.Log(collisions.ToString("X"));
 			uint mask = (uint) CollisionMask.None;
 
 			mask = (uint) CollisionMask.Forward;
-			if (collisions * mask > 0) {
+			if ((collisions & mask) > 0) {
 				actions.GetAction(PlayerAction.MoveForward).Disable();
 			}
 			else {
@@ -53,7 +53,7 @@ namespace Game.PlayerComponents {
 
 
 			mask = (uint) CollisionMask.Back;
-			if (collisions * mask > 0) {
+			if ((collisions & mask) > 0) {
 				actions.GetAction(PlayerAction.MoveBack).Disable();
 			}
 			else {
@@ -62,7 +62,7 @@ namespace Game.PlayerComponents {
 
 
 			mask = (uint) CollisionMask.Right;
-			if (collisions * mask > 0) {
+			if ((collisions & mask) > 0) {
 				actions.GetAction(PlayerAction.MoveRight).Disable();
 			}
 			else {
@@ -71,7 +71,7 @@ namespace Game.PlayerComponents {
 
 
 			mask = (uint) CollisionMask.Left;
-			if (collisions * mask > 0) {
+			if ((collisions & mask) > 0) {
 				actions.GetAction(PlayerAction.MoveLeft).Disable();
 			}
 			else {

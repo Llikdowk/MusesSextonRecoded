@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace Game.PlayerComponents {
 	public enum CollisionMask {
@@ -79,11 +80,17 @@ namespace Game.PlayerComponents {
 			}
 		}
 
+		private Vector3 _direction;
+		private Vector3 _lastPosition;
+		public float tolerance = -0.4f;
 		public void Update() {
+			float _speed = (transform.position - _lastPosition).magnitude;
+			_direction = (transform.position - _lastPosition).normalized;
+			_lastPosition = transform.position;
 			Debug.DrawRay(transform.position, _charMovement.WorldDir, Color.cyan);
 			Vector3 gravityForce = Vector3.zero;
 			if (!_isGrounded) {
-				gravityForce = Gravity * _timeOnAir * Time.deltaTime;
+				gravityForce = Gravity * _timeOnAir * Time.deltaTime; // TODO: move to characterMovement
 				_timeOnAir += Time.deltaTime;
 			}
 			Matrix4x4 M = _collider.transform.localToWorldMatrix;
@@ -93,16 +100,18 @@ namespace Game.PlayerComponents {
 			                      transform.up * (_collider.height / 2.0f - _collider.radius);
 
 			
-			
-			//CheckFloor
-			int floorHitsCount = Physics.CapsuleCastNonAlloc(capsuleFeet, capsuleHead, _collider.radius, -Vector3.up,
+			// Vertical Collision
+			int hitsCount = Physics.CapsuleCastNonAlloc(capsuleFeet, capsuleHead, _collider.radius, Vector3.down,
 				_colliderHits, GrounderDistance, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
 
-			if (floorHitsCount > 0) {
-				Sort(ref _colliderHits, 0, floorHitsCount);
+			if (hitsCount > 0) {
+				Sort(ref _colliderHits, 0, hitsCount);
 				RaycastHit nearHit = _colliderHits[0];
 				if (nearHit.point == Vector3.zero) {
-					transform.position = transform.position + -gravityForce + nearHit.normal * VerticalSkinWidth / 2.0f; // hit.normal here is -ray.direction
+					if (Vector3.Dot(nearHit.normal, Vector3.up) >= 0.8) { // SlopeLimit!
+						transform.position = transform.position + -gravityForce * Time.deltaTime * 10.0f +
+						                     nearHit.normal * VerticalSkinWidth / 2.0f; // hit.normal here is -ray.direction
+					}
 				}
 				else if (nearHit.distance > VerticalSkinWidth) {
 					Debug.DrawRay(transform.position, nearHit.point - transform.position, Color.magenta);
@@ -114,6 +123,56 @@ namespace Game.PlayerComponents {
 			else {
 				_isGrounded = false;
 				transform.position += gravityForce;
+			}
+
+			// Horizontal Collisions
+			Vector3 stepOffset = transform.up * StepAllowance;
+			hitsCount = Physics.CapsuleCastNonAlloc(capsuleHead, capsuleFeet + stepOffset, _collider.radius, _charMovement.WorldDir,
+				_colliderHits, HorizontalSkinWidth + _speed, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
+			for (int i = 0; i < hitsCount; ++i) {
+				RaycastHit hit = _colliderHits[i];
+				if (hit.point == Vector3.zero) {
+					if (Vector3.Dot(hit.normal, Vector3.up) < 0.8) { // SlopeLimit!
+						transform.position += hit.normal * (HorizontalSkinWidth/2.0f + _charMovement.WorldMovement.magnitude); // pushbackForce
+					}
+				}
+				//if (hit.distance < HorizontalSkinWidth) continue;
+
+				if (Vector3.Dot(transform.forward, hit.normal) <= tolerance) {
+					_collisions |= (uint) CollisionMask.Forward;
+				}
+				else {
+					_collisions &= ~(uint) CollisionMask.Forward;
+				}
+
+				if (Vector3.Dot(-transform.forward, hit.normal) <= tolerance) {
+					_collisions |= (uint) CollisionMask.Back;
+				}
+				else {
+					_collisions &= ~(uint) CollisionMask.Back;
+				}
+
+				if (Vector3.Dot(transform.right, hit.normal) <= tolerance) {
+					_collisions |= (uint) CollisionMask.Right;
+				}
+				else {
+					_collisions &= ~(uint) CollisionMask.Right;
+				}
+
+				if (Vector3.Dot(-transform.right, hit.normal) <= tolerance) {
+					_collisions |= (uint) CollisionMask.Left;
+				}
+				else {
+					_collisions &= ~(uint) CollisionMask.Left;
+				}
+
+				if (hit.distance > HorizontalSkinWidth) {
+					transform.position += hit.normal * (hit.distance - HorizontalSkinWidth / 2.0f);
+				}
+			}
+			//Debug.Log(_collisions.ToString("X"));
+			if (hitsCount == 0) {
+				_collisions = (uint) CollisionMask.None;
 			}
 		}
 
