@@ -47,6 +47,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 		public override void Step() {
+			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().Controller.WorldMovementProcessed);
 			if (SelfMovement != Vector3.zero) { 
 				AudioController.GetInstance().PlaySteps();
 			}

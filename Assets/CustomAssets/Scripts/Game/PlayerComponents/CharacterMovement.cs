@@ -32,7 +32,7 @@ namespace Game.PlayerComponents {
 
 		public void Update() {
 
-			CheckMovement();
+			//CheckMovement();
 			_movementBehaviour.Step();
 		}
 
@@ -43,6 +43,7 @@ namespace Game.PlayerComponents {
 			Debug.Log(collisions.ToString("X"));
 			uint mask = (uint) CollisionMask.None;
 
+			
 			mask = (uint) CollisionMask.Forward;
 			if ((collisions & mask) > 0) {
 				actions.GetAction(PlayerAction.MoveForward).Disable();
@@ -77,6 +78,7 @@ namespace Game.PlayerComponents {
 			else {
 				actions.GetAction(PlayerAction.MoveLeft).Enable();
 			}
+			
 			
 		}
 

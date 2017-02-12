@@ -84,6 +84,7 @@ namespace Game.PlayerComponents {
 		private Vector3 _lastPosition;
 		public float tolerance0 = -0.9f;
 		public float tolerance = -0.4f;
+		public Vector3 WorldMovementProcessed = Vector3.zero;
 		public void Update() {
 			float _speed = (transform.position - _lastPosition).magnitude;
 			_direction = (transform.position - _lastPosition).normalized;
@@ -109,8 +110,9 @@ namespace Game.PlayerComponents {
 				Sort(ref _colliderHits, 0, hitsCount);
 				RaycastHit nearHit = _colliderHits[0];
 				if (nearHit.point == Vector3.zero) {
-					if (Vector3.Dot(nearHit.normal, Vector3.up) >= 0.8) { // SlopeLimit!
-						transform.position = transform.position + -gravityForce * Time.deltaTime * 10.0f +
+					const float pushBack = 10.0f;
+					if (Vector3.Dot(nearHit.normal, Vector3.up) >= 1-SlopeInclinationAllowance) { // SlopeLimit!
+						transform.position = transform.position + -gravityForce * Time.deltaTime * pushBack +
 						                     nearHit.normal * VerticalSkinWidth / 2.0f; // hit.normal here is -ray.direction
 					}
 				}
@@ -126,6 +128,7 @@ namespace Game.PlayerComponents {
 				transform.position += gravityForce;
 			}
 
+			WorldMovementProcessed = _charMovement.WorldMovement;
 			// Horizontal Collisions
 			Vector3 stepOffset = transform.up * StepAllowance;
 			hitsCount = Physics.CapsuleCastNonAlloc(capsuleHead, capsuleFeet + stepOffset, _collider.radius, _charMovement.WorldDir,
@@ -133,10 +136,21 @@ namespace Game.PlayerComponents {
 			for (int i = 0; i < hitsCount; ++i) {
 				RaycastHit hit = _colliderHits[i];
 				if (hit.point == Vector3.zero) {
-					if (Vector3.Dot(hit.normal, Vector3.up) < 0.8) { // SlopeLimit!
-						transform.position += hit.normal * (_speed + HorizontalSkinWidth/2.0f); // hit.normal ~ -ray.distance
+					
+					if (Vector3.Dot(hit.normal, Vector3.up) < 1 - SlopeInclinationAllowance) {
+						transform.position += hit.normal * (HorizontalSkinWidth / 2.0f); // hit.normal <=> -ray.distance
+					}
+					
+				}
+				else {
+					if (hit.distance > HorizontalSkinWidth / 2.0f) {
+						WorldMovementProcessed = Vector3.ProjectOnPlane(WorldMovementProcessed, hit.normal);
+					}
+					else {
+						WorldMovementProcessed = Vector3.zero;
 					}
 				}
+				/*
 
 				float dot = Vector3.Dot(transform.forward, hit.normal);
 				if (dot < tolerance0) {
@@ -172,7 +186,7 @@ namespace Game.PlayerComponents {
 				else {
 					_collisions &= ~(uint) CollisionMask.Left;
 				}
-				
+				*/
 			}
 			//Debug.Log(_collisions.ToString("X"));
 			if (hitsCount == 0) {
