@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 114308564836683390}
   MasterBankRef: {fileID: 114055672616821706}
   StringsBankRef: {fileID: 114190188123820046}
-  stringsBankWriteTime: 636224153612344873
+  stringsBankWriteTime: 636224343918298185
   cacheVersion: 2
 --- !u!114 &114014297396825870
 MonoBehaviour:
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: D:\WORKSPACE\Unity Projects\MusesSextonRecoded\FMODProject\MusesSexton\Build\Desktop\Master
     Bank.bank
-  lastModified: 636224153612329836
+  lastModified: 636224343918228126
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -407,10 +407,10 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114238262609913932}
-  - {fileID: 114948853391792100}
-  - {fileID: 114070784012144246}
-  - {fileID: 114113182059330330}
+  - {fileID: 114666162316279868}
+  - {fileID: 114339238820594418}
+  - {fileID: 114192620086457142}
+  - {fileID: 114934174691916306}
   MinDistance: 0
   MaxDistance: 0
 --- !u!114 &114163860609184740
@@ -520,12 +520,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: FMODProject\MusesSexton\Build\Desktop\Master Bank.strings.bank
-  lastModified: 636224153612344873
+  lastModified: 636224343918298185
   LoadResult: 0
   FileSizes:
   - Name: Desktop
     Value: 854
   Exists: 1
+--- !u!114 &114192620086457142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Music3
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114228063438105296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,6 +832,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114339238820594418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Music2
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114369169319070590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -937,6 +967,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114432945535222392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Volume
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114438165596803004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -964,6 +1009,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Percussion
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &114472374102891062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Volume
   Min: 0
   Max: 1
   Default: 0
@@ -1096,7 +1156,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114231265545929562}
+  - {fileID: 114472374102891062}
   MinDistance: 0
   MaxDistance: 0
 --- !u!114 &114613758138803446
@@ -1186,6 +1246,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Volume
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &114666162316279868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Percussion
   Min: 0
   Max: 1
   Default: 0
@@ -1283,7 +1358,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 114132357843287442}
+  - {fileID: 114432945535222392}
   MinDistance: 0
   MaxDistance: 0
 --- !u!114 &114724595740380190
@@ -1532,6 +1607,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114889921023818452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Volume
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114897207293919908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1641,7 +1731,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 114622180787583782}
+  - {fileID: 114889921023818452}
   MinDistance: 0
   MaxDistance: 0
 --- !u!114 &114930142480634514
@@ -1656,6 +1746,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &114934174691916306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Music1
   Min: 0
   Max: 1
   Default: 0

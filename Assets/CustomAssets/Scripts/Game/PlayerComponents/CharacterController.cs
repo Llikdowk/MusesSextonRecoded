@@ -27,7 +27,7 @@ namespace Game.PlayerComponents {
 
 		private const int MaxSimultaneousColliders = 16;
 		private const int MaxSimultaneousTriggers = 16;
-		private RaycastHit[] _floorHits = new RaycastHit[MaxSimultaneousColliders];
+		private RaycastHit[] _colliderHits = new RaycastHit[MaxSimultaneousColliders];
 		private RaycastHit[] _triggers = new RaycastHit[MaxSimultaneousTriggers];
 		private uint _collisions;
 
@@ -37,10 +37,23 @@ namespace Game.PlayerComponents {
 			_layerMaskAllButPlayer = ~player;
 			_collider = GetComponent<CapsuleCollider>();
 			_charMovement = GetComponent<CharacterMovement>();
+
+			//test();
 		}
 
+		
+		private void test() {
 
-		private int ClassifyTriggers(ref RaycastHit[] hits, ref RaycastHit[] triggers, ref int hitsLength) {
+			//float[] hits = {3, 4, 7, 3.5f};
+			float[] hits = {3, 2, 1, 1.5f, 3.5f, 7, 3.5f};
+			sortOfsort(ref hits, 0, 5);
+			
+			Debug.Log("endtest");
+
+		}
+		
+
+		private int DeleteTriggers(ref RaycastHit[] hits, ref int hitsLength) {
 			int triggerCount = 0;
 
 			for (int i = hitsLength-1; i >= 0; --i) {
@@ -48,12 +61,34 @@ namespace Game.PlayerComponents {
 					for (int j = i; j < hitsLength - 1; ++j) {
 						hits[i] = hits[i + 1];
 					}
-					--hitsLength;
+					//--hitsLength;
 					++triggerCount;
 				}
 			}
 
+			hitsLength = hitsLength - triggerCount;
 			return triggerCount;
+		}
+
+		private void sortOfsort(ref float[] hits, int start, int length) {
+			float item, nextItem, targetItem, aux;
+			for (int i = start; i < length - 1; ++i) {
+				item = hits[i];
+				nextItem = hits[i + 1];
+				if (nextItem < item) {
+					for (int j = start; j <= i; ++j) {
+						targetItem = hits[j];
+						if (nextItem < targetItem) {
+							while (j <= i + 1) {
+								aux = hits[j];
+								hits[j] = nextItem;
+								nextItem = aux;
+								++j;
+							}
+						}
+					}
+				}
+			}
 		}
 
 		// minor-to-major raycast distance ordered (insertion sort, faster than default quicksort for low capacity arrays)
@@ -66,16 +101,15 @@ namespace Game.PlayerComponents {
 					for (int j = start; j <= i; ++j) {
 						targetItem = hits[j];
 						if (nextItem.distance < targetItem.distance) {
-							while (j <= i) {
-								aux = hits[j+1];
-								hits[j+1] = hits[j];
+							while (j <= i + 1) {
+								aux = hits[j];
 								hits[j] = nextItem;
 								nextItem = aux;
 								++j;
 							}
 						}
 					}
-				} 
+				}
 			}
 		}
 
@@ -93,20 +127,22 @@ namespace Game.PlayerComponents {
 			                      transform.up * (_collider.height / 2.0f - _collider.radius);
 
 			
+			
+			
 			_collisions |= CheckWalls(capsuleHead, capsuleFeet, transform.forward, PlayerAction.MoveForward) << 0; // TODO would be nice to have this independant of Action
 			_collisions |= CheckWalls(capsuleHead, capsuleFeet, -transform.forward, PlayerAction.MoveBack) << 1;
 			_collisions |= CheckWalls(capsuleHead, capsuleFeet, transform.right, PlayerAction.MoveRight) << 2;
 			_collisions |= CheckWalls(capsuleHead, capsuleFeet, -transform.right, PlayerAction.MoveLeft) << 3;
-
+			
 			//CheckFloor
-			int floorHitsCount = Physics.CapsuleCastNonAlloc(capsuleFeet, capsuleHead, _collider.radius, -Vector3.up, _floorHits, GrounderDistance, _layerMaskAllButPlayer);
+			int floorHitsCount = Physics.SphereCastNonAlloc(capsuleFeet, _collider.radius, -Vector3.up, _colliderHits, GrounderDistance, _layerMaskAllButPlayer);
 
-			int triggerCount = ClassifyTriggers(ref _floorHits, ref _triggers, ref floorHitsCount);
+			int triggerCount = DeleteTriggers(ref _colliderHits, ref floorHitsCount);
 			//Debug.Log(triggerCount + " " + floorHitsCount);
 
 			if (floorHitsCount > 0) {
-				Sort(ref _floorHits, 0, floorHitsCount);
-				RaycastHit nearHit = _floorHits[0];
+				Sort(ref _colliderHits, 0, floorHitsCount);
+				RaycastHit nearHit = _colliderHits[0];
 				if (nearHit.point == Vector3.zero) {
 					transform.position = transform.position + -gravityForce + Vector3.up * VerticalSkinWidth / 2.0f;
 				}
@@ -131,11 +167,34 @@ namespace Game.PlayerComponents {
 		private uint CheckWalls(Vector3 capsuleHead, Vector3 capsuleFeet, Vector3 dir, PlayerAction playerActionType) {
 			int collidersFound = 0;
 			Vector3 stepOffset = transform.up * StepAllowance;
-			RaycastHit[] wallHits = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, dir,
+			int wallHitsCount = Physics.CapsuleCastNonAlloc(capsuleHead, capsuleFeet + stepOffset, _collider.radius, dir, _colliderHits,
 				4 * HorizontalSkinWidth, _layerMaskAllButPlayer);
-			foreach (RaycastHit hit in wallHits) {
+			
+			Sort(ref _colliderHits, 0, wallHitsCount);
+			for (int i = 0; i < wallHitsCount; ++i) {
+				RaycastHit hit = _colliderHits[i];
 				if (hit.collider.isTrigger) {
-					//hit.collider.SendMessage("OnTriggerEnter", _collider, SendMessageOptions.DontRequireReceiver);
+					continue;
+				}
+				++collidersFound;
+				if (hit.point == Vector3.zero) {
+					_charMovement.AddForce(hit.normal, _charMovement.StepMovement.magnitude + HorizontalSkinWidth / 2.0f);
+					break;
+				}
+				else if (hit.distance > HorizontalSkinWidth / 2.0f && hit.distance < HorizontalSkinWidth) {
+					Debug.DrawRay(transform.position, hit.point - transform.position, Color.magenta);
+					_charMovement.AddForce(-dir,
+						(1 - Mathf.Abs(Vector3.Dot(Vector3.up, hit.normal))) * ((hit.distance - HorizontalSkinWidth / 2.0f)));
+					var action = _actions.GetAction(playerActionType);
+					action.Disable();
+					break;
+				}
+			}
+			
+			/*
+			for (int i = 0; i < wallHitsCount; ++i) {
+				RaycastHit hit = _colliderHits[i];
+				if (hit.collider.isTrigger) {
 					continue;
 				}
 				++collidersFound;
@@ -152,12 +211,12 @@ namespace Game.PlayerComponents {
 					action.Disable();
 				}
 			}
-
+			*/
 			if (collidersFound == 0) {
 				var action = _actions.GetAction(playerActionType);
 				action.Enable();
 			}
-
+			
 			return 1;
 		}
 
