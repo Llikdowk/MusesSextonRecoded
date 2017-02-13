@@ -39,7 +39,7 @@ Transform:
   m_GameObject: {fileID: 1674923585250168}
   m_LocalRotation: {x: 0, y: -0.13315998, z: 0, w: 0.9910945}
   m_LocalPosition: {x: -0.1, y: 1.7159995, z: 0.98}
-  m_LocalScale: {x: 0.9249226, y: 0.9249226, z: 0.9249226}
+  m_LocalScale: {x: 1.3, y: 0.9249226, z: 1.3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -127,4 +127,5 @@ MonoBehaviour:
   Color: {r: 0.05098039, g: 1, b: 0.0575253, a: 1}
   Icon: {fileID: 21300000, guid: 28f5c5dbd41979e45a0a0d0041ba6b68, type: 3}
   Scale: {x: 1.25, y: 1.25}
+  Offset: {x: 0, y: 0, z: 0}
   StartEnabled: 0
