@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 
 namespace Game.PlayerComponents {
@@ -80,6 +81,31 @@ namespace Game.PlayerComponents {
 			}
 		}
 
+		//method from https://forum.unity3d.com/threads/spherecast-capsulecast-raycasthit-normal-is-not-the-surface-normal-as-the-documentation-states.275369/
+        private static void RepairHitSurfaceNormal(ref RaycastHit hit)
+        {
+            if(hit.collider is MeshCollider)
+            {
+                var collider = hit.collider as MeshCollider;
+                var mesh = collider.sharedMesh;
+                var tris = mesh.triangles;
+                var verts = mesh.vertices;
+ 
+                var v0 = verts[tris[hit.triangleIndex * 3]];
+                var v1 = verts[tris[hit.triangleIndex * 3 + 1]];
+                var v2 = verts[tris[hit.triangleIndex * 3 + 2]];
+ 
+                var n = Vector3.Cross(v1 - v0, v2 - v1).normalized;
+                hit.normal = hit.transform.TransformDirection(n);
+            }
+            else
+            {
+                var p = hit.point + hit.normal * 0.01f;
+	            hit.collider.Raycast(new Ray(p, -hit.normal), out hit, 0.011f);
+                //collider.Raycast(p, -hit.normal, out hit, 0.011f, layerMask);
+            }
+        }
+
 		private Vector3 _direction;
 		private Vector3 _lastPosition;
 		public float tolerance0 = -0.9f;
@@ -92,12 +118,12 @@ namespace Game.PlayerComponents {
 			Debug.DrawRay(transform.position, _charMovement.WorldDir, Color.cyan);
 			Vector3 gravityForce = Vector3.zero;
 			if (!_isGrounded) {
-				gravityForce = Gravity * _timeOnAir * Time.deltaTime; // TODO: move to characterMovement
+				gravityForce = Gravity * _timeOnAir * Time.deltaTime; // TODO: move to characterMovement?
 				_timeOnAir += Time.deltaTime;
 			}
-			Matrix4x4 M = _collider.transform.localToWorldMatrix;
+			Matrix4x4 M = _collider.transform.localToWorldMatrix; //TODO: use transform.transformpoint instead
 			Vector3 capsuleHead = transform.position + M.MultiplyVector(_collider.center) +
-			                      transform.up * (_collider.height / 2.0f - _collider.radius);
+			                      transform.up * (_collider.height / 2.0f - _collider.radius); 
 			Vector3 capsuleFeet = transform.position + M.MultiplyVector(_collider.center) -
 			                      transform.up * (_collider.height / 2.0f - _collider.radius);
 
@@ -131,10 +157,45 @@ namespace Game.PlayerComponents {
 			WorldMovementProcessed = _charMovement.WorldMovement;
 			// Horizontal Collisions
 			Vector3 stepOffset = transform.up * StepAllowance;
+			/*
 			hitsCount = Physics.CapsuleCastNonAlloc(capsuleHead, capsuleFeet + stepOffset, _collider.radius, _charMovement.WorldDir,
 				_colliderHits, HorizontalSkinWidth + _speed, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
+			*/
+
+			/*
+			RaycastHit[] hitsTemp = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, _charMovement.WorldDir,
+				HorizontalSkinWidth + _speed, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
+			int k = 0;
+			for (int i = 0; i < hitsTemp.Length; ++i, ++k) {
+				_colliderHits[k] = hitsTemp[i];
+			} 
+			*/
+
+			Vector3 fdir = Vector3.Project(_charMovement.WorldDir, transform.forward);
+			RaycastHit[] hitsTemp = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, fdir,
+				HorizontalSkinWidth + _speed, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
+			int k = 0;
+			for (int i = 0; i < hitsTemp.Length; ++i, ++k) {
+				_colliderHits[k] = hitsTemp[i];
+			} 
+			Debug.DrawRay(transform.position, fdir, Color.red);
+
+			Vector3 rdir = Vector3.Project(_charMovement.WorldDir, transform.right);
+			hitsTemp = Physics.CapsuleCastAll(capsuleHead, capsuleFeet + stepOffset, _collider.radius, rdir,
+				HorizontalSkinWidth + 1, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
+			for (int i = 0; i < hitsTemp.Length; ++i, ++k) {
+				_colliderHits[k] = hitsTemp[i];
+			}
+			Debug.DrawRay(transform.position, rdir, Color.red);
+			hitsCount = k;
+
+			_collisions = (uint) CollisionMask.None;
 			for (int i = 0; i < hitsCount; ++i) {
 				RaycastHit hit = _colliderHits[i];
+				//RepairHitSurfaceNormal(ref hit);
+				Debug.DrawRay(hit.point, hit.normal, Color.magenta);
+				Debug.Log(hitsCount);
+				WorldMovementProcessed = Vector3.ProjectOnPlane(WorldMovementProcessed, hit.normal);
 				if (hit.point == Vector3.zero) {
 					
 					if (Vector3.Dot(hit.normal, Vector3.up) < 1 - SlopeInclinationAllowance) {
@@ -143,13 +204,26 @@ namespace Game.PlayerComponents {
 					
 				}
 				else {
-					if (hit.distance > HorizontalSkinWidth / 2.0f) {
-						WorldMovementProcessed = Vector3.ProjectOnPlane(WorldMovementProcessed, hit.normal);
-					}
-					else {
-						WorldMovementProcessed = Vector3.zero;
+					if (hit.distance < HorizontalSkinWidth) {
+						float dot = Vector3.Dot(transform.forward, hit.normal);
+						if (dot < tolerance0) {
+							_collisions |= (uint) CollisionMask.Forward;
+						}
+						dot = Vector3.Dot(-transform.forward, hit.normal);
+						if (dot < tolerance0) {
+							_collisions |= (uint) CollisionMask.Back;
+						}
+						dot = Vector3.Dot(transform.right, hit.normal);
+						if (dot < tolerance0) {
+							_collisions |= (uint) CollisionMask.Right;
+						}
+						dot = Vector3.Dot(-transform.right, hit.normal);
+						if (dot < tolerance0) {
+							_collisions |= (uint) CollisionMask.Left;
+						}
 					}
 				}
+				
 				/*
 
 				float dot = Vector3.Dot(transform.forward, hit.normal);
@@ -187,12 +261,17 @@ namespace Game.PlayerComponents {
 					_collisions &= ~(uint) CollisionMask.Left;
 				}
 				*/
+				
 			}
+			/*
 			//Debug.Log(_collisions.ToString("X"));
 			if (hitsCount == 0) {
 				_collisions = (uint) CollisionMask.None;
 			}
+			*/
+			
 		}
+		
 
 
 		public uint GetCollisions() {

@@ -32,7 +32,7 @@ namespace Game.PlayerComponents {
 
 		public void Update() {
 
-			//CheckMovement();
+			CheckMovement();
 			_movementBehaviour.Step();
 		}
 
