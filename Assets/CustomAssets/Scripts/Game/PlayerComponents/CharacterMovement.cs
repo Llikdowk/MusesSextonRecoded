@@ -40,7 +40,7 @@ namespace Game.PlayerComponents {
 			CharacterController c = Player.GetInstance().Controller; // TODO: make member of this class and remove from player
 			ActionManager<PlayerAction> actions = Player.GetInstance().Actions;
 			uint collisions = c.GetCollisions();
-			Debug.Log(collisions.ToString("X"));
+			//Debug.Log(collisions.ToString("X"));
 			uint mask = (uint) CollisionMask.None;
 
 			

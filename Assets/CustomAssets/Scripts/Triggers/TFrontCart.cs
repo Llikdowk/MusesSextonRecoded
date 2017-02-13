@@ -59,6 +59,7 @@ namespace Triggers {
 					};
 				}
 			}
+			Debug.Log("ontriggerenter");
 		}
 
 		public void OnTriggerExit(Collider other) {
@@ -67,6 +68,11 @@ namespace Triggers {
 			Player.GetInstance().CurrentState.CheckInternalInteraction(true);
 			if (mark) mark.EnableMark();
 			RemoveOutline();
+			Debug.Log("ontriggerexit");
+		}
+
+		public void OnTriggerStay(Collider other) {
+			Debug.Log("ontriggerstay " + other.gameObject.name);
 		}
 	}
 }
