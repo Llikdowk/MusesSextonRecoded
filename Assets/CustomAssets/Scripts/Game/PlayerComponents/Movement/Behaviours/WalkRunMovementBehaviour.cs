@@ -47,14 +47,14 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 		public override void Step() {
-			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().Controller.WorldMovementProcessed);
+			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().Controller.WorldMovementProcessed); // TODO clean this
 			if (SelfMovement != Vector3.zero) { 
 				AudioController.GetInstance().PlaySteps();
 			}
 			_transform.position += _stepMovement;
 			_stepMovement = Vector3.zero;
 
-			Vector3 dposSelf = SelfMovement.sqrMagnitude < 1.0f ? SelfMovement : SelfDir;
+			Vector3 dposSelf = SelfMovement.sqrMagnitude < 1.0f ? SelfMovement : SelfMovement.normalized;
 			Vector3 dvelSelf = Vector3.zero;
 			dvelSelf.x += dposSelf.x * (dposSelf.x > 0 ? _currentConfig.RightSpeed : _currentConfig.LeftSpeed);
 			dvelSelf.z += dposSelf.z * (dposSelf.z > 0 ? _currentConfig.ForwardSpeed : _currentConfig.BackwardSpeed);

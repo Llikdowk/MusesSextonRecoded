@@ -50,7 +50,6 @@ namespace Game.PlayerComponents {
 			for (int i = hitsLength-1; i >= 0; --i) {
 				if (hits[i].collider.isTrigger) {
 					if (hits[i].distance == 0) {
-						//_currentTriggers[triggerCount++] = hits[i].collider;
 						_currentTriggers.Add(hits[i].collider);
 						++triggerCount;
 					}
@@ -107,11 +106,35 @@ namespace Game.PlayerComponents {
 			}
 		}
 
+       private static void RepairHitSurfaceNormal(ref RaycastHit hit)
+       {
+            if(hit.collider is MeshCollider)
+            {
+                var collider = hit.collider as MeshCollider;
+                var mesh = collider.sharedMesh;
+                var tris = mesh.triangles;
+                var verts = mesh.vertices;
+ 
+                var v0 = verts[tris[hit.triangleIndex * 3]];
+                var v1 = verts[tris[hit.triangleIndex * 3 + 1]];
+                var v2 = verts[tris[hit.triangleIndex * 3 + 2]];
+ 
+                var n = Vector3.Cross(v1 - v0, v2 - v1).normalized;
+                hit.normal = hit.transform.TransformDirection(n);
+            }
+            else
+            {
+                var p = hit.point + hit.normal * 0.01f;
+	            hit.collider.Raycast(new Ray(p, -hit.normal), out hit, 0.011f);
+                //collider.Raycast(p, -hit.normal, out hit, 0.011f, layerMask);
+            }
+        }
 
 		private Vector3 _lastPosition;
 		public Vector3 WorldMovementProcessed = Vector3.zero; // TODO: encapsulate this
 		public void Update() {
 			float speed = (transform.position - _lastPosition).magnitude;
+			Vector3 direction = (transform.position - _lastPosition).normalized;
 			_lastPosition = transform.position;
 			Debug.DrawRay(transform.position, _charMovement.WorldDir, Color.cyan);
 			Vector3 gravityForce = Vector3.zero;
@@ -127,20 +150,21 @@ namespace Game.PlayerComponents {
 
 			
 			// Vertical Collision
-			int hitsCount = Physics.CapsuleCastNonAlloc(capsuleFeet, capsuleHead, _collider.radius, Vector3.down,
+			int hitsCount = Physics.SphereCastNonAlloc(capsuleFeet, /*capsuleHead,*/ _collider.radius, Vector3.down,
 				_colliderHits, GrounderDistance, _layerMaskAllButPlayer, QueryTriggerInteraction.Collide);
 			int triggerCount = ProcessTriggers(ref _colliderHits, ref hitsCount);
-			
 
+			Vector3 floorNormal = Vector3.up;
 			if (hitsCount > 0) {
 				Sort(ref _colliderHits, 0, hitsCount);
 				RaycastHit nearHit = _colliderHits[0];
+				floorNormal = nearHit.normal;
 				if (nearHit.point == Vector3.zero) {
 					const float pushBack = 10.0f;
-					if (Vector3.Dot(nearHit.normal, Vector3.up) >= 1-SlopeInclinationAllowance) { // SlopeLimit!
+					//if (Vector3.Dot(nearHit.normal, Vector3.up) >= 1-SlopeInclinationAllowance) { // SlopeLimit!
 						transform.position = transform.position + -gravityForce * Time.deltaTime * pushBack +
 						                     nearHit.normal * VerticalSkinWidth / 2.0f; // hit.normal here is -ray.direction
-					}
+					//}
 				}
 				else if (nearHit.distance > VerticalSkinWidth) {
 					Debug.DrawRay(transform.position, nearHit.point - transform.position, Color.magenta);
@@ -153,6 +177,7 @@ namespace Game.PlayerComponents {
 				_isGrounded = false;
 				transform.position += gravityForce;
 			}
+			Debug.Log("floorNormal = " + floorNormal);
 
 			// Horizontal Collisions
 			WorldMovementProcessed = _charMovement.WorldMovement;
@@ -161,37 +186,35 @@ namespace Game.PlayerComponents {
 			hitsCount = Physics.CapsuleCastNonAlloc(capsuleHead, capsuleFeet + stepOffset, _collider.radius, _charMovement.WorldDir,
 				_colliderHits, HorizontalSkinWidth + speed, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
 
-			_collisions = (uint) CollisionMask.None;
+			Debug.Log(hitsCount);
 			for (int i = 0; i < hitsCount; ++i) {
+				/*
+				if (i > 0) {
+					if (Vector3.Dot(_colliderHits[i - 1].normal, _colliderHits[i].normal) < 0.0f) {
+						WorldMovementProcessed = Vector3.zero;
+						break;
+					}
+				}
+				*/
 				RaycastHit hit = _colliderHits[i];
+				if (Vector3.Dot(hit.normal, transform.up) < 0) {
+					WorldMovementProcessed = Vector3.zero;
+					break;
+				}
 				Debug.DrawRay(hit.point, hit.normal, Color.magenta);
 				WorldMovementProcessed = Vector3.ProjectOnPlane(WorldMovementProcessed, hit.normal);
-				if (hit.point == Vector3.zero) {
-					if (Vector3.Dot(hit.normal, Vector3.up) < 1 - SlopeInclinationAllowance) {
-						transform.position += hit.normal * (HorizontalSkinWidth / 2.0f); // hit.normal <=> -ray.distance
-					}
+				
+				RaycastHit innerHit;
+				Debug.DrawRay(hit.point, Vector3.ProjectOnPlane(WorldMovementProcessed, floorNormal), Color.red);
+				if (Physics.CapsuleCast(capsuleHead, capsuleFeet, _collider.radius, Vector3.ProjectOnPlane(WorldMovementProcessed, floorNormal), out innerHit,
+					HorizontalSkinWidth + speed, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) 
+				{
+					WorldMovementProcessed = Vector3.zero;
+					break;
 				}
-				else {
-					if (hit.distance < HorizontalSkinWidth) { // TODO: check connection with CharacterMovement, remove?
-						float dot = Vector3.Dot(transform.forward, hit.normal);
-						if (dot < NormalTolerance) {
-							_collisions |= (uint) CollisionMask.Forward;
-						}
-						dot = Vector3.Dot(-transform.forward, hit.normal);
-						if (dot < NormalTolerance) {
-							_collisions |= (uint) CollisionMask.Back;
-						}
-						dot = Vector3.Dot(transform.right, hit.normal);
-						if (dot < NormalTolerance) {
-							_collisions |= (uint) CollisionMask.Right;
-						}
-						dot = Vector3.Dot(-transform.right, hit.normal);
-						if (dot < NormalTolerance) {
-							_collisions |= (uint) CollisionMask.Left;
-						}
-					}
-				}
+				
 			}
+
 		}
 		
 
