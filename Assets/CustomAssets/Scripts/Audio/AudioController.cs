@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using FMOD.Studio;
 using UnityEngine;
 using FMODUnity;
@@ -24,6 +25,8 @@ namespace Audio {
 
 		[Range(0, 1)] public float StepsSpeed = 0.0f;
 		[Range(0, 1)] public float StepsVolume = 0.5f;
+
+		public bool IsMute;
 
 		private FMODObject _music;
 		private FMODObject _wind;
@@ -59,11 +62,18 @@ namespace Audio {
 
 		}
 
+		public void Start() {
+			if (IsMute) {
+				Mute();
+			}
+		}
+
 		public void Update() {
 			_steps.SetParameter("Volume", StepsVolume);
 		}
 
 		public void PlaySteps() {
+			if (IsMute) return;
 			if (StepsSpeed == 0.0f) return;
 			if (_steps.IsPlaying()) {
 				if (_steps.GetNormalizedTimelinePosition() >= 1 - StepsSpeed) {
@@ -76,24 +86,31 @@ namespace Audio {
 		}
 
 		public void PlayBell() {
+			if (IsMute) return;
 			_bell.Play();
 		}
 
 		public void FadeInWind() {
+			if (IsMute) return;
 			_wind.Play();
 			StartCoroutine(Fade(_wind, "Volume", Wind, WindFadeTime));
 		}
 
 		public void FadeInMusic1(AudioAction f = null) {
+			if (IsMute) return;
 			StartCoroutine(Fade(_music, "Music1", Music1, Music1FadeTime, f));
 		}
 		public void FadeInMusic2(AudioAction f = null) {
+			if (IsMute) return;
 			StartCoroutine(Fade(_music, "Music2", Music2, Music2FadeTime, f));
 		}
 		public void FadeInMusic3(AudioAction f = null) {
+			if (IsMute) return;
 			StartCoroutine(Fade(_music, "Music3", Music3, Music3FadeTime, f));
+			
 		}
 		public void FadeInPercussion() {
+			if (IsMute) return;
 			StartCoroutine(Fade(_music, "Percussion", Percussion, PercussionFadeTime));
 		}
 
@@ -109,6 +126,15 @@ namespace Audio {
 				yield return null;
 			}
 			if (f != null) f();
+		}
+
+		public void Mute() {
+			IsMute = true;
+			StopAllCoroutines();
+			_music.StopImmediate();
+			_steps.StopImmediate();
+			_bell.StopImmediate();
+			FMODUnity.RuntimeManager.MuteAllEvents(true);
 		}
 	}
 }
