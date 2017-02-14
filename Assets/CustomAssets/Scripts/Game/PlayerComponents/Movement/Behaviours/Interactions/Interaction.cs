@@ -8,6 +8,12 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public abstract class Interaction {
 		public abstract void DoInteraction();
 
+		/* TODO?
+		public void CheckForInteraction() {
+			
+		}
+		*/
+
 		public virtual void ShowFeedback() {
 		}
 
@@ -32,22 +38,33 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 	
 	public class PickUpCoffinInteraction : Interaction {
-		private GameObject _coffin;
+		public GameObject Coffin;
+		private readonly int _backupLayer;
 
 		public PickUpCoffinInteraction(GameObject coffin) {
-			_coffin = coffin;
+			Debug.Log("CONSTRUCT COFFIN INTERACTION");
+			Coffin = coffin;
+			_backupLayer = coffin.layer;
 		}
 
 		public override void DoInteraction() {
 			Debug.Log("DO PICK UP INTERACTION");
-			_coffin.layer = LayerMaskManager.Get(Layer.DrawFront);
-			MarkableComponent m = _coffin.GetComponent<MarkableComponent>();
+			Coffin.layer = LayerMaskManager.Get(Layer.DrawFront);
+			MarkableComponent m = Coffin.GetComponent<MarkableComponent>();
 			if (m != null) {
 				m.DisableMark();
 			} else {
 				DebugMsg.ComponentNotFound(Debug.LogWarning, typeof(MarkableComponent));
 			}
-			Player.GetInstance().CurrentState = new DragCoffinState(_coffin);
+			Player.GetInstance().CurrentState = new DragCoffinState(Coffin);
+		}
+
+		public override void ShowFeedback() {
+			Coffin.layer = LayerMaskManager.Get(Layer.Outline);
+		}
+
+		public override void HideFeedback() {
+			Coffin.layer = _backupLayer;
 		}
 	}
 
@@ -61,6 +78,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		private RaycastHit _hit;
 
 		public CarveTerrainInteraction(RaycastHit hit) {
+			Debug.Log("CONSTRUCT CARVE INTERACTION");
 			if (_digMarker == null) {
 				_digMarker = GameObject.CreatePrimitive(PrimitiveType.Cube);
 				Object.Destroy(_digMarker.GetComponent<Collider>());
@@ -124,6 +142,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 	}
 
+	
 	/*
 	public class DriveCartInteraction : Interaction {
 		

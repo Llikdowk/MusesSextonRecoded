@@ -80,6 +80,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			*/
 
 			//_interactions.FindMax().DoInteraction();
+			n.ShowFeedback();
 			CheckForInteraction();
 
 		}
@@ -87,8 +88,9 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		public void OnCoffinUsed(GameObject g) {
 			//Interactions.add(PickUpCoffinInteraction, 100);
 			Debug.Log("oncoffinused");
+			n.HideFeedback();
 			n = new PickUpCoffinInteraction(g);
-			CleanOutline();
+			//CleanOutline();
 		}
 
 
@@ -98,6 +100,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 		*/
 		public void OnCarveTerrain(RaycastHit hit) {
+			n.HideFeedback();
 			n = new CarveTerrainInteraction(hit);
 		}
 		
@@ -111,33 +114,36 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			//_digMarker.SetActive(false);
 			if (Physics.SphereCast(ray, 0.05f, out hit, 5.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
 				GameObject g = hit.collider.gameObject;
-				CleanOutline();
+				//CleanOutline();
 				if (g.tag == _coffinTag && hit.distance < 2.5f) {
 					modified = true;
 					//SetOutline(g);
-					if (n.GetType() != typeof(PickUpCoffinInteraction))
-					OnCoffinUsed(g);
+					if (n.GetType() != typeof(PickUpCoffinInteraction)) {
+						OnCoffinUsed(g);
+					}
+					else {
+						if ((n as PickUpCoffinInteraction).Coffin.GetInstanceID() != g.GetInstanceID()) {
+							n.HideFeedback();
+							(n as PickUpCoffinInteraction).Coffin = g;
+						}
+					}
 				} 
 				else if (g.tag == _terrainTag && hit.distance > 2.0f) {
 					modified = true;
 					OnCarveTerrain(hit);
 				}
-				//else {
-				//	modified = false;
-				//	_useAction.StartBehaviour = () => { };
-				//}
+				else {
+					n.HideFeedback();
+				}
 			}
-			//else {
-			//	if (modified) {
-			//		modified = false;
-			//		_useAction.StartBehaviour = () => { };
-			//		//CleanOutline();
-			//	}
-			//}
+			else {
+				n.HideFeedback();
+			}
 			
 		}
 
 
+		/*
 		private void SetOutline(GameObject g) {
 			_outlined.Add(g);
 			g.layer = _outlineLayer;
@@ -149,6 +155,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			}
 			_outlined.Clear();
 		}
+		*/
 
 		public override void OnDestroy() { 
 			//Object.Destroy(_digMarker);
