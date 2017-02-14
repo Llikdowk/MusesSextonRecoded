@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Security.Cryptography.X509Certificates;
+using UnityEngine;
 
 using Cubiquity;
 
@@ -18,22 +19,33 @@ public class CarveTerrainVolumeComponent : MonoBehaviour {
 		}
 	}
 
-
-	public void DoCarveAction(Ray ray) {
+	/// <summary>
+	/// <para>Returns Vector3[] of Length 2.</para>
+	/// elem 0 is upper left corner and elem 1 is lower right corner
+	/// </summary>
+	/// <param name="ray"></param>
+	/// <returns></returns>
+	public Vector3[] DoCarveAction(Ray ray/*, out Vector3 p1, out Vector3 p2, out Vector3 p3, out Vector3 p4 */) {
+		/*p1 = p2 = p3 = p4 = Vector3.zero;*/
 		if (_terrainVolume == null) {
-			return;
+			return new[] { Vector3.zero, Vector3.zero };
 		}
 
 		PickSurfaceResult pickResult;
 		bool hit = Picking.PickSurface(_terrainVolume, ray, 1000.0f, out pickResult);
 
 		if (hit) {
-			DestroyVoxels((int) pickResult.volumeSpacePos.x, (int) pickResult.volumeSpacePos.y, (int) pickResult.volumeSpacePos.z);
+			int x = (int) pickResult.volumeSpacePos.x;
+			int y = (int) pickResult.volumeSpacePos.y;
+			int z = (int) pickResult.volumeSpacePos.z;
+			DestroyVoxels(x, y, z);
+			return new[] {new Vector3(x - RangeX, pickResult.worldSpacePos.y, z + RangeZ), new Vector3(x + RangeX, pickResult.worldSpacePos.y, z - RangeZ)};
 		}
+		return new[] { Vector3.zero, Vector3.zero };
 	}
 
 
-	private void DestroyVoxels(int xPos, int yPos, int zPos) {
+	private void DestroyVoxels(int xPos, int yPos, int zPos/*, out Vector3 p1, out Vector3 p2, out Vector3 p3, out Vector3 p4*/) {
 		int aux = Mathf.Max(RangeX, RangeY, RangeZ);
 		int rangeSquared = aux * aux;
 		MaterialSet emptyMaterialSet = new MaterialSet();
@@ -41,6 +53,13 @@ public class CarveTerrainVolumeComponent : MonoBehaviour {
 		fillMaterialSet.weights[0] = 255;
 		fillMaterialSet.weights[1] = 255;
 		fillMaterialSet.weights[2] = 255;
+
+		/*
+		p1 = new Vector3(xPos - RangeX, 0, zPos + RangeZ);
+		p2 = new Vector3(xPos - RangeX, 0, zPos - RangeZ);
+		p3 = new Vector3(xPos + RangeX, 0, zPos - RangeZ);
+		p4 = new Vector3(xPos + RangeX, 0, zPos + RangeZ);
+		*/
 
 		for (int z = zPos - RangeZ; z < zPos + RangeZ; z++) {
 			for (int y = yPos - RangeY; y < yPos + RangeY; y++) {

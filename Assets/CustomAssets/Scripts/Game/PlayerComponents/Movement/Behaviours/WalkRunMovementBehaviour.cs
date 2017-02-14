@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Audio;
 using Boo.Lang.Runtime.DynamicDispatching;
+using Cubiquity;
 using MiscComponents;
 using UnityEngine;
 
@@ -15,7 +16,9 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		private readonly int _outlineLayer;
 		private readonly string _coffinTag;
 		private readonly string _terrainTag;
+		private readonly TerrainVolume _terrainVolume;
 		private readonly CarveTerrainVolumeComponent _terrainCarver;
+		private readonly GameObject _ground;
 
 		public WalkRunMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
 			Player.GetInstance().Look.Config = config.WalkRunLook;
@@ -41,6 +44,9 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				DebugMsg.GameObjectNotFound(Debug.LogError, terrainName);
 			}
 			else {
+				_terrainVolume = terrain.GetComponent<TerrainVolume>();
+				if (!_terrainVolume) DebugMsg.ComponentNotFound(Debug.LogError, typeof(TerrainVolume));
+
 				_terrainCarver = terrain.GetComponent<CarveTerrainVolumeComponent>();
 				if (!_terrainCarver) DebugMsg.ComponentNotFound(Debug.LogError, typeof(CarveTerrainVolumeComponent));
 			}
@@ -55,11 +61,14 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			GameObject marker = new GameObject("_marker");
 			marker.transform.parent = _digMarker.transform;
 			marker.transform.LocalReset();
-			marker.transform.localScale = new Vector3(1/4f, 10.0f, 1/4f);
 			SpriteRenderer sr = marker.AddComponent<SpriteRenderer>();
 			sr.sprite = Resources.Load<Sprite>("Sprites/bury");
 			sr.material = new Material(Shader.Find("Custom/UniformSpriteFaceCamera"));
 			sr.material.color = new Color(0, 81.0f/255.0f, 240.0f/255.0f);
+
+			_ground = Resources.Load<GameObject>("Prefabs/Ground");
+			_ground.name = "_ground";
+			_ground.SetActive(false);
 		}
 
 		public override void Step() {
@@ -92,6 +101,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			Ray ray = new Ray(_transform.position, _cameraTransform.forward);
 			RaycastHit hit;
+			_digMarker.SetActive(false);
 			if (Physics.SphereCast(ray, 0.05f, out hit, 5.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
 				GameObject g = hit.collider.gameObject;
 				CleanOutline();
@@ -99,24 +109,37 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 					modified = true;
 					SetOutline(g);
 					_useAction.StartBehaviour = () => SetDragCoffinUse(g);
-					_digMarker.SetActive(false);
 				} 
 				else if (g.tag == _terrainTag && hit.distance > 2.0f) {
 					modified = true;
 					_digMarker.SetActive(true);
 					_digMarker.transform.position = hit.point;
-					_useAction.StartBehaviour = SetCarveHollowUse;
+					_digMarker.transform.up = Vector3.Lerp(_digMarker.transform.up, hit.normal, 0.05f);
+					_useAction.StartBehaviour = () => {
+						Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_transform.position, _cameraTransform.forward));
+						GameObject ground = Object.Instantiate(_ground);
+						ground.SetActive(true);
+						Vector3 continuousPosition = hit.point - hit.normal * 0.5f;
+						Vector3 discretePosition = new Vector3((int)continuousPosition.x, (int)continuousPosition.y, (int)continuousPosition.z);
+						ground.transform.position = discretePosition;
+						ground.transform.up = hit.normal;
+						Debug.DrawRay(v[0], Vector3.up*10, Color.magenta);
+						Debug.DrawRay(v[1], Vector3.up*10, Color.magenta);
+						Vector3 upperLeft = v[0];
+						Vector3 lowerRight = v[1];
+						Vector3 middleLow = new Vector3(upperLeft.x - 2.0f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z)/2.0f );
+						Player.GetInstance().MoveImmediatlyTo(middleLow);
+						Player.GetInstance().transform.rotation =  Quaternion.AngleAxis(80, Vector3.up);
+					};
 				}
 				else {
 					modified = false;
-					_digMarker.SetActive(false);
 					_useAction.StartBehaviour = () => { };
 				}
 			}
 			else {
 				if (modified) {
 					modified = false;
-					_digMarker.SetActive(false);
 					_useAction.StartBehaviour = () => { };
 					CleanOutline();
 				}
@@ -136,10 +159,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			}
 			Player.GetInstance().CurrentState = new DragCoffinState(coffin);
 
-		}
-
-		private void SetCarveHollowUse() {
-			_terrainCarver.DoCarveAction(new Ray(_transform.position, _cameraTransform.forward));
 		}
 
 		private void SetOutline(GameObject g) {

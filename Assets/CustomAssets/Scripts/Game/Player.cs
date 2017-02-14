@@ -64,6 +64,7 @@ namespace Game.PlayerComponents {
 		[HideInInspector] public Look Look;
 		[HideInInspector] public Camera Camera { get; private set; }
 		[HideInInspector] public ActionManager<PlayerAction> Actions = new ActionManager<PlayerAction>();
+		private CapsuleCollider _collider;
 
 
 		private static Player _instance = null;
@@ -84,6 +85,7 @@ namespace Game.PlayerComponents {
 				Controller = GetComponent<CharacterController>();
 				Look = GetComponent<Look>();
 				Camera = GetComponentInChildren<Camera>();
+				_collider = GetComponent<CapsuleCollider>();
 			}
 			else {
 				Debug.LogWarning("Player singleton instance destroyed!");
@@ -93,6 +95,10 @@ namespace Game.PlayerComponents {
 
 		public void Start() {
 			CurrentState = new WalkRunState();
+		}
+
+		public void MoveImmediatlyTo(Vector3 position) {
+			transform.position = position + Vector3.up * _collider.height/2.0f;
 		}
 	}
 }
