@@ -9,7 +9,7 @@ namespace Game.PlayerComponents {
 
 		public MovementBehaviour MovementBehaviour {
 			set {
-				_movementBehaviour.ResetModifiedState();
+				_movementBehaviour.OnDestroy();
 				_movementBehaviour = value;
 				_movementBehaviour.CanInteract = _canInteract;
 			}
@@ -26,7 +26,7 @@ namespace Game.PlayerComponents {
 		public Vector3 WorldDir { get { return _movementBehaviour.WorldDir; } }
 		private bool _canInteract = true;
 
-		public void Start() {
+		public void Awake() {
 			_movementBehaviour = new NullMovementBehaviour(transform);
 		}
 

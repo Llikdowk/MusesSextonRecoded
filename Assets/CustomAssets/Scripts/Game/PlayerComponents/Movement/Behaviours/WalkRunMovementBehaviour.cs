@@ -44,6 +44,22 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				_terrainCarver = terrain.GetComponent<CarveTerrainVolumeComponent>();
 				if (!_terrainCarver) DebugMsg.ComponentNotFound(Debug.LogError, typeof(CarveTerrainVolumeComponent));
 			}
+
+			_digMarker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			Object.Destroy(_digMarker.GetComponent<Collider>());
+			_digMarker.SetActive(false);
+			_digMarker.name = "_digMarker";
+			_digMarker.transform.localScale = new Vector3(4, 0.1f, 4);
+			_digMarker.layer = _outlineLayer;
+			_digMarker.GetComponent<MeshRenderer>().material = new Material(Shader.Find("UI/Default"));
+			GameObject marker = new GameObject("_marker");
+			marker.transform.parent = _digMarker.transform;
+			marker.transform.LocalReset();
+			marker.transform.localScale = new Vector3(1/4f, 10.0f, 1/4f);
+			SpriteRenderer sr = marker.AddComponent<SpriteRenderer>();
+			sr.sprite = Resources.Load<Sprite>("Sprites/bury");
+			sr.material = new Material(Shader.Find("Custom/UniformSpriteFaceCamera"));
+			sr.material.color = new Color(0, 81.0f/255.0f, 240.0f/255.0f);
 		}
 
 		public override void Step() {
@@ -69,32 +85,38 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			}
 		}
 
+		private GameObject _digMarker;
 		private bool modified = false;
 		protected virtual void CheckForInteraction() {
 			if (!CanInteract) return;
 
 			Ray ray = new Ray(_transform.position, _cameraTransform.forward);
 			RaycastHit hit;
-			if (Physics.SphereCast(ray, 0.05f, out hit, 2.5f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
+			if (Physics.SphereCast(ray, 0.05f, out hit, 5.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
 				GameObject g = hit.collider.gameObject;
 				CleanOutline();
-				if (g.tag == _coffinTag) {
+				if (g.tag == _coffinTag && hit.distance < 2.5f) {
 					modified = true;
 					SetOutline(g);
 					_useAction.StartBehaviour = () => SetDragCoffinUse(g);
+					_digMarker.SetActive(false);
 				} 
-				else if (g.tag == _terrainTag) {
+				else if (g.tag == _terrainTag && hit.distance > 2.0f) {
 					modified = true;
+					_digMarker.SetActive(true);
+					_digMarker.transform.position = hit.point;
 					_useAction.StartBehaviour = SetCarveHollowUse;
 				}
 				else {
 					modified = false;
+					_digMarker.SetActive(false);
 					_useAction.StartBehaviour = () => { };
 				}
 			}
 			else {
 				if (modified) {
 					modified = false;
+					_digMarker.SetActive(false);
 					_useAction.StartBehaviour = () => { };
 					CleanOutline();
 				}
@@ -132,8 +154,9 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_outlined.Clear();
 		}
 
-		public override void ResetModifiedState() { 
+		public override void OnDestroy() { 
 			//_runAction.Reset();
+			Object.Destroy(_digMarker);
 		}
 	}
 

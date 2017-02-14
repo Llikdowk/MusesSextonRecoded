@@ -15,7 +15,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			Action<PlayerAction> useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
 			useAction.StartBehaviour = () => {
-				Debug.Log("USING DRAGCOFFIN!");
 				_coffin.transform.parent = null;
 				_coffin.GetComponent<Collider>().enabled = true;
 				Rigidbody rb = _coffin.GetComponent<Rigidbody>();
@@ -36,14 +35,8 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			_slot = Player.GetInstance().transform.Find("Camera/_slotCoffin");
 			if (_slot == null) Debug.LogError("Camera/_slotCoffin not found in PlayerGameobject"); // TODO extract to Error class
-			coffin.transform.parent = null;
-			//coffin.transform.parent = _slot; // UNITY BUG?! GameObject disappears and behaves undefinedly
-		}
-
-		public override void Step() {
-			base.Step();
-			_coffin.transform.position = _slot.position; // bug workaround
-			_coffin.transform.rotation = _slot.rotation;
+			coffin.transform.parent = _slot;
+			coffin.transform.LocalReset();
 		}
 
 		protected override void CheckForInteraction() {

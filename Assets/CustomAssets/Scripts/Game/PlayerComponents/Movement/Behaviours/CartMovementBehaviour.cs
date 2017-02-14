@@ -34,7 +34,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 		}
 
-		public override void ResetModifiedState() {
+		public override void OnDestroy() {
 			foreach (Collider c in _disabledColliders) {
 				c.enabled = true;
 			}

@@ -37,7 +37,7 @@ namespace Cubiquity
                     indicesAsInt[ct] = indices[ct];
                 }
 
-                // ResetModifiedState any previous mesh data.
+                // OnDestroy any previous mesh data.
                 mesh.Clear(true);
 
                 // Required for the CubicVertex decoding process.
@@ -99,7 +99,7 @@ namespace Cubiquity
                     indicesAsInt[ct] = indices[ct];
                 }
 
-                // ResetModifiedState any previous mesh data.
+                // OnDestroy any previous mesh data.
                 mesh.Clear(true);
 
                 // Create the arrays which we'll copy the data to.

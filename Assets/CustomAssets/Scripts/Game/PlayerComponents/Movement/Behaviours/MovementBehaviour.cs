@@ -25,7 +25,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 		public abstract void Step();
-		public abstract void ResetModifiedState();
+		public abstract void OnDestroy();
 	}
 
 }
