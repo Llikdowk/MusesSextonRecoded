@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Security.Cryptography;
 using Game.PlayerComponents.Movement;
 using Game.PlayerComponents.Movement.Behaviours;
 using UnityEngine;
@@ -18,38 +19,43 @@ namespace Game.PlayerComponents {
 
 	public abstract class PlayerState {
 		protected PlayerState() {
-			Movement = Player.GetInstance().Movement;
-			Transform = Player.GetInstance().transform;
-			Config = Player.GetInstance().Config;
+			_movement = Player.GetInstance().Movement;
+			_transform = Player.GetInstance().transform;
+			_config = Player.GetInstance().Config;
 		}
 
 		public void CheckInternalInteraction(bool interaction) {
-			Movement.CheckInternalInteraction(interaction);
+			_movement.CheckInternalInteraction(interaction);
 		}
 
-		protected CharacterMovement Movement;
-		protected Transform Transform;
-		protected SuperConfig Config;
+		protected CharacterMovement _movement;
+		protected Transform _transform;
+		protected SuperConfig _config;
 	}
 
 	public class WalkRunState : PlayerState {
 		public WalkRunState() {
-			Movement.MovementBehaviour = new WalkRunMovementBehaviour(Transform, Config);
+			_movement.MovementBehaviour = new WalkRunMovementBehaviour(_transform, _config);
 		}
 	}
 
 	public class DriveCartState : PlayerState {
 		public DriveCartState(GameObject cart) {
-			Movement.MovementBehaviour = new CartMovementBehaviour(Transform, cart, Config);
+			_movement.MovementBehaviour = new CartMovementBehaviour(_transform, cart, _config);
 		}
 	}
 
 	public class DragCoffinState : PlayerState {
 		public DragCoffinState(GameObject coffin) {
-			Movement.MovementBehaviour = new DragCoffinBehaviour(Transform, coffin, Config);
+			_movement.MovementBehaviour = new DragCoffinBehaviour(_transform, coffin, _config);
 		}
 	}
 
+	public class DigDownState : PlayerState {
+		public DigDownState(GameObject ground) {
+			_movement.MovementBehaviour = new DigBehaviour(_transform, ground);
+		}
+	}
 
 
 	[RequireComponent(typeof(CharacterController))]

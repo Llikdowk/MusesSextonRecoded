@@ -2,6 +2,7 @@
 using Audio;
 using Boo.Lang.Runtime.DynamicDispatching;
 using Cubiquity;
+using Game.Entities;
 using MiscComponents;
 using UnityEngine;
 
@@ -62,13 +63,10 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			marker.transform.parent = _digMarker.transform;
 			marker.transform.LocalReset();
 			SpriteRenderer sr = marker.AddComponent<SpriteRenderer>();
-			sr.sprite = Resources.Load<Sprite>("Sprites/bury");
+			sr.sprite = Resources.Load<Sprite>("Sprites/dig");
 			sr.material = new Material(Shader.Find("Custom/UniformSpriteFaceCamera"));
 			sr.material.color = new Color(0, 81.0f/255.0f, 240.0f/255.0f);
 
-			_ground = Resources.Load<GameObject>("Prefabs/Ground");
-			_ground.name = "_ground";
-			_ground.SetActive(false);
 		}
 
 		public override void Step() {
@@ -117,19 +115,23 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 					_digMarker.transform.up = Vector3.Lerp(_digMarker.transform.up, hit.normal, 0.05f);
 					_useAction.StartBehaviour = () => {
 						Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_transform.position, _cameraTransform.forward));
-						GameObject ground = Object.Instantiate(_ground);
-						ground.SetActive(true);
+						GameObject tomb = new GameObject("_tomb");
+						CreateTombComponent tombComponent = tomb.AddComponent<CreateTombComponent>();
+
 						Vector3 continuousPosition = hit.point - hit.normal * 0.5f;
 						Vector3 discretePosition = new Vector3((int)continuousPosition.x, (int)continuousPosition.y, (int)continuousPosition.z);
-						ground.transform.position = discretePosition;
-						ground.transform.up = hit.normal;
+						tomb.transform.position = discretePosition; 
+						tomb.transform.up = hit.normal;
+
 						Debug.DrawRay(v[0], Vector3.up*10, Color.magenta);
 						Debug.DrawRay(v[1], Vector3.up*10, Color.magenta);
 						Vector3 upperLeft = v[0];
 						Vector3 lowerRight = v[1];
-						Vector3 middleLow = new Vector3(upperLeft.x - 2.0f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z)/2.0f );
+						Vector3 middleLow = new Vector3(upperLeft.x - 4.0f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z)/2.0f );
 						Player.GetInstance().MoveImmediatlyTo(middleLow);
 						Player.GetInstance().transform.rotation =  Quaternion.AngleAxis(80, Vector3.up);
+						Player.GetInstance().CurrentState = new DigDownState(tombComponent.GetGround());
+
 					};
 				}
 				else {

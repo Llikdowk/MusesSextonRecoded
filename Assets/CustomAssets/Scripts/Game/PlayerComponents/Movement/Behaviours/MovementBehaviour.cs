@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.PlayerComponents.Movement.Behaviours {
 
@@ -19,6 +20,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			Player.GetInstance().Actions.ResetAllActions();
 			_transform = transform;
 		}
+
 
 		public void AddForce(Vector3 dir, float force) {
 			_stepMovement += dir * force;
