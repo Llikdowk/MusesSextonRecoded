@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Audio;
 using Boo.Lang.Runtime.DynamicDispatching;
+using C5;
 using Cubiquity;
 using Game.Entities;
+using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using MiscComponents;
 using UnityEngine;
 
@@ -68,8 +70,18 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			sr.material = new Material(Shader.Find("Custom/UniformSpriteFaceCamera"));
 			sr.material.color = new Color(0, 81.0f/255.0f, 240.0f/255.0f);
 
+			/*
+			 *  _useAction.StartAction = () => { 
+			 *  if (!CanInteract) return;
+			 *  _interactions.FindMax().DoInteraction(); 
+			 *  }
+			 */
+
+
 		}
 
+		private Interaction n;
+		//private C5.IntervalHeap<Interaction> _interactions = new IntervalHeap<Interaction>();
 		public override void Step() {
 			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().Controller.WorldMovementProcessed); // TODO clean this
 			if (SelfMovement != Vector3.zero) { 
@@ -85,13 +97,39 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 
+			/*
 			if (CanInteract) {
 				CheckForInteraction();
 			}
 			else {
 				CleanOutline();
 			}
+			*/
+
+			//_interactions.FindMax().DoInteraction();
+			if (n != null) {
+				n.DoInteraction();
+			}
+			//CheckForInteraction();
+
 		}
+
+		public void OnCoffinUsed(GameObject g) {
+			//Interactions.add(PickUpCoffinInteraction, 100);
+			n = new PickUpCoffinInteraction(g);
+			CleanOutline();
+		}
+
+
+		/*
+		public void OnCartUsed() {
+			Interactions.add(DriveCartInteraction, 200);
+		}
+
+		public void OnTerrainCarved() {
+			
+		}
+		*/
 
 		private bool modified = false;
 		protected virtual void CheckForInteraction() {
@@ -106,7 +144,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				if (g.tag == _coffinTag && hit.distance < 2.5f) {
 					modified = true;
 					SetOutline(g);
-					_useAction.StartBehaviour = () => SetDragCoffinUse(g);
+					OnCoffinUsed(g);
 				} 
 				else if (g.tag == _terrainTag && hit.distance > 2.0f) {
 					modified = true;
@@ -149,19 +187,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			
 		}
 
-		private void SetDragCoffinUse(GameObject coffin) {
-
-			CleanOutline();
-			coffin.layer = LayerMaskManager.Get(Layer.DrawFront);
-			MarkableComponent m = coffin.GetComponent<MarkableComponent>();
-			if (m != null) {
-				m.DisableMark();
-			} else {
-				DebugMsg.ComponentNotFound(Debug.LogWarning, typeof(MarkableComponent));
-			}
-			Player.GetInstance().CurrentState = new DragCoffinState(coffin);
-
-		}
 
 		private void SetOutline(GameObject g) {
 			_outlined.Add(g);
