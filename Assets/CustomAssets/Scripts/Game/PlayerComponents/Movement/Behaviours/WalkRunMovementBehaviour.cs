@@ -2,21 +2,14 @@
 using Audio;
 using Boo.Lang.Runtime.DynamicDispatching;
 using C5;
-using Cubiquity;
-using Game.Entities;
 using Game.PlayerComponents.Movement.Behaviours.Interactions;
-using MiscComponents;
 using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours {
 	public class WalkRunMovementBehaviour : MovementBehaviour {
 		private MovementConfig _currentConfig;
-		private readonly Action<PlayerAction> _runAction;
-		private readonly Action<PlayerAction> _useAction;
 		private readonly Transform _cameraTransform;
 		private readonly int _layerMaskAllButPlayer;
-		private readonly List<GameObject> _outlined = new List<GameObject>();
-		private readonly int _outlineLayer;
 		private readonly string _coffinTag;
 		private readonly string _terrainTag;
 
@@ -31,16 +24,13 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_layerMaskAllButPlayer = ~(1 << LayerMaskManager.Get(Layer.Player));
 			_coffinTag = TagManager.Get(Tag.Coffin);
 			_terrainTag = TagManager.Get(Tag.Terrain);
-			_outlineLayer = LayerMaskManager.Get(Layer.Outline);
 
-			_runAction = Player.GetInstance().Actions.GetAction(PlayerAction.Run);
-			_runAction.StartBehaviour = () => _currentConfig = runConfig;
-			_runAction.FinishBehaviour = () => _currentConfig = walkConfig;
-			_useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
+			var runAction = Player.GetInstance().Actions.GetAction(PlayerAction.Run);
+			runAction.StartBehaviour = () => _currentConfig = runConfig;
+			runAction.FinishBehaviour = () => _currentConfig = walkConfig;
+			var useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
 
-
-
-			_useAction.StartBehaviour = () => {
+			useAction.StartBehaviour = () => {
 				n.DoInteraction();
 			};
 			/*
@@ -105,19 +95,14 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 		
 
-		private bool modified = false;
 		protected virtual void CheckForInteraction() {
 			if (!CanInteract) return;
 
 			Ray ray = new Ray(_transform.position, _cameraTransform.forward);
 			RaycastHit hit;
-			//_digMarker.SetActive(false);
 			if (Physics.SphereCast(ray, 0.05f, out hit, 5.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
 				GameObject g = hit.collider.gameObject;
-				//CleanOutline();
 				if (g.tag == _coffinTag && hit.distance < 2.5f) {
-					modified = true;
-					//SetOutline(g);
 					if (n.GetType() != typeof(PickUpCoffinInteraction)) {
 						OnCoffinUsed(g);
 					}
@@ -147,22 +132,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 
-		/*
-		private void SetOutline(GameObject g) {
-			_outlined.Add(g);
-			g.layer = _outlineLayer;
-		}
-
-		private void CleanOutline() {
-			foreach (GameObject go in _outlined) { // TODO clean this code
-				go.layer = LayerMaskManager.Get(Layer.Default);
-			}
-			_outlined.Clear();
-		}
-		*/
-
 		public override void OnDestroy() { 
-			//Object.Destroy(_digMarker);
 		}
 	}
 
