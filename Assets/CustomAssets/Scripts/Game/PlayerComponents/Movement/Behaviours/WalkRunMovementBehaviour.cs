@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Audio;
-using Boo.Lang.Runtime.DynamicDispatching;
-using C5;
+﻿using Audio;
 using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using UnityEngine;
 
@@ -33,18 +30,9 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			useAction.StartBehaviour = () => {
 				Interaction.DoInteraction();
 			};
-			/*
-			 *  _useAction.StartAction = () => { 
-			 *  if (!CanInteract) return;
-			 *  _interactions.FindMax().DoInteraction(); 
-			 *  }
-			 */
-
 
 		}
 
-		//private Interaction n = new EmptyInteraction();
-		//private C5.IntervalHeap<Interaction> _interactions = new IntervalHeap<Interaction>();
 		public override void Step() {
 			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().Controller.WorldMovementProcessed); // TODO clean this
 			if (SelfMovement != Vector3.zero) { 
@@ -60,37 +48,9 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 
-			/*
-			if (CanInteract) {
-				CheckForInteraction();
-			}
-			else {
-				CleanOutline();
-			}
-			*/
-
-			//_interactions.FindMax().DoInteraction();
 			Interaction.ShowFeedback();
 			CheckForInteraction();
 
-		}
-		public void OnCoffinUsed(GameObject g) {
-			//Interactions.add(PickUpCoffinInteraction, 100);
-			Debug.Log("oncoffinused");
-			Interaction.HideFeedback();
-			Interaction = new PickUpCoffinInteraction(g);
-			//CleanOutline();
-		}
-
-
-		/*
-		public void OnCartUsed() {
-			Interactions.add(DriveCartInteraction, 200);
-		}
-		*/
-		public void OnCarveTerrain(RaycastHit hit) {
-			Interaction.HideFeedback();
-			Interaction = new CarveTerrainInteraction(hit);
 		}
 		
 
@@ -103,7 +63,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				GameObject g = hit.collider.gameObject;
 				if (g.tag == _coffinTag && hit.distance < 2.5f) {
 					if (Interaction.GetType() != typeof(PickUpCoffinInteraction)) {
-						OnCoffinUsed(g);
+						Interaction = new PickUpCoffinInteraction(g);
 					}
 					else {
 						if ((Interaction as PickUpCoffinInteraction).Coffin.GetInstanceID() != g.GetInstanceID()) {
@@ -114,7 +74,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				} 
 				else if (g.tag == _terrainTag && hit.distance > 2.0f) {
 					if (Interaction.GetType() != typeof(CarveTerrainInteraction)) {
-						OnCarveTerrain(hit);
+						Interaction = new CarveTerrainInteraction(hit);
 					}
 					else {
 						(Interaction as CarveTerrainInteraction).RefreshHit(hit);
@@ -129,7 +89,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			}
 			
 		}
-
 
 		public override void OnDestroy() { 
 		}

@@ -18,8 +18,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			set {
 				_interaction.HideFeedback();
 				_interaction = value;
-			}
-			
+			}	
 		}
 
 		private Interaction _interaction = new EmptyInteraction();

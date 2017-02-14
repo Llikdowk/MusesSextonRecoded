@@ -1,4 +1,5 @@
 ﻿using Game.PlayerComponents.Movement.Behaviours;
+using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using UnityEngine;
 
 namespace Game.PlayerComponents {
@@ -9,9 +10,13 @@ namespace Game.PlayerComponents {
 
 		public MovementBehaviour MovementBehaviour {
 			set {
+				_movementBehaviour.Interaction = new EmptyInteraction();
 				_movementBehaviour.OnDestroy();
 				_movementBehaviour = value;
 				_movementBehaviour.CanInteract = _canInteract;
+			}
+			get {
+				return _movementBehaviour;
 			}
 		}
 
@@ -31,8 +36,6 @@ namespace Game.PlayerComponents {
 		}
 
 		public void Update() {
-
-			//CheckMovement();
 			_movementBehaviour.Step();
 		}
 
