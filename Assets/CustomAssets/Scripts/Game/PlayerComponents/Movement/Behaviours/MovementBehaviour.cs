@@ -1,6 +1,5 @@
 ﻿using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Game.PlayerComponents.Movement.Behaviours {
 

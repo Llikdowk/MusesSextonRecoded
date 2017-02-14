@@ -39,15 +39,5 @@ namespace Game.PlayerComponents {
 			_movementBehaviour.Step();
 		}
 
-		//TODO deprecate
-		public void AddForce(Vector3 dir, float force) {
-			_movementBehaviour.AddForce(dir, force);
-		}
-
-		public void CheckInternalInteraction(bool interaction) {
-			_canInteract = interaction;
-			_movementBehaviour.CanInteract = interaction;
-		}
-
 	}
 }

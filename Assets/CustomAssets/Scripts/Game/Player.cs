@@ -24,10 +24,6 @@ namespace Game.PlayerComponents {
 			_config = Player.GetInstance().Config;
 		}
 
-		public void CheckInternalInteraction(bool interaction) {
-			_movement.CheckInternalInteraction(interaction);
-		}
-
 		protected CharacterMovement _movement;
 		protected Transform _transform;
 		protected SuperConfig _config;
