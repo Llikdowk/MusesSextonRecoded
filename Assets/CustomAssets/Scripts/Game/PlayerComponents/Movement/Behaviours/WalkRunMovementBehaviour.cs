@@ -20,6 +20,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		private readonly TerrainVolume _terrainVolume;
 		private readonly CarveTerrainVolumeComponent _terrainCarver;
 		private readonly GameObject _ground;
+		private readonly GameObject _digMarker;
 
 		public WalkRunMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
 			Player.GetInstance().Look.Config = config.WalkRunLook;
@@ -92,7 +93,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			}
 		}
 
-		private GameObject _digMarker;
 		private bool modified = false;
 		protected virtual void CheckForInteraction() {
 			if (!CanInteract) return;
@@ -176,7 +176,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 		public override void OnDestroy() { 
-			//_runAction.Reset();
 			Object.Destroy(_digMarker);
 		}
 	}

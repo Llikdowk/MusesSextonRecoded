@@ -1,13 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.PlayerComponents {
-	public enum CollisionMask {
-		None = 0x000, Forward = 0x0001, Back = 0x0010, Right = 0x0100, Left = 0x1000
-	}
-
 	[RequireComponent(typeof(CharacterMovement))]
 	[RequireComponent(typeof(CapsuleCollider))]
 	public class CharacterController : MonoBehaviour {
@@ -31,9 +24,8 @@ namespace Game.PlayerComponents {
 
 		private const int MaxSimultaneousColliders = 32;
 		private RaycastHit[] _colliderHits = new RaycastHit[MaxSimultaneousColliders];
-		private List<Collider> _currentTriggers = new List<Collider>(); 
-		private List<Collider> _stayTriggers = new List<Collider>();
-		private uint _collisions;
+		private C5.IList<Collider> _currentTriggers = new C5.ArrayList<Collider>(); 
+		private readonly C5.IList<Collider> _stayTriggers = new C5.ArrayList<Collider>();
 
 		public void Start() {
 			int player = 1 << LayerMaskManager.Get(Layer.Player);
@@ -44,7 +36,7 @@ namespace Game.PlayerComponents {
 		}
 
 		private void ProcessTriggers(ref RaycastHit[] hits, ref int hitsLength) {
-			_currentTriggers.Clear();
+			_currentTriggers = _currentTriggers.View(0, 0);
 
 			for (int i = hitsLength-1; i >= 0; --i) {
 				if (hits[i].collider.isTrigger) {
@@ -202,11 +194,5 @@ namespace Game.PlayerComponents {
 			}
 
 		}
-
-
-		public uint GetCollisions() {
-			return _collisions;
-		}
-
 	}
 }
