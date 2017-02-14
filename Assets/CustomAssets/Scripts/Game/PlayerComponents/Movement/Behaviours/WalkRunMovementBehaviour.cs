@@ -31,7 +31,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			var useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
 
 			useAction.StartBehaviour = () => {
-				n.DoInteraction();
+				Interaction.DoInteraction();
 			};
 			/*
 			 *  _useAction.StartAction = () => { 
@@ -43,7 +43,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 		}
 
-		private Interaction n = new EmptyInteraction();
+		//private Interaction n = new EmptyInteraction();
 		//private C5.IntervalHeap<Interaction> _interactions = new IntervalHeap<Interaction>();
 		public override void Step() {
 			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().Controller.WorldMovementProcessed); // TODO clean this
@@ -70,16 +70,15 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			*/
 
 			//_interactions.FindMax().DoInteraction();
-			n.ShowFeedback();
+			Interaction.ShowFeedback();
 			CheckForInteraction();
 
 		}
-
 		public void OnCoffinUsed(GameObject g) {
 			//Interactions.add(PickUpCoffinInteraction, 100);
 			Debug.Log("oncoffinused");
-			n.HideFeedback();
-			n = new PickUpCoffinInteraction(g);
+			Interaction.HideFeedback();
+			Interaction = new PickUpCoffinInteraction(g);
 			//CleanOutline();
 		}
 
@@ -90,8 +89,8 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 		*/
 		public void OnCarveTerrain(RaycastHit hit) {
-			n.HideFeedback();
-			n = new CarveTerrainInteraction(hit);
+			Interaction.HideFeedback();
+			Interaction = new CarveTerrainInteraction(hit);
 		}
 		
 
@@ -103,30 +102,30 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			if (Physics.SphereCast(ray, 0.05f, out hit, 5.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
 				GameObject g = hit.collider.gameObject;
 				if (g.tag == _coffinTag && hit.distance < 2.5f) {
-					if (n.GetType() != typeof(PickUpCoffinInteraction)) {
+					if (Interaction.GetType() != typeof(PickUpCoffinInteraction)) {
 						OnCoffinUsed(g);
 					}
 					else {
-						if ((n as PickUpCoffinInteraction).Coffin.GetInstanceID() != g.GetInstanceID()) {
-							n.HideFeedback();
-							(n as PickUpCoffinInteraction).Coffin = g;
+						if ((Interaction as PickUpCoffinInteraction).Coffin.GetInstanceID() != g.GetInstanceID()) {
+							Interaction.HideFeedback();
+							(Interaction as PickUpCoffinInteraction).Coffin = g;
 						}
 					}
 				} 
 				else if (g.tag == _terrainTag && hit.distance > 2.0f) {
-					if (n.GetType() != typeof(CarveTerrainInteraction)) {
+					if (Interaction.GetType() != typeof(CarveTerrainInteraction)) {
 						OnCarveTerrain(hit);
 					}
 					else {
-						(n as CarveTerrainInteraction).RefreshHit(hit);
+						(Interaction as CarveTerrainInteraction).RefreshHit(hit);
 					}
 				}
 				else {
-					n.HideFeedback();
+					Interaction.HideFeedback();
 				}
 			}
 			else {
-				n.HideFeedback();
+				Interaction.HideFeedback();
 			}
 			
 		}

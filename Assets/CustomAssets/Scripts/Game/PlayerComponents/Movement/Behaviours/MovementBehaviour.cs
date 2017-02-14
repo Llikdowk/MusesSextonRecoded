@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.PlayerComponents.Movement.Behaviours.Interactions;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.PlayerComponents.Movement.Behaviours {
@@ -11,6 +12,19 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		protected Vector3 _stepMovement;
 
 		public bool CanInteract = true;
+
+		public Interaction Interaction {
+			get { return _interaction; }
+			set {
+				_interaction.HideFeedback();
+				_interaction = value;
+			}
+			
+		}
+
+		private Interaction _interaction = new EmptyInteraction();
+
+
 		public Vector3 SelfMovement { get { return _movement.SelfMovement; } }
 		public Vector3 WorldMovement { get { return _transform.localToWorldMatrix.MultiplyVector(_movement.SelfMovement); } }
 		public Vector3 SelfDir { get { return _movement.SelfMovement.normalized; } }

@@ -13,8 +13,6 @@ namespace Triggers {
 		private GameObject _model;
 		private MarkableComponent mark;
 
-		//private ActionDelegate _useStartBehaviourBackup;
-
 
 		public void Start() {
 			_player = Player.GetInstance();
@@ -47,15 +45,15 @@ namespace Triggers {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
 
 			if (mark) mark.DisableMark();
-			if (Player.GetInstance().CurrentState.GetType() == typeof(WalkRunState)) {
-				Player.GetInstance().CurrentState.CheckInternalInteraction(false);
+			if (_player.CurrentState.GetType() == typeof(WalkRunState)) {
+				_player.CurrentState.CheckInternalInteraction(false);
 
-				if (Player.GetInstance().CurrentState.GetType() == typeof(WalkRunState)) {
+				if (_player.CurrentState.GetType() == typeof(WalkRunState)) {
 					AddOutline();
-					Action use = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
+					Action use = _player.Actions.GetAction(PlayerAction.Use);
 					use.StartBehaviour = () => {
 						RemoveOutline();
-						Player.GetInstance().CurrentState = new DriveCartState(transform.parent.gameObject);
+						_player.CurrentState = new DriveCartState(transform.parent.gameObject);
 					};
 				}
 			}
@@ -64,7 +62,7 @@ namespace Triggers {
 		public void OnTriggerExit(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
 
-			Player.GetInstance().CurrentState.CheckInternalInteraction(true);
+			_player.CurrentState.CheckInternalInteraction(true);
 			if (mark) mark.EnableMark();
 			RemoveOutline();
 		}

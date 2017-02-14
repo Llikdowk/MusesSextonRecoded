@@ -1,6 +1,11 @@
 ﻿
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public class DriveCartInteraction : Interaction {
+
+		public DriveCartInteraction() {
+			
+		}
+
 		public override void DoInteraction() {
 			throw new System.NotImplementedException();
 		}
