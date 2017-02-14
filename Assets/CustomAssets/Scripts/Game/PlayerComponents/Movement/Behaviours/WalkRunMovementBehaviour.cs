@@ -19,10 +19,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		private readonly int _outlineLayer;
 		private readonly string _coffinTag;
 		private readonly string _terrainTag;
-		private readonly TerrainVolume _terrainVolume;
-		private readonly CarveTerrainVolumeComponent _terrainCarver;
-		private readonly GameObject _ground;
-		private readonly GameObject _digMarker;
 
 		public WalkRunMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
 			Player.GetInstance().Look.Config = config.WalkRunLook;
@@ -42,34 +38,11 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_runAction.FinishBehaviour = () => _currentConfig = walkConfig;
 			_useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
 
-			string terrainName = "Terrain Volume";
-			GameObject terrain = GameObject.Find(terrainName);
-			if (!terrain) {
-				DebugMsg.GameObjectNotFound(Debug.LogError, terrainName);
-			}
-			else {
-				_terrainVolume = terrain.GetComponent<TerrainVolume>();
-				if (!_terrainVolume) DebugMsg.ComponentNotFound(Debug.LogError, typeof(TerrainVolume));
 
-				_terrainCarver = terrain.GetComponent<CarveTerrainVolumeComponent>();
-				if (!_terrainCarver) DebugMsg.ComponentNotFound(Debug.LogError, typeof(CarveTerrainVolumeComponent));
-			}
 
-			_digMarker = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			Object.Destroy(_digMarker.GetComponent<Collider>());
-			_digMarker.SetActive(false);
-			_digMarker.name = "_digMarker";
-			_digMarker.transform.localScale = new Vector3(4, 0.1f, 4);
-			_digMarker.layer = _outlineLayer;
-			_digMarker.GetComponent<MeshRenderer>().material = new Material(Shader.Find("UI/Default"));
-			GameObject marker = new GameObject("_marker");
-			marker.transform.parent = _digMarker.transform;
-			marker.transform.LocalReset();
-			SpriteRenderer sr = marker.AddComponent<SpriteRenderer>();
-			sr.sprite = Resources.Load<Sprite>("Sprites/dig");
-			sr.material = new Material(Shader.Find("Custom/UniformSpriteFaceCamera"));
-			sr.material.color = new Color(0, 81.0f/255.0f, 240.0f/255.0f);
-
+			_useAction.StartBehaviour = () => {
+				n.DoInteraction();
+			};
 			/*
 			 *  _useAction.StartAction = () => { 
 			 *  if (!CanInteract) return;
@@ -80,7 +53,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 		}
 
-		private Interaction n;
+		private Interaction n = new EmptyInteraction();
 		//private C5.IntervalHeap<Interaction> _interactions = new IntervalHeap<Interaction>();
 		public override void Step() {
 			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().Controller.WorldMovementProcessed); // TODO clean this
@@ -107,15 +80,13 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			*/
 
 			//_interactions.FindMax().DoInteraction();
-			if (n != null) {
-				n.DoInteraction();
-			}
-			//CheckForInteraction();
+			CheckForInteraction();
 
 		}
 
 		public void OnCoffinUsed(GameObject g) {
 			//Interactions.add(PickUpCoffinInteraction, 100);
+			Debug.Log("oncoffinused");
 			n = new PickUpCoffinInteraction(g);
 			CleanOutline();
 		}
@@ -125,11 +96,11 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		public void OnCartUsed() {
 			Interactions.add(DriveCartInteraction, 200);
 		}
-
-		public void OnTerrainCarved() {
-			
-		}
 		*/
+		public void OnCarveTerrain(RaycastHit hit) {
+			n = new CarveTerrainInteraction(hit);
+		}
+		
 
 		private bool modified = false;
 		protected virtual void CheckForInteraction() {
@@ -137,53 +108,32 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			Ray ray = new Ray(_transform.position, _cameraTransform.forward);
 			RaycastHit hit;
-			_digMarker.SetActive(false);
+			//_digMarker.SetActive(false);
 			if (Physics.SphereCast(ray, 0.05f, out hit, 5.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
 				GameObject g = hit.collider.gameObject;
 				CleanOutline();
 				if (g.tag == _coffinTag && hit.distance < 2.5f) {
 					modified = true;
-					SetOutline(g);
+					//SetOutline(g);
+					if (n.GetType() != typeof(PickUpCoffinInteraction))
 					OnCoffinUsed(g);
 				} 
 				else if (g.tag == _terrainTag && hit.distance > 2.0f) {
 					modified = true;
-					_digMarker.SetActive(true);
-					_digMarker.transform.position = hit.point;
-					_digMarker.transform.up = Vector3.Lerp(_digMarker.transform.up, hit.normal, 0.05f);
-					_useAction.StartBehaviour = () => {
-						Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_transform.position, _cameraTransform.forward));
-						GameObject tomb = new GameObject("_tomb");
-						CreateTombComponent tombComponent = tomb.AddComponent<CreateTombComponent>();
-
-						Vector3 continuousPosition = hit.point - hit.normal * 0.5f;
-						Vector3 discretePosition = new Vector3((int)continuousPosition.x, (int)continuousPosition.y, (int)continuousPosition.z);
-						tomb.transform.position = discretePosition; 
-						tomb.transform.up = hit.normal;
-
-						Debug.DrawRay(v[0], Vector3.up*10, Color.magenta);
-						Debug.DrawRay(v[1], Vector3.up*10, Color.magenta);
-						Vector3 upperLeft = v[0];
-						Vector3 lowerRight = v[1];
-						Vector3 middleLow = new Vector3(upperLeft.x - 4.0f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z)/2.0f );
-						Player.GetInstance().MoveImmediatlyTo(middleLow);
-						Player.GetInstance().transform.rotation =  Quaternion.AngleAxis(80, Vector3.up);
-						Player.GetInstance().CurrentState = new DigDownState(tombComponent.GetGround());
-
-					};
+					OnCarveTerrain(hit);
 				}
-				else {
-					modified = false;
-					_useAction.StartBehaviour = () => { };
-				}
+				//else {
+				//	modified = false;
+				//	_useAction.StartBehaviour = () => { };
+				//}
 			}
-			else {
-				if (modified) {
-					modified = false;
-					_useAction.StartBehaviour = () => { };
-					CleanOutline();
-				}
-			}
+			//else {
+			//	if (modified) {
+			//		modified = false;
+			//		_useAction.StartBehaviour = () => { };
+			//		//CleanOutline();
+			//	}
+			//}
 			
 		}
 
@@ -201,7 +151,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 		public override void OnDestroy() { 
-			Object.Destroy(_digMarker);
+			//Object.Destroy(_digMarker);
 		}
 	}
 
