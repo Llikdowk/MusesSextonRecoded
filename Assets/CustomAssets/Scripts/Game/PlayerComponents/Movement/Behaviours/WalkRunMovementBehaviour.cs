@@ -129,8 +129,12 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 					}
 				} 
 				else if (g.tag == _terrainTag && hit.distance > 2.0f) {
-					modified = true;
-					OnCarveTerrain(hit);
+					if (n.GetType() != typeof(CarveTerrainInteraction)) {
+						OnCarveTerrain(hit);
+					}
+					else {
+						(n as CarveTerrainInteraction).RefreshHit(hit);
+					}
 				}
 				else {
 					n.HideFeedback();

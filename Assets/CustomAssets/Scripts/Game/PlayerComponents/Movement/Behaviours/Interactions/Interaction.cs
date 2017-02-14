@@ -117,9 +117,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		public override void DoInteraction() {
 			Debug.Log("DO DIG INTERACTION");
-			_digMarker.SetActive(true);
-			_digMarker.transform.position = _hit.point;
-			_digMarker.transform.up = Vector3.Lerp(_digMarker.transform.up, _hit.normal, 0.05f);
 
 			Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_transform.position, _cameraTransform.forward));
 			GameObject tomb = new GameObject("_tomb");
@@ -139,6 +136,20 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			Player.GetInstance().transform.rotation =  Quaternion.AngleAxis(80, Vector3.up);
 			Player.GetInstance().CurrentState = new DigDownState(tombComponent.GetGround());
 
+		}
+
+		public override void ShowFeedback() {
+			_digMarker.SetActive(true);
+			_digMarker.transform.position = _hit.point;
+			_digMarker.transform.up = Vector3.Lerp(_digMarker.transform.up, _hit.normal, 0.05f);
+		}
+
+		public override void HideFeedback() {
+			_digMarker.SetActive(false);
+		}
+
+		public void RefreshHit(RaycastHit hit) {
+			_hit = hit;
 		}
 	}
 
