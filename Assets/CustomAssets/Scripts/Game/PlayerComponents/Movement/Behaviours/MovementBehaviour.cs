@@ -12,15 +12,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 		public bool CanInteract = true;
 
-		public Interaction CurrentInteraction {
-			get { return _currentInteraction; }
-			set {
-				_currentInteraction = value;
-			}	
-		}
-
-		private Interaction _currentInteraction = new EmptyInteraction();
-		public readonly C5.ArrayList<Interaction> _availableInteractions = new C5.ArrayList<Interaction>();
 
 		public Vector3 SelfMovement { get { return _movement.SelfMovement; } }
 		public Vector3 WorldMovement { get { return _transform.localToWorldMatrix.MultiplyVector(_movement.SelfMovement); } }
@@ -30,11 +21,54 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		protected MovementBehaviour(Transform transform) {
 			Player.GetInstance().Actions.ResetAllActions();
 			_transform = transform;
+
+			//TODO move INTERACTION HANDLING from CharacterMovement to here
+			var useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
+			useAction.StartBehaviour = () => {
+				//CurrentInteraction.DoInteraction();
+				CurrentInteraction.DoInteraction();
+			};
 		}
 
 
 		public abstract void Step();
 		public abstract void OnDestroy();
+
+		public void InteractionStep() {
+			Interaction potentialInteraction = null;
+
+			foreach (Interaction interaction in AvailableInteractions) {
+				potentialInteraction = interaction.CheckForPromotion();
+				if (potentialInteraction != null && CurrentInteraction != potentialInteraction) {
+					CurrentInteraction = potentialInteraction;
+					break;
+				}
+			}
+			if (potentialInteraction == null) {
+				//CurrentInteraction.HideFeedback();
+				CurrentInteraction = new EmptyInteraction();
+			}
+		}
+
+
+
+
+
+
+
+
+
+		public Interaction CurrentInteraction {
+			get { return _currentInteraction; }
+			set {
+				_currentInteraction = value;
+			}	
+		}
+
+		private Interaction _currentInteraction = new EmptyInteraction();
+
+		public readonly C5.ArrayList<Interaction> AvailableInteractions = new C5.ArrayList<Interaction>();
+
 	}
 
 }

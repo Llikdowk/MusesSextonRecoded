@@ -10,7 +10,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public override void HideFeedback() {
 		}
 
-		public override Interaction Check() {
+		public override Interaction CheckForPromotion() {
 			return null;
 		}
 	}

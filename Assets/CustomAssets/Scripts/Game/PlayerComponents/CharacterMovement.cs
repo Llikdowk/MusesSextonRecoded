@@ -2,15 +2,23 @@
 using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using UnityEngine;
 
+
+
 namespace Game.PlayerComponents {
+
+
+
+
 
 	[RequireComponent(typeof(InputController))]
 	public class CharacterMovement : MonoBehaviour {
 
 
+
+
+
 		public MovementBehaviour MovementBehaviour {
 			set {
-				_movementBehaviour.CurrentInteraction = new EmptyInteraction();
 				_movementBehaviour.OnDestroy();
 				_movementBehaviour = value;
 				_movementBehaviour.CanInteract = _canInteract;
@@ -31,12 +39,24 @@ namespace Game.PlayerComponents {
 		public Vector3 WorldDir { get { return _movementBehaviour.WorldDir; } }
 		private bool _canInteract = true;
 
+
+
+
+
+
+
+
+
 		public void Awake() {
 			_movementBehaviour = new NullMovementBehaviour(transform);
 		}
 
+		public void Start() {
+		}
+
 		public void Update() {
 			_movementBehaviour.Step();
+
 		}
 
 	}

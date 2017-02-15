@@ -38,7 +38,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			}
 		}
 
-		public override Interaction Check() {
+		public override Interaction CheckForPromotion() {
 			ShowFeedback();
 			return this;
 		}

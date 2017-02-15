@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using Game.PlayerComponents.Movement;
 using Game.PlayerComponents.Movement.Behaviours;
+using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using UnityEngine;
 
 
@@ -32,6 +33,14 @@ namespace Game.PlayerComponents {
 	public class WalkRunState : PlayerState {
 		public WalkRunState() {
 			_movement.MovementBehaviour = new WalkRunMovementBehaviour(_transform, _config);
+			_movement.MovementBehaviour.AvailableInteractions.Add(new PickUpCoffinInteraction());
+			_movement.MovementBehaviour.AvailableInteractions.Add(new CarveTerrainInteraction());
+		}
+	}
+	public class DragCoffinState : PlayerState {
+		public DragCoffinState(GameObject coffin) {
+			_movement.MovementBehaviour = new DragCoffinBehaviour(_transform, coffin, _config);
+			_movement.MovementBehaviour.AvailableInteractions.Add(new ThrowCoffinInteraction(coffin));
 		}
 	}
 
@@ -41,11 +50,6 @@ namespace Game.PlayerComponents {
 		}
 	}
 
-	public class DragCoffinState : PlayerState {
-		public DragCoffinState(GameObject coffin) {
-			_movement.MovementBehaviour = new DragCoffinBehaviour(_transform, coffin, _config);
-		}
-	}
 
 	public class DigDownState : PlayerState {
 		public DigDownState(GameObject ground) {
@@ -67,6 +71,10 @@ namespace Game.PlayerComponents {
 		[HideInInspector] public Camera Camera { get; private set; }
 		[HideInInspector] public ActionManager<PlayerAction> Actions = new ActionManager<PlayerAction>();
 		private CapsuleCollider _collider;
+		private int _layerMaskAllButPlayer;
+		private RaycastHit _hit;
+		private bool _hasHit;
+		private bool _isEyeSightValid = false;
 
 
 		private static Player _instance = null;
@@ -88,6 +96,7 @@ namespace Game.PlayerComponents {
 				Look = GetComponent<Look>();
 				Camera = GetComponentInChildren<Camera>();
 				_collider = GetComponent<CapsuleCollider>();
+				_layerMaskAllButPlayer = ~(1 << LayerMaskManager.Get(Layer.Player));
 			}
 			else {
 				Debug.LogWarning("Player singleton instance destroyed!");
@@ -99,8 +108,22 @@ namespace Game.PlayerComponents {
 			CurrentState = new WalkRunState();
 		}
 
+		public void Update() {
+			_isEyeSightValid = false;
+		}
+
 		public void MoveImmediatlyTo(Vector3 position) {
 			transform.position = position + Vector3.up * _collider.height/2.0f;
+		}
+
+		public bool GetEyeSight(out RaycastHit hit) {
+			if (!_isEyeSightValid) {
+				Ray ray = new Ray(transform.position, Camera.transform.forward);
+				_hasHit = Physics.SphereCast(ray, 0.05f, out _hit, 5.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
+				_isEyeSightValid = true;
+			}
+			hit = _hit;
+			return _hasHit;
 		}
 	}
 }

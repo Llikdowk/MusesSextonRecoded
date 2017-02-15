@@ -7,13 +7,10 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		private static GameObject _digMarker;
 
-		private readonly Transform _transform;
-		private readonly Transform _cameraTransform;
 		private readonly CarveTerrainVolumeComponent _terrainCarver;
-		//private RaycastHit _hit;
-		private EyeSight _eyeSight;
+		private readonly Player _player;
 
-		public CarveTerrainInteraction(EyeSight eyeSight) {
+		public CarveTerrainInteraction() {
 			Debug.Log("CONSTRUCT CARVE INTERACTION");
 			if (_digMarker == null) {
 				_digMarker = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -32,10 +29,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				sr.material.color = new Color(0, 81.0f / 255.0f, 240.0f / 255.0f);
 			}
 
-			_eyeSight = eyeSight;
-			Player player = Player.GetInstance();
-			_transform = player.transform;
-			_cameraTransform = player.Camera.transform;
+			_player = Player.GetInstance();
 
 			string terrainName = "Terrain Volume";
 			GameObject terrain = GameObject.Find(terrainName);
@@ -54,20 +48,23 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public override void DoInteraction() {
 			Debug.Log("DO DIG INTERACTION");
 
-			Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_transform.position, _cameraTransform.forward));
+			Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_player.transform.position, _player.Camera.transform.forward));
 			GameObject tomb = new GameObject("_tomb");
 			CreateTombComponent tombComponent = tomb.AddComponent<CreateTombComponent>();
 
-			Vector3 continuousPosition = _eyeSight.Hit.point - _eyeSight.Hit.normal * 0.5f;
+			RaycastHit hit;
+			_player.GetEyeSight(out hit);
+
+			Vector3 continuousPosition = hit.point - hit.normal * 0.5f;
 			Vector3 discretePosition = new Vector3((int)continuousPosition.x, (int)continuousPosition.y, (int)continuousPosition.z);
 			tomb.transform.position = discretePosition; 
-			tomb.transform.up = _eyeSight.Hit.normal;
+			tomb.transform.up = hit.normal;
 
 			Debug.DrawRay(v[0], Vector3.up*10, Color.magenta);
 			Debug.DrawRay(v[1], Vector3.up*10, Color.magenta);
 			Vector3 upperLeft = v[0];
 			Vector3 lowerRight = v[1];
-			Vector3 middleLow = new Vector3(upperLeft.x - 4.0f, _eyeSight.Hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z)/2.0f );
+			Vector3 middleLow = new Vector3(upperLeft.x - 4.0f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z)/2.0f );
 			Player.GetInstance().MoveImmediatlyTo(middleLow);
 			Player.GetInstance().transform.rotation =  Quaternion.AngleAxis(80, Vector3.up);
 			Player.GetInstance().CurrentState = new DigDownState(tombComponent.GetGround());
@@ -75,19 +72,25 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		protected override void ShowFeedback() {
+			RaycastHit hit;
+			_player.GetEyeSight(out hit);
+
 			_digMarker.SetActive(true);
-			_digMarker.transform.position = _eyeSight.Hit.point;
-			_digMarker.transform.up = Vector3.Lerp(_digMarker.transform.up, _eyeSight.Hit.normal, 0.05f);
+			_digMarker.transform.position = hit.point;
+			_digMarker.transform.up = Vector3.Lerp(_digMarker.transform.up, hit.normal, 0.05f);
 		}
 
 		public override void HideFeedback() {
 			_digMarker.SetActive(false);
 		}
 
-		public override Interaction Check() {
-			if (!_eyeSight.HasHit) return null;
-			GameObject g = _eyeSight.Hit.collider.gameObject;
-			if (g.tag == TagManager.Get(Tag.Terrain) && _eyeSight.Hit.distance > 2.0f) {
+		public override Interaction CheckForPromotion() {
+			RaycastHit hit;
+			bool hasHit = _player.GetEyeSight(out hit);
+
+			if (!hasHit) return null;
+			GameObject g = hit.collider.gameObject;
+			if (g.tag == TagManager.Get(Tag.Terrain) && hit.distance > 2.0f) {
 				ShowFeedback();
 				return this;
 			}

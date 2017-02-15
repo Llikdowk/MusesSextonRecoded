@@ -1,7 +1,5 @@
-﻿using Game;
-using Game.PlayerComponents;
+﻿using Game.PlayerComponents;
 using Game.PlayerComponents.Movement.Behaviours.Interactions;
-using MiscComponents;
 using UnityEngine;
 
 namespace Triggers {
@@ -20,14 +18,14 @@ namespace Triggers {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
 
 			if (_player.CurrentState.GetType() == typeof(WalkRunState)) {
-				_player.Movement.MovementBehaviour._availableInteractions.Insert(0, _cartInteraction);
+				_player.Movement.MovementBehaviour.AvailableInteractions.Insert(0, _cartInteraction);
 			}
 		}
 
 		public void OnTriggerExit(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
 			if (_player.CurrentState.GetType() == typeof(WalkRunState)) {
-				_player.Movement.MovementBehaviour._availableInteractions.Remove(_cartInteraction);
+				_player.Movement.MovementBehaviour.AvailableInteractions.Remove(_cartInteraction);
 			}
 
 		}
