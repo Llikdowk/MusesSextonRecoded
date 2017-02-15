@@ -22,7 +22,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		public override void DoInteraction() {
 			HideFeedback();
-			Player.GetInstance().CurrentState = new DriveCartState(_cart, this);
+			Player.GetInstance().CurrentState = new DriveCartState(_cart);
 		}
 
 		public override void ShowFeedback() {

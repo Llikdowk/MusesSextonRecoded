@@ -10,13 +10,8 @@ namespace Game.PlayerComponents {
 		Use, MoveForward, MoveLeft, MoveRight, MoveBack, Run
 	}
 
-	/*
-	public enum PlayerState {
-		Walk, DriveCart, Dig, Poem, DragCoffin
-	}
-	*/
-
 	public abstract class PlayerState {
+
 		protected PlayerState() {
 			_movement = Player.GetInstance().Movement;
 			_transform = Player.GetInstance().transform;
@@ -36,12 +31,6 @@ namespace Game.PlayerComponents {
 		}
 	}
 
-	public class WalkRunStateFromCart : WalkRunState {
-		public WalkRunStateFromCart(DriveCartInteraction interaction) {
-			_movement.MovementBehaviour.AvailableInteractions.Insert(0, interaction);
-		}
-	}
-
 	public class DragCoffinState : PlayerState {
 		public DragCoffinState(GameObject coffin) {
 			_movement.MovementBehaviour = new DragCoffinBehaviour(_transform, coffin, _config);
@@ -51,9 +40,9 @@ namespace Game.PlayerComponents {
 	}
 
 	public class DriveCartState : PlayerState {
-		public DriveCartState(GameObject cart, DriveCartInteraction driveInteraction) {
+		public DriveCartState(GameObject cart) {
 			_movement.MovementBehaviour = new CartMovementBehaviour(_transform, cart, _config);
-			_movement.MovementBehaviour.AvailableInteractions.Add(new StopDrivingCartInteraction(driveInteraction));
+			_movement.MovementBehaviour.AvailableInteractions.Add(new StopDrivingCartInteraction());
 		}
 	}
 
@@ -71,7 +60,8 @@ namespace Game.PlayerComponents {
 		public PlayerState CurrentState;
 		public SuperConfig Config;
 
-		// TODO: Movement should not be accessible from everywhere, its changes should be limited in PlayerState classes
+		// TODO: should movement be accessible from everywhere? its changes should be limited in PlayerState classes
+		// TODO: what about actions?
 		[HideInInspector] public CharacterMovement Movement;
 		[HideInInspector] public CharacterController Controller;
 		[HideInInspector] public Look Look;

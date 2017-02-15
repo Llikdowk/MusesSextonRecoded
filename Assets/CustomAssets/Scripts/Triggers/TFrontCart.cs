@@ -14,19 +14,27 @@ namespace Triggers {
 			_cartInteraction = new DriveCartInteraction(transform.parent.gameObject);
 		}
 
-		public void OnTriggerEnter(Collider other) {
+		private bool _hasEntered = false;
+		public void OnTriggerStay(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
 
-			if (_player.CurrentState.GetType() == typeof(WalkRunState) || _player.CurrentState.GetType() == typeof(WalkRunStateFromCart)) {
-				_player.Movement.MovementBehaviour.AvailableInteractions.Insert(0, _cartInteraction);
+			if (_player.CurrentState.GetType() == typeof(WalkRunState)) {
+				if (!_hasEntered) {
+					_player.Movement.MovementBehaviour.AvailableInteractions.Insert(0, _cartInteraction);
+					_hasEntered = true;
+				}
+			}
+			else {
+				_hasEntered = false;
 			}
 		}
 
 		public void OnTriggerExit(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
-			if (_player.CurrentState.GetType() == typeof(WalkRunState) || _player.CurrentState.GetType() == typeof(WalkRunStateFromCart)) { 
+			if (_player.CurrentState.GetType() == typeof(WalkRunState)) { 
 				_player.Movement.MovementBehaviour.AvailableInteractions.Remove(_cartInteraction);
 			}
+			_hasEntered = false;
 		}
 	}
 }

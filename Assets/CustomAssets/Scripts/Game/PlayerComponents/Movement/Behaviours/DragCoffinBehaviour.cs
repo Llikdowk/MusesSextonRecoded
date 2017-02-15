@@ -1,5 +1,4 @@
-﻿using MiscComponents;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours {
 
