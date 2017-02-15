@@ -44,9 +44,19 @@ namespace Game {
 	}
 
 
-	public class DigDownState : PlayerState {
-		public DigDownState(GameObject ground) {
-			_movement.MovementBehaviour = new DigBehaviour(_transform, ground);
+	public class DigState : PlayerState {
+		public DigState(GameObject ground) {
+			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			_movement.MovementBehaviour.AddInteraction(new DigInteraction(ground));
 		}
 	}
+
+	public class BuryState : PlayerState {
+		public BuryState(GameObject tomb, GameObject ground) {
+			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			_movement.MovementBehaviour.AddInteraction(new BuryInteraction(tomb, ground));
+		}
+	}
+
+
 }

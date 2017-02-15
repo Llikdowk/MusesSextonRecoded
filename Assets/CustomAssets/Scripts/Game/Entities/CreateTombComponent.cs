@@ -34,7 +34,8 @@ namespace Game.Entities {
 			trigger.isTrigger = true;
 			trigger.radius = 4.5f;
 
-			gameObject.AddComponent<TTomb>();
+			TTomb triggerTomb = gameObject.AddComponent<TTomb>();
+			triggerTomb.Init(_ground);
 		}
 
 		public GameObject GetGround() {

@@ -68,7 +68,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			Vector3 middleLow = new Vector3(upperLeft.x - 4.0f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z)/2.0f );
 			Player.GetInstance().MoveImmediatlyTo(middleLow);
 			Player.GetInstance().transform.rotation =  Quaternion.AngleAxis(80, Vector3.up);
-			Player.GetInstance().CurrentState = new DigDownState(tombComponent.GetGround());
+			Player.GetInstance().CurrentState = new DigState(tombComponent.GetGround());
 
 		}
 

@@ -6,9 +6,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		public NullMovementBehaviour(Transform transform) : base(transform) {
 		}
 
-		public override void Step() {
-		}
-
 		public override void OnDestroy() {
 		}
 	}
