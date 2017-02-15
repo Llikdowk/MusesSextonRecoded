@@ -8,33 +8,33 @@ namespace Triggers {
 
 		private Player _player;
 		private DriveCartInteraction _cartInteraction;
+		private bool _isChecked = false;
 
 		public void Start() {
 			_player = Player.GetInstance();
 			_cartInteraction = new DriveCartInteraction(transform.parent.gameObject);
 		}
 
-		private bool _hasEntered = false;
 		public void OnTriggerStay(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
 
 			if (_player.CurrentState.GetType() == typeof(WalkRunState)) {
-				if (!_hasEntered) {
-					_player.Movement.MovementBehaviour.AvailableInteractions.Insert(0, _cartInteraction);
-					_hasEntered = true;
+				if (!_isChecked) {
+					_player.Movement.MovementBehaviour.AddInteractionWithPriority(_cartInteraction);
+					_isChecked = true;
 				}
 			}
 			else {
-				_hasEntered = false;
+				_isChecked = false;
 			}
 		}
 
 		public void OnTriggerExit(Collider other) {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
 			if (_player.CurrentState.GetType() == typeof(WalkRunState)) { 
-				_player.Movement.MovementBehaviour.AvailableInteractions.Remove(_cartInteraction);
+				_player.Movement.MovementBehaviour.RemoveInteraction(_cartInteraction);
 			}
-			_hasEntered = false;
+			_isChecked = false;
 		}
 	}
 }

@@ -14,7 +14,19 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 		public bool CanInteract = true;
 		public Interaction CurrentInteraction = new EmptyInteraction();
-		public readonly C5.ArrayList<Interaction> AvailableInteractions = new C5.ArrayList<Interaction>();
+		private readonly C5.ArrayList<Interaction> AvailableInteractions = new C5.ArrayList<Interaction>();
+
+		public void AddInteraction(Interaction interaction) {
+			AvailableInteractions.Add(interaction);
+		}
+
+		public void AddInteractionWithPriority(Interaction interaction) {
+			AvailableInteractions.Insert(0, interaction);
+		}
+
+		public bool RemoveInteraction(Interaction interaction) {
+			return AvailableInteractions.Remove(interaction);
+		}
 
 		protected MovementHandler _movement = new NullMovementHandler();
 		protected Transform _transform;
@@ -35,7 +47,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			}
 		}
 
-		public void InteractionStep() {
+		protected void InteractionStep() {
 			Interaction potentialInteraction = null;
 
 			foreach (Interaction interaction in AvailableInteractions) {

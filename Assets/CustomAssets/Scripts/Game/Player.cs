@@ -26,15 +26,17 @@ namespace Game.PlayerComponents {
 	public class WalkRunState : PlayerState {
 		public WalkRunState() {
 			_movement.MovementBehaviour = new WalkRunMovementBehaviour(_transform, _config);
-			_movement.MovementBehaviour.AvailableInteractions.Add(new PickUpCoffinInteraction());
-			_movement.MovementBehaviour.AvailableInteractions.Add(new CarveTerrainInteraction());
+			_movement.MovementBehaviour.AddInteraction(new PickUpCoffinInteraction());
+			_movement.MovementBehaviour.AddInteraction(new CarveTerrainInteraction());
 		}
 	}
 
 	public class DragCoffinState : PlayerState {
+		public GameObject Coffin { get; private set; }
 		public DragCoffinState(GameObject coffin) {
+			Coffin = coffin;
 			_movement.MovementBehaviour = new DragCoffinBehaviour(_transform, coffin, _config);
-			_movement.MovementBehaviour.AvailableInteractions.Add(new ThrowCoffinInteraction(coffin));
+			_movement.MovementBehaviour.AddInteraction(new ThrowCoffinInteraction(coffin));
 			//_movement.MovementBehaviour.AvailableInteractions.Add(new SendCoffinToTombInteraction(coffin));
 		}
 	}
@@ -42,7 +44,7 @@ namespace Game.PlayerComponents {
 	public class DriveCartState : PlayerState {
 		public DriveCartState(GameObject cart) {
 			_movement.MovementBehaviour = new CartMovementBehaviour(_transform, cart, _config);
-			_movement.MovementBehaviour.AvailableInteractions.Add(new StopDrivingCartInteraction());
+			_movement.MovementBehaviour.AddInteraction(new StopDrivingCartInteraction());
 		}
 	}
 
