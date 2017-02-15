@@ -70,7 +70,7 @@ namespace Game.PlayerComponents {
 		public bool GetEyeSight(out RaycastHit hit) {
 			if (!_isEyeSightValid) {
 				Ray ray = new Ray(transform.position, Camera.transform.forward);
-				_hasHit = Physics.SphereCast(ray, 0.05f, out _hit, 5.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
+				_hasHit = Physics.SphereCast(ray, 0.05f, out _hit, 1000.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
 				_isEyeSightValid = true;
 			}
 			hit = _hit;

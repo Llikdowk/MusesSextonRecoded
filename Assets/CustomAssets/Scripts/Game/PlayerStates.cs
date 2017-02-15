@@ -32,7 +32,6 @@ namespace Game {
 			Coffin = coffin;
 			_movement.MovementBehaviour = new DragCoffinBehaviour(_transform, coffin, _config);
 			_movement.MovementBehaviour.AddInteraction(new ThrowCoffinInteraction(coffin));
-			//_movement.MovementBehaviour.AvailableInteractions.Add(new SendCoffinToTombInteraction(coffin));
 		}
 	}
 
@@ -55,6 +54,13 @@ namespace Game {
 		public BuryState(GameObject tomb, GameObject ground) {
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
 			_movement.MovementBehaviour.AddInteraction(new BuryInteraction(tomb, ground));
+		}
+	}
+
+	public class PoemState : PlayerState {
+		public PoemState() {
+			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			_movement.MovementBehaviour.AddInteraction(new PoemInteraction());
 		}
 	}
 

@@ -57,19 +57,15 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 			RaycastHit hit;
 			_player.GetEyeSight(out hit);
-
-			tomb.transform.position = position; 
+			tomb.transform.position = position;
 			tomb.transform.up = hit.normal;
 
-			Debug.DrawRay(v[0], Vector3.up*10, Color.magenta);
-			Debug.DrawRay(v[1], Vector3.up*10, Color.magenta);
 			Vector3 upperLeft = v[0];
 			Vector3 lowerRight = v[1];
-			Vector3 middleLow = new Vector3(upperLeft.x - 4.0f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z)/2.0f );
+			Vector3 middleLow = new Vector3(upperLeft.x - 4.0f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
 			Player.GetInstance().MoveImmediatlyTo(middleLow);
-			Player.GetInstance().transform.rotation =  Quaternion.AngleAxis(80, Vector3.up);
+			Player.GetInstance().transform.rotation = Quaternion.AngleAxis(80, Vector3.up);
 			Player.GetInstance().CurrentState = new DigState(tombComponent.GetGround());
-
 		}
 
 		public override void ShowFeedback() {
@@ -89,7 +85,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			RaycastHit hit;
 			bool hasHit = _player.GetEyeSight(out hit);
 
-			if (!hasHit) return null;
+			if (!hasHit || hit.distance > 5.0f) return null;
 			GameObject g = hit.collider.gameObject;
 			if (g.tag == TagManager.Get(Tag.Terrain) && hit.distance > 2.0f) {
 				return this;
