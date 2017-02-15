@@ -1,8 +1,18 @@
-{
-	
+[
+	{
+		"LandmarkName" : "l1",
 		"Masculine" : ["m1","m2","m3","m4","m5","m6"],
 		"Feminine" : ["f1","f2","f3","f4","f5","f6"],
 		"Plural" : ["p1","p2","p3","p4","p5","p6"],
 		"FirstPerson" : ["firstp1","firstp2","firstp3","firstp4","firstp5","firstp6"],
+	},
 
-}
+	{
+		"LandmarkName" : "l2",
+		"Masculine" : ["mm1","m2","m3","m4","m5","m6"],
+		"Feminine" : ["ff1","f2","f3","f4","f5","f6"],
+		"Plural" : ["pp1","p2","p3","p4","p5","p6"],
+		"FirstPerson" : ["ffirstp1","firstp2","firstp3","firstp4","firstp5","firstp6"],
+	}
+	
+]
