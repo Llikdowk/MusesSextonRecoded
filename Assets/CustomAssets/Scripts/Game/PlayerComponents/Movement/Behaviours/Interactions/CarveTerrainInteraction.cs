@@ -61,18 +61,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			tomb.transform.position = position; 
 			tomb.transform.up = hit.normal;
 
-			GameObject _debugSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-			_debugSphere.transform.position = tomb.transform.position;
-			_debugSphere.transform.localScale = 0.2f * Vector3.one;
-			_debugSphere = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			_debugSphere.transform.position = v[0];
-			_debugSphere.name = "v0";
-			_debugSphere.transform.localScale = 0.2f * Vector3.one;
-			_debugSphere = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			_debugSphere.transform.position = v[1];
-			_debugSphere.name = "v1";
-			_debugSphere.transform.localScale = 0.2f * Vector3.one;
-
 			Debug.DrawRay(v[0], Vector3.up*10, Color.magenta);
 			Debug.DrawRay(v[1], Vector3.up*10, Color.magenta);
 			Vector3 upperLeft = v[0];

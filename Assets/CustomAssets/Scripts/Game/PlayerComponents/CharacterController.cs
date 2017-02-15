@@ -40,11 +40,11 @@ namespace Game.PlayerComponents {
 
 			for (int i = hitsLength-1; i >= 0; --i) {
 				if (hits[i].collider.isTrigger) {
-					if (hits[i].distance == 0) {
+					//if (hits[i].distance == 0) {
 						_currentTriggers.Add(hits[i].collider);
-					}
+					//}
 					for (int j = i; j < hitsLength - 1; ++j) {
-						hits[i] = hits[i + 1];
+						hits[j] = hits[j + 1];
 					}
 					--hitsLength;
 				}
@@ -113,7 +113,6 @@ namespace Game.PlayerComponents {
             {
                 var p = hit.point + hit.normal * 0.01f;
 	            hit.collider.Raycast(new Ray(p, -hit.normal), out hit, 0.011f);
-                //collider.Raycast(p, -hit.normal, out hit, 0.011f, layerMask);
             }
         }
 
@@ -137,7 +136,7 @@ namespace Game.PlayerComponents {
 			
 			// Vertical Collision
 			int hitsCount = Physics.CapsuleCastNonAlloc(capsuleFeet, capsuleHead, _collider.radius, Vector3.down,
-				_colliderHits, GrounderDistance, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
+				_colliderHits, GrounderDistance, _layerMaskAllButPlayer, QueryTriggerInteraction.Collide);
 			ProcessTriggers(ref _colliderHits, ref hitsCount);
 
 			Vector3 floorNormal = Vector3.up;

@@ -25,25 +25,14 @@ namespace Game.Entities {
 			_ground.transform.LocalReset();
 			_ground.SetActive(true);
 
-			/*
-			BoxCollider collider = gameObject.AddComponent<BoxCollider>();
-			collider.isTrigger = false;
-			collider.size = new Vector3(6, 10, 6);
-			
-			BoxCollider trigger = gameObject.AddComponent<BoxCollider>();
-			trigger.isTrigger = true;
-			trigger.size = new Vector3(8, 10, 8);
-			*/
-			
-			/*
 			SphereCollider c = gameObject.AddComponent<SphereCollider>();
 			c.isTrigger = false;
-			c.radius = 4.6f;
-			c.center = new Vector3(0, 0.5f, 0);
-			*/
+			c.radius = 3.85f;
+			c.center = new Vector3(0, 0.85f, 0);
+			
 			SphereCollider trigger = gameObject.AddComponent<SphereCollider>();
 			trigger.isTrigger = true;
-			trigger.radius = 6.4f;
+			trigger.radius = 4.5f;
 
 			gameObject.AddComponent<TTomb>();
 		}
