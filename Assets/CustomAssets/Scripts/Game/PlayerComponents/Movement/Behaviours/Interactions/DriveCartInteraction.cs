@@ -21,10 +21,11 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public override void DoInteraction() {
-			Player.GetInstance().CurrentState = new DriveCartState(_cart);
+			HideFeedback();
+			Player.GetInstance().CurrentState = new DriveCartState(_cart, this);
 		}
 
-		protected override void ShowFeedback() {
+		public override void ShowFeedback() {
 			_mark.DisableMark();
 			foreach (MeshRenderer r in _model.GetComponentsInChildren<MeshRenderer>()) {
 				r.gameObject.layer = LayerMaskManager.Get(Layer.Outline);
@@ -39,7 +40,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public override Interaction CheckForPromotion() {
-			ShowFeedback();
 			return this;
 		}
 	}

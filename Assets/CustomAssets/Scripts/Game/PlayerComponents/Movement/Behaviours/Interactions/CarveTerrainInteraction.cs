@@ -47,6 +47,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		public override void DoInteraction() {
 			Debug.Log("DO DIG INTERACTION");
+			HideFeedback();
 
 			Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_player.transform.position, _player.Camera.transform.forward));
 			GameObject tomb = new GameObject("_tomb");
@@ -71,7 +72,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		}
 
-		protected override void ShowFeedback() {
+		public override void ShowFeedback() {
 			RaycastHit hit;
 			_player.GetEyeSight(out hit);
 
@@ -91,7 +92,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			if (!hasHit) return null;
 			GameObject g = hit.collider.gameObject;
 			if (g.tag == TagManager.Get(Tag.Terrain) && hit.distance > 2.0f) {
-				ShowFeedback();
 				return this;
 			}
 			return null;

@@ -6,7 +6,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public GameObject Coffin;
 		private int _backupLayer = LayerMaskManager.Get(Layer.Default);
 		
-		protected override void ShowFeedback() {
+		public override void ShowFeedback() {
 			Coffin.layer = LayerMaskManager.Get(Layer.Outline);
 		}
 
@@ -24,7 +24,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				if (Coffin != null) { HideFeedback(); }
 				Coffin = g;
 				_backupLayer = g.layer;
-				ShowFeedback();
 				return this;
 			}
 			return null;

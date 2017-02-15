@@ -26,11 +26,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_layerMaskAllButPlayer = ~ (1 << LayerMaskManager.Get(Layer.Player));
 			_moveBackAction = Player.GetInstance().Actions.GetAction(PlayerAction.MoveBack);
 
-			Utils.Animation.SlerpForward(transform, cart.transform, _cartConfig.GoInsideTimeSeconds, () => {
-				Player.GetInstance().Actions.GetAction(PlayerAction.Use).StartBehaviour = () => {
-					Player.GetInstance().CurrentState = new WalkRunState();
-				};
-			});
+			Utils.Animation.SlerpForward(transform, cart.transform, _cartConfig.GoInsideTimeSeconds, () => { });
 
 		}
 
@@ -41,6 +37,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		}
 
 		public override void Step() {
+			base.Step();
 			_transform.position += _stepMovement;
 			_stepMovement = Vector3.zero;
 

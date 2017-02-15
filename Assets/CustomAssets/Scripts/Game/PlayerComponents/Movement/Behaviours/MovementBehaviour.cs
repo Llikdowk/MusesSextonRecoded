@@ -22,16 +22,16 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			Player.GetInstance().Actions.ResetAllActions();
 			_transform = transform;
 
-			//TODO move INTERACTION HANDLING from CharacterMovement to here
 			var useAction = Player.GetInstance().Actions.GetAction(PlayerAction.Use);
 			useAction.StartBehaviour = () => {
-				//CurrentInteraction.DoInteraction();
 				CurrentInteraction.DoInteraction();
 			};
 		}
 
 
-		public abstract void Step();
+		public virtual void Step() {
+			InteractionStep();
+		}
 		public abstract void OnDestroy();
 
 		public void InteractionStep() {
@@ -39,13 +39,15 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 			foreach (Interaction interaction in AvailableInteractions) {
 				potentialInteraction = interaction.CheckForPromotion();
-				if (potentialInteraction != null && CurrentInteraction != potentialInteraction) {
+				if (potentialInteraction != null) {
+					CurrentInteraction.HideFeedback();
 					CurrentInteraction = potentialInteraction;
+					CurrentInteraction.ShowFeedback();
 					break;
 				}
 			}
 			if (potentialInteraction == null) {
-				//CurrentInteraction.HideFeedback();
+				CurrentInteraction.HideFeedback();
 				CurrentInteraction = new EmptyInteraction();
 			}
 		}

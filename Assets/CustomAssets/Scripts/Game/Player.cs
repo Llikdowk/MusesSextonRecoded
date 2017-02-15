@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using System.Security.Cryptography;
-using Game.PlayerComponents.Movement;
+﻿using Game.PlayerComponents.Movement;
 using Game.PlayerComponents.Movement.Behaviours;
 using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using UnityEngine;
@@ -37,16 +35,25 @@ namespace Game.PlayerComponents {
 			_movement.MovementBehaviour.AvailableInteractions.Add(new CarveTerrainInteraction());
 		}
 	}
+
+	public class WalkRunStateFromCart : WalkRunState {
+		public WalkRunStateFromCart(DriveCartInteraction interaction) {
+			_movement.MovementBehaviour.AvailableInteractions.Insert(0, interaction);
+		}
+	}
+
 	public class DragCoffinState : PlayerState {
 		public DragCoffinState(GameObject coffin) {
 			_movement.MovementBehaviour = new DragCoffinBehaviour(_transform, coffin, _config);
 			_movement.MovementBehaviour.AvailableInteractions.Add(new ThrowCoffinInteraction(coffin));
+			//_movement.MovementBehaviour.AvailableInteractions.Add(new SendCoffinToTombInteraction(coffin));
 		}
 	}
 
 	public class DriveCartState : PlayerState {
-		public DriveCartState(GameObject cart) {
+		public DriveCartState(GameObject cart, DriveCartInteraction driveInteraction) {
 			_movement.MovementBehaviour = new CartMovementBehaviour(_transform, cart, _config);
+			_movement.MovementBehaviour.AvailableInteractions.Add(new StopDrivingCartInteraction(driveInteraction));
 		}
 	}
 
@@ -81,7 +88,7 @@ namespace Game.PlayerComponents {
 
 		public static Player GetInstance() {
 			if (_instance == null) {
-				Debug.LogError("Player singleton called but it is not yet built");
+				Debug.LogError("Player singleton called but it is not yet built"); // TODO extract to DebugMsg
 			}
 			return _instance;
 		}

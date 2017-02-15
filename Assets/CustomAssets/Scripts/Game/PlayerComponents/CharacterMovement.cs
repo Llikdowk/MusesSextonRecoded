@@ -1,5 +1,4 @@
 ﻿using Game.PlayerComponents.Movement.Behaviours;
-using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using UnityEngine;
 
 
