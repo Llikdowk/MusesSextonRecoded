@@ -10,7 +10,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		public DriveCartInteraction(GameObject cart) {
 			_cart = cart;
-
 			foreach (Transform t in cart.GetComponentInChildren<Transform>()) {
 				if (t.gameObject.name == "Model") {
 					_model = t.gameObject;
@@ -25,7 +24,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			Player.GetInstance().CurrentState = new DriveCartState(_cart);
 		}
 
-		public override void ShowFeedback() {
+		protected override void ShowFeedback() {
 			_mark.DisableMark();
 			foreach (MeshRenderer r in _model.GetComponentsInChildren<MeshRenderer>()) {
 				r.gameObject.layer = LayerMaskManager.Get(Layer.Outline);
@@ -37,6 +36,11 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			foreach (MeshRenderer r in _model.GetComponentsInChildren<MeshRenderer>()) {
 				r.gameObject.layer = LayerMaskManager.Get(Layer.Default);
 			}
+		}
+
+		public override Interaction Check() {
+			ShowFeedback();
+			return this;
 		}
 	}
 }

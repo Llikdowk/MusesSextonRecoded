@@ -4,10 +4,14 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public override void DoInteraction() {
 		}
 
-		public override void ShowFeedback() {
+		protected override void ShowFeedback() {
 		}
 
 		public override void HideFeedback() {
+		}
+
+		public override Interaction Check() {
+			return null;
 		}
 	}
 }

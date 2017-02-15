@@ -39,7 +39,5 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			coffin.transform.LocalReset();
 		}
 
-		protected override void CheckForInteraction() {
-		}
 	}
 }

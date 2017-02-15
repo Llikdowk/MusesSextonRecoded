@@ -12,16 +12,15 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 		public bool CanInteract = true;
 
-		public Interaction Interaction {
-			get { return _interaction; }
+		public Interaction CurrentInteraction {
+			get { return _currentInteraction; }
 			set {
-				_interaction.HideFeedback();
-				_interaction = value;
+				_currentInteraction = value;
 			}	
 		}
 
-		private Interaction _interaction = new EmptyInteraction();
-
+		private Interaction _currentInteraction = new EmptyInteraction();
+		public readonly C5.ArrayList<Interaction> _availableInteractions = new C5.ArrayList<Interaction>();
 
 		public Vector3 SelfMovement { get { return _movement.SelfMovement; } }
 		public Vector3 WorldMovement { get { return _transform.localToWorldMatrix.MultiplyVector(_movement.SelfMovement); } }
@@ -33,10 +32,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_transform = transform;
 		}
 
-
-		public void AddForce(Vector3 dir, float force) {
-			_stepMovement += dir * force;
-		}
 
 		public abstract void Step();
 		public abstract void OnDestroy();

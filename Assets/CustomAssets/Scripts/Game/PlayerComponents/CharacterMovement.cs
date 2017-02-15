@@ -10,7 +10,7 @@ namespace Game.PlayerComponents {
 
 		public MovementBehaviour MovementBehaviour {
 			set {
-				_movementBehaviour.Interaction = new EmptyInteraction();
+				_movementBehaviour.CurrentInteraction = new EmptyInteraction();
 				_movementBehaviour.OnDestroy();
 				_movementBehaviour = value;
 				_movementBehaviour.CanInteract = _canInteract;
