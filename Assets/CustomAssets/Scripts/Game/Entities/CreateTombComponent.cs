@@ -35,11 +35,12 @@ namespace Game.Entities {
 			trigger.size = new Vector3(8, 10, 8);
 			*/
 			
+			/*
 			SphereCollider c = gameObject.AddComponent<SphereCollider>();
 			c.isTrigger = false;
 			c.radius = 4.6f;
 			c.center = new Vector3(0, 0.5f, 0);
-			
+			*/
 			SphereCollider trigger = gameObject.AddComponent<SphereCollider>();
 			trigger.isTrigger = true;
 			trigger.radius = 6.4f;

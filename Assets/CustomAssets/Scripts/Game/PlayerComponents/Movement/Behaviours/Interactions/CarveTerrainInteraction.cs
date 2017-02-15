@@ -11,7 +11,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		private readonly Player _player;
 
 		public CarveTerrainInteraction() {
-			Debug.Log("CONSTRUCT CARVE INTERACTION");
 			if (_digMarker == null) {
 				_digMarker = GameObject.CreatePrimitive(PrimitiveType.Cube);
 				Object.Destroy(_digMarker.GetComponent<Collider>());
@@ -46,20 +45,33 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public override void DoInteraction() {
-			Debug.Log("DO DIG INTERACTION");
 			HideFeedback();
 
 			Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_player.transform.position, _player.Camera.transform.forward));
+			v[0] = v[0] + new Vector3(-1, 0, 0); // hardcoded offset
+			v[1] = v[1] + new Vector3(0, 0, -1);
+			Vector3 position = (v[1] - v[0]) / 2.0f + v[0];
+
 			GameObject tomb = new GameObject("_tomb");
 			CreateTombComponent tombComponent = tomb.AddComponent<CreateTombComponent>();
 
 			RaycastHit hit;
 			_player.GetEyeSight(out hit);
 
-			Vector3 continuousPosition = hit.point - hit.normal * 0.5f;
-			Vector3 discretePosition = new Vector3((int)continuousPosition.x, (int)continuousPosition.y, (int)continuousPosition.z);
-			tomb.transform.position = discretePosition; 
+			tomb.transform.position = position; 
 			tomb.transform.up = hit.normal;
+
+			GameObject _debugSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+			_debugSphere.transform.position = tomb.transform.position;
+			_debugSphere.transform.localScale = 0.2f * Vector3.one;
+			_debugSphere = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			_debugSphere.transform.position = v[0];
+			_debugSphere.name = "v0";
+			_debugSphere.transform.localScale = 0.2f * Vector3.one;
+			_debugSphere = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			_debugSphere.transform.position = v[1];
+			_debugSphere.name = "v1";
+			_debugSphere.transform.localScale = 0.2f * Vector3.one;
 
 			Debug.DrawRay(v[0], Vector3.up*10, Color.magenta);
 			Debug.DrawRay(v[1], Vector3.up*10, Color.magenta);

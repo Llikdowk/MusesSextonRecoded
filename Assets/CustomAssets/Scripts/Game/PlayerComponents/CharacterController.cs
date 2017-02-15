@@ -137,7 +137,7 @@ namespace Game.PlayerComponents {
 			
 			// Vertical Collision
 			int hitsCount = Physics.CapsuleCastNonAlloc(capsuleFeet, capsuleHead, _collider.radius, Vector3.down,
-				_colliderHits, GrounderDistance, _layerMaskAllButPlayer, QueryTriggerInteraction.Collide);
+				_colliderHits, GrounderDistance, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
 			ProcessTriggers(ref _colliderHits, ref hitsCount);
 
 			Vector3 floorNormal = Vector3.up;
