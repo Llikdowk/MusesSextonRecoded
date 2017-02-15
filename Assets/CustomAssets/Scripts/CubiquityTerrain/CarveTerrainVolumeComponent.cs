@@ -1,13 +1,12 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using UnityEngine;
+﻿using UnityEngine;
 
 using Cubiquity;
 
 public class CarveTerrainVolumeComponent : MonoBehaviour {
 	public int RangeX = 2;
 	public int RangeY = 4;
-	public int RangeZ = 2;
-	public int SmoothFactor = 2;
+	public int RangeZ = 1;
+	public int SmoothFactor = 0;
 	public bool Euclidean = false;
 	public bool Erase = true;
 	private TerrainVolume _terrainVolume;
@@ -25,8 +24,7 @@ public class CarveTerrainVolumeComponent : MonoBehaviour {
 	/// </summary>
 	/// <param name="ray"></param>
 	/// <returns></returns>
-	public Vector3[] DoCarveAction(Ray ray/*, out Vector3 p1, out Vector3 p2, out Vector3 p3, out Vector3 p4 */) {
-		/*p1 = p2 = p3 = p4 = Vector3.zero;*/
+	public Vector3[] DoCarveAction(Ray ray) {
 		if (_terrainVolume == null) {
 			return new[] { Vector3.zero, Vector3.zero };
 		}
@@ -45,7 +43,7 @@ public class CarveTerrainVolumeComponent : MonoBehaviour {
 	}
 
 
-	private void DestroyVoxels(int xPos, int yPos, int zPos/*, out Vector3 p1, out Vector3 p2, out Vector3 p3, out Vector3 p4*/) {
+	private void DestroyVoxels(int xPos, int yPos, int zPos) {
 		int aux = Mathf.Max(RangeX, RangeY, RangeZ);
 		int rangeSquared = aux * aux;
 		MaterialSet emptyMaterialSet = new MaterialSet();
@@ -53,13 +51,6 @@ public class CarveTerrainVolumeComponent : MonoBehaviour {
 		fillMaterialSet.weights[0] = 255;
 		fillMaterialSet.weights[1] = 255;
 		fillMaterialSet.weights[2] = 255;
-
-		/*
-		p1 = new Vector3(xPos - RangeX, 0, zPos + RangeZ);
-		p2 = new Vector3(xPos - RangeX, 0, zPos - RangeZ);
-		p3 = new Vector3(xPos + RangeX, 0, zPos - RangeZ);
-		p4 = new Vector3(xPos + RangeX, 0, zPos + RangeZ);
-		*/
 
 		for (int z = zPos - RangeZ; z < zPos + RangeZ; z++) {
 			for (int y = yPos - RangeY; y < yPos + RangeY; y++) {
