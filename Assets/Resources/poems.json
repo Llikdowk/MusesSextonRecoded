@@ -210,7 +210,7 @@
         ]
     },
     {
-        "LandmarkName": "BURNED DOWN HOUSE",
+        "LandmarkName": "BURNED-HOUSE",
         "Masculine": [
             "Hence the ashes of the afterlife.",
             "The wood crackling like his soul.",
@@ -245,7 +245,7 @@
         ]
     },
     {
-        "LandmarkName": "TOWER WITH A BELL",
+        "LandmarkName": "TOWER",
         "Masculine": [
             "I married him for a dollar.",
             "The sheriff shot him at my wedding.",
@@ -350,7 +350,7 @@
         ]
     },
     {
-        "LandmarkName": "HUNTSMAN - FURRIER'S WORKSHOP (little campsite with logs and skins drying on wooden sticks)",
+        "LandmarkName": "HUNTSMAN",
         "Masculine": [
             "I skinned him like a deer.",
             "He had the strength of a bear.",
@@ -385,7 +385,7 @@
         ]
     },
     {
-        "LandmarkName": "NATIVE AMERICAN TOTEM",
+        "LandmarkName": "TOTEM",
         "Masculine": [
             "Mescal warned him about the storm.",
             "He spent eight nights yelling my name.",
@@ -420,7 +420,7 @@
         ]
     },
     {
-        "LandmarkName": "THE BIG DOOR",
+        "LandmarkName": "GIANTDOOR",
         "Masculine": [
             "He never dared to leave the town.",
             "When the horsemen came, he cried.",
