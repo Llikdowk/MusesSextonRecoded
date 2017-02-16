@@ -1,18 +1,457 @@
 [
-	{
-		"LandmarkName" : "l1",
-		"Masculine" : ["m1","m2","m3","m4","m5","m6"],
-		"Feminine" : ["f1","f2","f3","f4","f5","f6"],
-		"Plural" : ["p1","p2","p3","p4","p5","p6"],
-		"FirstPerson" : ["firstp1","firstp2","firstp3","firstp4","firstp5","firstp6"],
-	},
-
-	{
-		"LandmarkName" : "l2",
-		"Masculine" : ["mm1","m2","m3","m4","m5","m6"],
-		"Feminine" : ["ff1","f2","f3","f4","f5","f6"],
-		"Plural" : ["pp1","p2","p3","p4","p5","p6"],
-		"FirstPerson" : ["ffirstp1","firstp2","firstp3","firstp4","firstp5","firstp6"],
-	}
-	
+    {
+        "LandmarkName": "PINE",
+        "Masculine": [
+            "All but food for the pine roots.",
+            "Green needles to pierce his heart.",
+            "Snow covered pines judge his crimes.",
+            "I hid from him in the forest.",
+            "Immortal trees to witness this ritual.",
+            "Return to nature, my beloved one."
+        ],
+        "Feminine": [
+            "All but food for the pine roots.",
+            "Green needles to pierce her heart.",
+            "Snow covered pines judge her crimes.",
+            "I hid from her in the forest.",
+            "Immortal trees to witness this ritual.",
+            "Return to nature, my beloved one."
+        ],
+        "Plural": [
+            "All but food for the pine roots.",
+            "Green needles to pierce their hearts.",
+            "Snow covered pines judge their crimes.",
+            "I hid from them in the forest.",
+            "Immortal trees to witness this ritual.",
+            "Return to nature, my beloved ones."
+        ],
+        "FirstPerson": [
+            "All but food for the pine roots.",
+            "Green needles to pierce my heart.",
+            "Snow covered pines judge my crimes.",
+            "I hid from myself in the forest.",
+            "Immortal trees to witness this ritual.",
+            "I return to nature, loved by noone."
+        ]
+    },
+    {
+        "LandmarkName": "ROCK",
+        "Masculine": [
+            "His head hit the solid ground.",
+            "Where he used to hide from dad.",
+            "Smashed his chains to pieces.",
+            "He was made of stone.",
+            "His sins hidden beneath a rock.",
+            "I will sculpt him a tombstone."
+        ],
+        "Feminine": [
+            "Her head hit the solid ground.",
+            "Where she used to hide from dad.",
+            "Smashed her chains to pieces.",
+            "She was made of stone.",
+            "Her sins hidden beneath a rock.",
+            "I will sculpt her a tombstone."
+        ],
+        "Plural": [
+            "Their head hit the solid ground.",
+            "Where they used to hide from dad.",
+            "Smashed their chains to pieces.",
+            "They were made of stone.",
+            "Their sins hidden beneath a rock.",
+            "I will sculpt them a tombstone."
+        ],
+        "FirstPerson": [
+            "My head hit the solid ground.",
+            "Where I used to hide from dad.",
+            "Smashed my chains to pieces.",
+            "I was made of stone.",
+            "My sins hidden beneath a rock.",
+            "I sculpted myself a tombstone."
+        ]
+    },
+    {
+        "LandmarkName": "VULTURE",
+        "Masculine": [
+            "They're coming for me too, Mom.",
+            "Probably smelling my rotting heart.",
+            "I know that vulture is him.",
+            "Save me for last, winged partners.",
+            "His blood my sin, their beak my sentence.",
+            "Eat his skin, but leave me the bones."
+        ],
+        "Feminine": [
+            "They're coming for me too, Mom.",
+            "Probably smelling my rotting heart.",
+            "I know this vulture is she.",
+            "Save me for last, winged partners.",
+            "Her blood my sin, their beak my sentence.",
+            "Eat her skin, but leave me the bones."
+        ],
+        "Plural": [
+            "They're coming for me too, Mom.",
+            "Probably smelling my rotting heart.",
+            "I know those vultures are they.",
+            "Save me for last, winged partners.",
+            "Their blood my sin, their beak my sentence.",
+            "Eat their skin, but leave me the bones."
+        ],
+        "FirstPerson": [
+            "They're coming for me too, Mom.",
+            "I can smell my rotting heart.",
+            "I know the vultures are in my mind.",
+            "Save me for last, winged partners.",
+            "My blood's my sin, but I got no sentence.",
+            "Eat my skin, but leave my bones."
+        ]
+    },
+    {
+        "LandmarkName": "CART",
+        "Masculine": [
+            "Dad, let me take you for a stroll.",
+            "My son, I wish you were the one driving.",
+            "Let me pull your rotting body.",
+            "Every step vanishes a memory.",
+            "Didn't expect vengeance to weight this much.",
+            "Even dead, he won't set me free."
+        ],
+        "Feminine": [
+            "Mom, let me take you for a stroll.",
+            "My daughter, I wish you were the one driving.",
+            "Let me pull your rotting body.",
+            "Every step vanishes a memory.",
+            "Didn't expect vengeance to weight this much.",
+            "Even dead, she won't set me free."
+        ],
+        "Plural": [
+            "Mom, Dad, let me take you for a stroll.",
+            "My children, I wish you were the ones driving.",
+            "Let me pull your rotting bodies.",
+            "Every step vanishes a memory.",
+            "Didn't expect vengeance to weight this much.",
+            "Even dead, they won't set me free."
+        ],
+        "FirstPerson": [
+            "Sorry folks, let me leave without you.",
+            "Kids, I hope you're de ones burying me.",
+            "Someone pull my rotting body.",
+            "Every step vanishes a memory.",
+            "Why does vengeance weight this much.",
+            "Even dead, from myself won't ever free."
+        ]
+    },
+    {
+        "LandmarkName": "COFFIN",
+        "Masculine": [
+            "I wish this coffin was empty.",
+            "I made his bed myself with oak.",
+            "He doesn't even deserve a box.",
+            "I had to dress him myself in a pine suit.",
+            "Closed it with sixteen nails.",
+            "That's why I'm burying him alive."
+        ],
+        "Feminine": [
+            "I wish this coffin was empty.",
+            "I made her bed myself with oak.",
+            "She doesn't even deserve a box.",
+            "I had to dress her myself in a pine suit.",
+            "Closed it with sixteen nails.",
+            "That's why I'm burying she alive."
+        ],
+        "Plural": [
+            "I wish this coffin was empty.",
+            "I made their bed myself with oak.",
+            "They don't even deserve a box.",
+            "I had to dress them myself in a pine suit.",
+            "Closed it with sixteen nails.",
+            "That's why I'm burying them alive."
+        ],
+        "FirstPerson": [
+            "I wish my coffin was empty.",
+            "I made my own bed with oak.",
+            "I don't even deserve a box.",
+            "I dressed myself in a pine suit.",
+            "Closed it with sixteen nails.",
+            "That's why I'm being buried alive."
+        ]
+    },
+    {
+        "LandmarkName": "OTHER GRAVE",
+        "Masculine": [
+            "If I dig enough I may bury him in hell.",
+            "He didn't deserve this.",
+            "I only needed a bullet for him.",
+            "I hope his corpse doesn't poisons earth.",
+            "Rest in all the peace you've stolen.",
+            "Til the day of reckoning, old friend."
+        ],
+        "Feminine": [
+            "If I dig enough I may bury her in hell.",
+            "She didn't deserve this.",
+            "I only needed a bullet for her.",
+            "I hope her corpse doesn't poisons earth.",
+            "Rest in all the peace you've stolen.",
+            "Til the day of reckoning, old friend."
+        ],
+        "Plural": [
+            "If I dig enough I may bury them in hell.",
+            "They didn't deserve this.",
+            "I only needed a bullet for each of them.",
+            "I hope their corpses doesn't poisons earth.",
+            "Rest in all the peace you've stolen.",
+            "Til the day of reckoning, old friends."
+        ],
+        "FirstPerson": [
+            "If they dig enough I may end up deep in hell.",
+            "I didn't deserve this.",
+            "It only took a bullet to kill myself.",
+            "I hope my corpse doesn't poison earth.",
+            "I'll rest in all the peace I stole.",
+            "See you on the day of reckoning, fools."
+        ]
+    },
+    {
+        "LandmarkName": "BURNED DOWN HOUSE",
+        "Masculine": [
+            "Hence the ashes of the afterlife.",
+            "The wood crackling like his soul.",
+            "Who thought death would be this warm.",
+            "The initial spark grew into a fire.",
+            "I saw a face amidst the flames.",
+            "Ashes to ashes, he always said."
+        ],
+        "Feminine": [
+            "Hence the ashes of the afterlife.",
+            "The wood crackling like her souls.",
+            "Who thought death would be this warm.",
+            "The initial spark grew into a fire.",
+            "I saw a face amidst the flames.",
+            "Ashes to ashes, she always said."
+        ],
+        "Plural": [
+            "Hence the ashes of the afterlife.",
+            "The wood crackling like their souls.",
+            "Who thought death would be this warm.",
+            "The initial spark grew into a fire.",
+            "I saw a face amidst the flames.",
+            "Ashes to ashes, they always said."
+        ],
+        "FirstPerson": [
+            "Hence the ashes of my afterlife.",
+            "The wood crackling like my soul.",
+            "Who thought death would be this warm.",
+            "The initial spark grew into a fire.",
+            "I saw my face amidst the flames.",
+            "Ashes to ashes, like I always said."
+        ]
+    },
+    {
+        "LandmarkName": "TOWER WITH A BELL",
+        "Masculine": [
+            "I married him for a dollar.",
+            "The sheriff shot him at my wedding.",
+            "He confessed all sins but one.",
+            "Reverend adviced me against revenge.",
+            "To me belongeth vengeance, and recompence.",
+            "God refused to look at him."
+        ],
+        "Feminine": [
+            "I married her for a dollar.",
+            "The sheriff shot her at my wedding.",
+            "She confessed all sins but one.",
+            "Reverend adviced me against revenge.",
+            "To me belongeth vengeance, and recompence.",
+            "God refused to look at her."
+        ],
+        "Plural": [
+            "They married for a dollar.",
+            "The sheriff shot them at their wedding.",
+            "They confessed all sins but one.",
+            "Reverend adviced me against revenge.",
+            "To me belongeth vengeance, and recompence.",
+            "God refused to look at them."
+        ],
+        "FirstPerson": [
+            "I got married for a dollar.",
+            "The sheriff shot me at my wedding.",
+            "I confessed all my sins but one.",
+            "Reverend told them to not avenge me.",
+            "Vengeance has no owner. Has no end.",
+            "I've met God, and he hates me."
+        ]
+    },
+    {
+        "LandmarkName": "GALLOW",
+        "Masculine": [
+            "His neck snapped and hushed the town.",
+            "Daddy took the blame for him.",
+            "I wish I was the hangman myself.",
+            "My life started when they put an end to his.",
+            "His hanging corpse kept looking at me.",
+            "I may hang myself after I'm done."
+        ],
+        "Feminine": [
+            "Her neck snapped and hushed the town.",
+            "Daddy took the blame for her.",
+            "I wish I was the hangman myself.",
+            "My life started when they put an end to hers.",
+            "Her hanging corpse kept looking at me.",
+            "I may hang myself after I'm done."
+        ],
+        "Plural": [
+            "Their neck snapped and hushed the town.",
+            "Daddy took the blame for them.",
+            "I wish I was the hangman myself.",
+            "My life started when they put an end to theirs.",
+            "Their hanging corpses kept looking at me.",
+            "I may hang myself after I'm done."
+        ],
+        "FirstPerson": [
+            "My neck snapped and hushed the town.",
+            "Daddy took the blame for me.",
+            "I wish I was the hangman myself.",
+            "All life began when they put mine to an end.",
+            "My hanging corpse kept looking at them.",
+            "I hanged myself after all."
+        ]
+    },
+    {
+        "LandmarkName": "WELL",
+        "Masculine": [
+            "He drowned my baby in a bucket.",
+            "Father hid the gun in a well.",
+            "He held me down there a month.",
+            "We all hoped for a wishing well.",
+            "There was blood in every bucket.",
+            "I still hear him scream at the bottom."
+        ],
+        "Feminine": [
+            "She drowned my baby in a bucket.",
+            "Mother hid the gun in a well.",
+            "She held me down there a month.",
+            "We all hoped for a wishing well.",
+            "There was blood in every bucket.",
+            "I still hear her scream at the bottom."
+        ],
+        "Plural": [
+            "They drowned my baby in a bucket.",
+            "Father hid the gun in a well.",
+            "They held me down there a month.",
+            "We all hoped for a wishing well.",
+            "There was blood in every bucket.",
+            "I still hear them scream at the bottom."
+        ],
+        "FirstPerson": [
+            "I drowned my baby in a bucket",
+            "I hid the gun in a well.",
+            "Didn't dare to come out for a month.",
+            "I always hoped for a wishing well.",
+            "My blood was in every bucket.",
+            "I keep screaming from the bottom."
+        ]
+    },
+    {
+        "LandmarkName": "HUNTSMAN - FURRIER'S WORKSHOP (little campsite with logs and skins drying on wooden sticks)",
+        "Masculine": [
+            "I skinned him like a deer.",
+            "He had the strength of a bear.",
+            "We ate deer stew under a blue moon.",
+            "I spent half a life hunting him down.",
+            "He made love to me on a bear skin.",
+            "I wrapped his body in the fur of a wolf."
+        ],
+        "Feminine": [
+            "I skinned her like a deer.",
+            "She had the strength of a bear.",
+            "We ate deer stew under a blue moon.",
+            "I spent half a life hunting her down.",
+            "She made love to me on a bear skin.",
+            "I wrapped her body with the fur of a wolf."
+        ],
+        "Plural": [
+            "I skinned them like a deer.",
+            "They had the strength of a bear.",
+            "We ate deer stew under a blue moon.",
+            "I spent half a life hunting them down.",
+            "They used to make love on a bear skin.",
+            "I wrapped their body with the fur of a wolf."
+        ],
+        "FirstPerson": [
+            "I got skinned like a deer.",
+            "I had the strength of a bear.",
+            "Feed me deer stew under a blue moon.",
+            "Half my life I've been hunted down.",
+            "I made love on a bear skin.",
+            "My body wrapped with the fur of a wolf."
+        ]
+    },
+    {
+        "LandmarkName": "NATIVE AMERICAN TOTEM",
+        "Masculine": [
+            "Mescal warned him about the storm.",
+            "He spent eight nights yelling my name.",
+            "They scalped him and his men.",
+            "He refused to believe in the chief's omen.",
+            "I carved a knife out of his bones.",
+            "I'm burying him naked, his body painted."
+        ],
+        "Feminine": [
+            "Mescal warned her about the storm.",
+            "She spent eight nights yelling my name.",
+            "They scalped her and her children.",
+            "She refused to believe in the chief's omen.",
+            "I carved a knife out of her bones.",
+            "I'm burying her naked, her body painted."
+        ],
+        "Plural": [
+            "Mescal warned them about the storm.",
+            "They spent eight nights yelling my name.",
+            "They scalped them all.",
+            "They refused to believe in the chief's omen.",
+            "I carved three knives out of their bones.",
+            "I'm burying them naked, their body painted."
+        ],
+        "FirstPerson": [
+            "Mescal warned me about the storm.",
+            "I spent eight nights yelling their names.",
+            "They scalped me and my men.",
+            "I refused to believe in the chief's omen.",
+            "Three knives carved out of my bones.",
+            "I'm buried naked, my body painted."
+        ]
+    },
+    {
+        "LandmarkName": "THE BIG DOOR",
+        "Masculine": [
+            "He never dared to leave the town.",
+            "When the horsemen came, he cried.",
+            "Tales of distant cities drove him mad.",
+            "Blood rained from his chest atop the door.",
+            "His eyes still watch through the keyhole.",
+            "He was left behind, trapped in the valley."
+        ],
+        "Feminine": [
+            "She never dared to leave the town.",
+            "When the horsemen came, she cried.",
+            "Tales of distant cities drove her mad.",
+            "Blood rained from her chest atop the door.",
+            "Her eyes still watch through the keyhole.",
+            "She was left behind, trapped in the valley."
+        ],
+        "Plural": [
+            "They never dared to leave the town.",
+            "When the horsemen came, they cried.",
+            "Tales of distant cities drove them mad.",
+            "Blood rained from their chests atop the door.",
+            "Their eyes still watch through the keyhole.",
+            "They were left behind, trapped in the valley."
+        ],
+        "FirstPerson": [
+            "I never dared to leave the town.",
+            "When the horsemen came, I cried.",
+            "Tales of distant cities drove me mad.",
+            "Blood rained from my chest atop the door.",
+            "My eyes still watch through the keyhole.",
+            "I was left behind, trapped in the valley."
+        ]
+    }
 ]
