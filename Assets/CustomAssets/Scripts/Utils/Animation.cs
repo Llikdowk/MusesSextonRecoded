@@ -7,7 +7,7 @@ namespace Utils {
 
 	public static class Animation {
 
-		public static void SlerpForward(Transform target, Transform destination, float durationSecs, AnimationDelegate callback) {
+		public static void SlerpTowards(Transform target, Transform destination, float durationSecs, AnimationDelegate callback) {
 			SlerpForwardComponent c = target.gameObject.AddComponent<SlerpForwardComponent>();
 			c.Init(target, destination, durationSecs, callback);
 			c.Run();

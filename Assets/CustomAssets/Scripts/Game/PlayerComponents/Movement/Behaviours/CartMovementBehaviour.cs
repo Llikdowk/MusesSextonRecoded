@@ -26,7 +26,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_layerMaskAllButPlayer = ~ (1 << LayerMaskManager.Get(Layer.Player));
 			_moveBackAction = Player.GetInstance().Actions.GetAction(PlayerAction.MoveBack);
 
-			Utils.Animation.SlerpForward(transform, cart.transform, _cartConfig.GoInsideTimeSeconds, () => { });
+			Utils.Animation.SlerpTowards(transform, cart.transform, _cartConfig.GoInsideTimeSeconds, () => { });
 
 		}
 
