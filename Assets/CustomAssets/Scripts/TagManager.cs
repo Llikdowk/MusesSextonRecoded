@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public enum Tag {
 	Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, // default

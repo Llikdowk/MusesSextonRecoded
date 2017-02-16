@@ -1,4 +1,6 @@
 ﻿
+using Game;
+using Game.PlayerComponents;
 using UnityEngine;
 
 public class GlobalConfig : MonoBehaviour {
@@ -8,4 +10,10 @@ public class GlobalConfig : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
+	//DEBUG
+	public void Update() {
+		if (Input.GetKeyDown(KeyCode.P)) {
+			Player.GetInstance().CurrentState = new PoemState();
+		}
+	}
 }

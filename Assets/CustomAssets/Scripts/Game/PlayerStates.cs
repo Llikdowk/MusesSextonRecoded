@@ -60,7 +60,7 @@ namespace Game {
 	public class PoemState : PlayerState {
 		public PoemState() {
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
-			_movement.MovementBehaviour.AddInteraction(new PoemInteraction());
+			_movement.MovementBehaviour.AddInteraction(new PoemLandmarkSelectionInteraction());
 		}
 	}
 
