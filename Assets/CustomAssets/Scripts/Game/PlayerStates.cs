@@ -3,6 +3,7 @@ using Game.PlayerComponents;
 using Game.PlayerComponents.Movement;
 using Game.PlayerComponents.Movement.Behaviours;
 using Game.PlayerComponents.Movement.Behaviours.Interactions;
+using Game.Poems;
 using UnityEngine;
 
 namespace Game {
@@ -58,10 +59,32 @@ namespace Game {
 	}
 
 	public class PoemState : PlayerState {
+		public enum Gender {
+			Undefined, Masculine, Feminine, Plural, FirstPerson
+		}
+
+		private Gender _gender;
+
 		public PoemState() {
+			_gender = Gender.Undefined;
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
 			_movement.MovementBehaviour.AddInteraction(new PoemLandmarkSelectionInteraction());
 		}
+
+		public void SetGender(Gender gender) {
+			_gender = gender;
+		}
+
+		public void SetLandmarkSelectionInteraction() {
+			_movement.MovementBehaviour.ClearInteractions();
+			_movement.MovementBehaviour.AddInteraction(new PoemLandmarkSelectionInteraction());
+		}
+
+		public void SetVerseInteraction(LandmarkVerses verses) {
+			_movement.MovementBehaviour.ClearInteractions();
+			_movement.MovementBehaviour.AddInteraction(new VerseSelectionInteraction(verses, _gender));
+		}
+
 	}
 
 

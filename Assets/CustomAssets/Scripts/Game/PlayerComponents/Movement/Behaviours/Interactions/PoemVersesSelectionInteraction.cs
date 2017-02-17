@@ -1,0 +1,111 @@
+﻿using Game.Poems;
+using UnityEngine;
+
+namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
+
+	public class VerseSelectionInteraction : Interaction {
+		private static readonly VersesDisplayer _displayMeshText = new VersesDisplayer();
+		private LandmarkVerses _verses;
+		private VerseInfo _selectedVerse;
+		private GameObject _selectedGameObject;
+		private bool _hasHit;
+
+
+		public VerseSelectionInteraction(LandmarkVerses verses, PoemState.Gender gender) {
+			_verses = verses;
+			DisplayVerses(gender);
+		}
+
+
+		private void DisplayVerses(PoemState.Gender gender) {
+			VerseInfo[] versesText = new VerseInfo[6];
+
+			switch (gender) {
+				case PoemState.Gender.Undefined:
+					versesText[0].Verse = _verses.Masculine[0];
+					versesText[0].Gender = PoemState.Gender.Masculine;
+					versesText[1].Verse = _verses.Masculine[1];
+					versesText[1].Gender = PoemState.Gender.Masculine;
+
+					versesText[2].Verse = _verses.Feminine[2];
+					versesText[2].Gender = PoemState.Gender.Feminine;
+					versesText[3].Verse = _verses.Feminine[3];
+					versesText[3].Gender = PoemState.Gender.Feminine;
+
+					versesText[4].Verse = _verses.Plural[4];
+					versesText[3].Gender = PoemState.Gender.Plural;
+					versesText[5].Verse = _verses.Plural[5];
+					versesText[3].Gender = PoemState.Gender.Plural;
+					break;
+
+				case PoemState.Gender.Masculine:
+					for (int i = 0; i < versesText.Length; ++i) {
+						versesText[i].Verse = _verses.Masculine[i];
+						versesText[i].Gender = PoemState.Gender.Masculine;
+					}
+					break;
+
+				case PoemState.Gender.Feminine:
+					for (int i = 0; i < versesText.Length; ++i) {
+						versesText[i].Verse = _verses.Feminine[i];
+						versesText[i].Gender = PoemState.Gender.Feminine;
+					}
+					break;
+
+				case PoemState.Gender.Plural:
+					for (int i = 0; i < versesText.Length; ++i) {
+						versesText[i].Verse = _verses.Plural[i];
+						versesText[i].Gender = PoemState.Gender.Plural;
+					}
+					break;
+			}
+
+
+			Player player = Player.GetInstance();
+			_displayMeshText.Display(player.transform.position + player.transform.forward * 6.0f, player.transform.rotation, versesText); // TODO parametrice distance
+		}
+
+
+		public override void DoInteraction() {
+			PoemState poemState = ((PoemState)Player.GetInstance().CurrentState); // TODO: send in constructor
+			if (_hasHit) {
+				Debug.Log(_selectedVerse);
+				poemState.SetGender(_selectedVerse.Gender);
+			}
+			_displayMeshText.Hide();
+			poemState.SetLandmarkSelectionInteraction();
+		}
+
+		public override void ShowFeedback() {
+			_selectedGameObject.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = _displayMeshText.BaseHighlightColor;
+		}
+
+		public override void HideFeedback() {
+			_selectedGameObject.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = _displayMeshText.BaseColor;
+		}
+
+		public override Interaction CheckForPromotion() {
+			Ray ray = new Ray(Player.GetInstance().Camera.transform.position, Player.GetInstance().Camera.transform.forward);
+			RaycastHit hit;
+			Debug.DrawRay(ray.origin, ray.direction, Color.red);
+			_hasHit = Physics.SphereCast(ray, 0.05f, out hit, 1000.0f, 1 << LayerMaskManager.Get(Layer.Verse),
+				QueryTriggerInteraction.Collide);
+
+			if (_hasHit) {
+				if (_selectedGameObject == null) _selectedGameObject = hit.collider.gameObject;
+				if (_selectedGameObject.GetInstanceID() != hit.collider.gameObject.GetInstanceID()) {
+					HideFeedback();
+					_selectedGameObject = hit.collider.gameObject;
+					_selectedVerse = _selectedGameObject.GetComponent<VerseInfoComponent>().Info;
+					ShowFeedback();
+				}
+			}
+			else {
+				HideFeedback();
+			}
+			return this;
+		}
+	}
+
+
+}

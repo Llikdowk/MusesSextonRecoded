@@ -28,6 +28,10 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			return AvailableInteractions.Remove(interaction);
 		}
 
+		public void ClearInteractions() {
+			AvailableInteractions.Clear();
+		}
+
 		protected MovementHandler _movement = new NullMovementHandler();
 		protected Transform _transform;
 
