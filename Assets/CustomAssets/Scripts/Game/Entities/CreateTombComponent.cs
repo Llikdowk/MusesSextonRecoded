@@ -27,7 +27,7 @@ namespace Game.Entities {
 
 			SphereCollider c = gameObject.AddComponent<SphereCollider>();
 			c.isTrigger = false;
-			c.radius = 3.85f;
+			c.radius = 2.75f;
 			c.center = new Vector3(0, 0.85f, 0);
 			
 			SphereCollider trigger = gameObject.AddComponent<SphereCollider>();

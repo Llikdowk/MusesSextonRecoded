@@ -1,6 +1,6 @@
-﻿using Game.Entities;
+﻿using Audio;
+using Game.Entities;
 using Game.PlayerComponents.Movement;
-using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using UnityEngine;
 
 
@@ -23,6 +23,8 @@ namespace Game.PlayerComponents {
 		[HideInInspector] public Look Look;
 		[HideInInspector] public Camera Camera { get; private set; }
 		[HideInInspector] public ActionManager<PlayerAction> Actions = new ActionManager<PlayerAction>();
+		[HideInInspector] public Animator Animator;
+
 		private CapsuleCollider _collider;
 		private int _layerMaskAllButPlayer;
 		private RaycastHit _hit;
@@ -49,6 +51,7 @@ namespace Game.PlayerComponents {
 				Controller = GetComponent<CharacterController>();
 				Look = GetComponent<Look>();
 				Camera = GetComponentInChildren<Camera>();
+				Animator = GetComponent<Animator>();
 				_collider = GetComponent<CapsuleCollider>();
 				_layerMaskAllButPlayer = ~(1 << LayerMaskManager.Get(Layer.Player));
 			}
@@ -100,5 +103,22 @@ namespace Game.PlayerComponents {
 				return null;
 			}
 		}
+
+
+		public bool PlayDigAnimation() {
+			string name = "ShovelDig";
+			if (Animator.GetCurrentAnimatorStateInfo(0).IsName(name)) {
+				return false;
+			}
+			else {
+				Animator.Play(name);
+				return true;
+			}
+		}
+
+		public void OnDigAnimationEvent() {
+			AudioController.GetInstance().PlayShovel();
+		}
+
 	}
 }

@@ -12,10 +12,12 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public override void DoInteraction() {
-			_ground.transform.position -= _ground.transform.up;
-			++_counter;
-			if (_counter >= MaxCount) {
-				Player.GetInstance().CurrentState = new WalkRunState();
+			if (Player.GetInstance().PlayDigAnimation()) {
+				_ground.transform.position -= _ground.transform.up;
+				++_counter;
+				if (_counter >= MaxCount) {
+					Player.GetInstance().CurrentState = new WalkRunState();
+				}
 			}
 		}
 

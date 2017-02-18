@@ -28,6 +28,8 @@ namespace Audio {
 		private FMODObject _wind;
 		private FMODObject _bell;
 		private FMODObject _steps;
+		private FMODObject _shovel;
+
 
 		private static AudioController _instance;
 
@@ -55,6 +57,7 @@ namespace Audio {
 				_bell = new FMODObject("event:/Bell");
 				_bell.SetParameter("Volume", Bell);
 				_steps = new FMODObject("event:/Steps");
+				_shovel = new FMODObject("event:/Shovel");
 			}
 			else {
 				Destroy(gameObject);
@@ -80,6 +83,14 @@ namespace Audio {
 #endif
 		}
 
+		public void Mute() {
+			FMODUnity.RuntimeManager.MuteAllEvents(true);
+		}
+
+		public void Unmute() {
+			FMODUnity.RuntimeManager.MuteAllEvents(false);
+		}
+
 		public void PlaySteps() {
 			if (IsMute) return;
 			if (StepsSpeed == 0.0f) return;
@@ -95,6 +106,10 @@ namespace Audio {
 
 		public void PlayBell() {
 			_bell.Play();
+		}
+
+		public void PlayShovel() {
+			_shovel.Play();
 		}
 
 		public void FadeInWind() {
@@ -130,13 +145,5 @@ namespace Audio {
 			if (f != null) f();
 		}
 
-		public void Mute() {
-			FMODUnity.RuntimeManager.MuteAllEvents(true);
-		}
-
-		public void Unmute() {
-			FMODUnity.RuntimeManager.MuteAllEvents(false);
-			
-		}
 	}
 }

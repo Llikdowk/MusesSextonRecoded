@@ -1,6 +1,7 @@
 using Cubiquity;
 using Game.Entities;
 using UnityEngine;
+using Utils;
 
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public class CarveTerrainInteraction : Interaction {
@@ -62,22 +63,25 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 			Vector3 upperLeft = v[0];
 			Vector3 lowerRight = v[1];
-			Vector3 middleLow = new Vector3(upperLeft.x - 4.0f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
+			Vector3 middleLow = new Vector3(upperLeft.x - 1.75f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
 			Player.GetInstance().MoveImmediatlyTo(middleLow);
 			Player.GetInstance().transform.rotation = Quaternion.AngleAxis(80, Vector3.up);
 			Player.GetInstance().CurrentState = new DigState(tombComponent.GetGround());
+			Player.GetInstance().PlayDigAnimation();
 		}
 
 		public override void ShowFeedback() {
 			RaycastHit hit;
 			_player.GetEyeSight(out hit);
 
+			UIUtils.Crosshair(false);
 			_digMarker.SetActive(true);
 			_digMarker.transform.position = hit.point;
 			_digMarker.transform.up = Vector3.Lerp(_digMarker.transform.up, hit.normal, 0.05f);
 		}
 
 		public override void HideFeedback() {
+			UIUtils.Crosshair(true);
 			_digMarker.SetActive(false);
 		}
 

@@ -36,7 +36,7 @@ public class LoadComponents : MonoBehaviour {
 				child.tag = terrainTag;
 			}
 			enabled = false;
-			StartCoroutine(UI.FadeOut(FallbackImage, 0.5f, () => {
+			StartCoroutine(UIUtils.FadeOut(FallbackImage, 0.5f, () => {
 				FallbackImage.gameObject.SetActive(false);
 				Time.timeScale = _originalTimeScale;
 			}));
@@ -53,7 +53,7 @@ public class LoadComponents : MonoBehaviour {
 		else {
 			if (Input.GetKeyDown(KeyCode.Mouse0)) {
 				_hasClicked = true;
-				StartCoroutine(UI.FadeOut(TitleImage, 3.0f, () => {
+				StartCoroutine(UIUtils.FadeOut(TitleImage, 3.0f, () => {
 					TitleImage.gameObject.SetActive(false);
 				}));
 				FallbackImage.gameObject.SetActive(true);
