@@ -4,11 +4,11 @@ using UnityEngine;
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 	public class VerseSelectionInteraction : Interaction {
-		private static readonly VersesDisplayer _displayMeshText = new VersesDisplayer();
+		private readonly VersesDisplayer _displayMeshText = VersesDisplayer.NormalPoem;
 		private LandmarkVerses _verses;
-		private VerseInfo _selectedVerse;
+		protected VerseInfo _selectedVerse;
 		private GameObject _selectedGameObject;
-		private bool _hasHit;
+		protected bool _hasHit;
 
 
 		public VerseSelectionInteraction(LandmarkVerses verses, PoemState.Gender gender) {
@@ -39,7 +39,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 					versesText[4].Verse = _verses.Plural[4];
 					versesText[4].Gender = PoemState.Gender.Plural;
 					versesText[4].FirstPersonVerse = _verses.FirstPerson[4];
-
 					versesText[5].Verse = _verses.Plural[5];
 					versesText[5].Gender = PoemState.Gender.Plural;
 					versesText[5].FirstPersonVerse = _verses.FirstPerson[5];
@@ -116,6 +115,4 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			return this;
 		}
 	}
-
-
 }

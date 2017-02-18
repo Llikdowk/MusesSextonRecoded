@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public class VersesDisplayer {
+		public static VersesDisplayer NormalPoem = new VersesDisplayer(6);
+		public static VersesDisplayer PlayerPoem = new VersesDisplayer(3);
+
 		public float VerticalSeparation = 1.0f;
 		public Color BaseColor = Color.white;
 		public Color BaseHighlightColor = Color.red;
@@ -12,10 +15,13 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		private GameObject _container;
 
-		private TextMesh[] _displayMeshText = new TextMesh[6];
-		private TextMesh[] _shadowMeshText = new TextMesh[6];
+		private readonly TextMesh[] _displayMeshText;
+		private readonly TextMesh[] _shadowMeshText;
 
-		public VersesDisplayer() {
+		public VersesDisplayer(int length) {
+			_displayMeshText = new TextMesh[length];
+			_shadowMeshText = new TextMesh[length];
+
 			_container = new GameObject("_textMeshContainer");
 			Font font = Resources.Load<Font>("Fonts/HammerheadRegular");
 			Material fontMat = Resources.Load<Material>("Fonts/HammerheadRegularMat");

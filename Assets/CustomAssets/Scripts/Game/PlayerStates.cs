@@ -68,7 +68,7 @@ namespace Game {
 
 		private Gender _gender;
 		private int _selectedVersesCount = 0;
-		private const int _maxVerses = 3;
+		public const int MaxVerses = 3;
 
 		public PoemState() {
 			_gender = Gender.Undefined;
@@ -82,7 +82,7 @@ namespace Game {
 
 		public void CalcNextInteraction() {
 			++_selectedVersesCount;
-			if (_selectedVersesCount == _maxVerses) {
+			if (_selectedVersesCount == MaxVerses) {
 				Player.GetInstance().CurrentState = new WalkRunState();
 			}
 			else {
@@ -100,6 +100,20 @@ namespace Game {
 			_movement.MovementBehaviour.AddInteraction(new VerseSelectionInteraction(verses, _gender));
 		}
 
+	}
+
+	public class PlayerPoemState : PlayerState {
+		public PlayerPoemState() {
+			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			_movement.MovementBehaviour.AddInteraction(new PlayerPoemInteraction());
+		}
+	}
+
+	public class FinalGameState : PlayerState {
+		public FinalGameState() {
+			Debug.Log("GAME FINISHED");
+			Player.GetInstance().CurrentState = new WalkRunState();
+		}
 	}
 
 

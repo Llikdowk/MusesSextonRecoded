@@ -1,5 +1,6 @@
 ﻿using Game.Entities;
 using Game.PlayerComponents.Movement;
+using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using UnityEngine;
 
 
@@ -84,6 +85,19 @@ namespace Game.PlayerComponents {
 			if (_poem.Count == 9) {
 				Debug.Log("OPEN GIANT DOOR");
 				GameObject.Find("LandmarkGIANTDOOR").GetComponent<GiantDoorComponent>().Open();
+			}
+		}
+
+		private int _currentTomb = 0;
+
+		public string[] GetNextTombPoem() {
+			if (_currentTomb < 3) {
+				string[] result = _poem.View(_currentTomb * PoemState.MaxVerses, PoemState.MaxVerses).ToArray();
+				++_currentTomb;
+				return result;
+			}
+			else {
+				return null;
 			}
 		}
 	}
