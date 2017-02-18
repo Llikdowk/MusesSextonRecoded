@@ -2,6 +2,7 @@
 
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public class BuryInteraction : Interaction {
+		private const float _upStep = 0.60f;
 		private readonly GameObject _tomb;
 		private readonly GameObject _ground;
 		private int _counter = 0;
@@ -13,7 +14,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public override void DoInteraction() {
-			_ground.transform.position += _ground.transform.up;
+			_ground.transform.position += _ground.transform.up * _upStep;
 			++_counter;
 			if (_counter >= MaxCount) {
 				Player.GetInstance().CurrentState = new PoemState();

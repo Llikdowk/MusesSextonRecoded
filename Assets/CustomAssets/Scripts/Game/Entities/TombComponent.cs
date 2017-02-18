@@ -24,6 +24,7 @@ namespace Game.Entities {
 			_ground = Object.Instantiate(_groundInstantiator);
 			_ground.transform.parent = transform;
 			_ground.transform.LocalReset();
+			_ground.transform.localPosition = Vector3.down * 0.5f;
 			_ground.SetActive(true);
 
 			SphereCollider c = gameObject.AddComponent<SphereCollider>();
