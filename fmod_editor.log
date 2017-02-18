@@ -14,7 +14,7 @@
 [LOG] SystemI::init                            : create the stream thread
 [LOG] Thread::initThread                       : Init FMOD stream thread. Priority: 2, Stack Size: 65536, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Priority: 3, Stack Size: 49152, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 000000003FF63918 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 000000003FF646A8 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Priority: 0, Stack Size: 65536, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -22,130 +22,13 @@
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Priority: 0, Stack Size: 65536, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] Manager::init                            : done.
 [LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000000301CDE88
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000000301CDE88
-[LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
-[LOG] SystemI::createSound                     : filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 00000000301CD2B8 : node = 0000000040D5DA30
-[LOG] SystemI::createSound                     : add node to async list : head = 0000000010C68418.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000000301CD2B8
-[LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 5699168
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 22976
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000000040D5DB48
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Format has 1 subsounds.
-[LOG] SystemI::createSoundInternal             :     Create as FMOD_CREATESTREAM
-[LOG] System::createSoundInternal              :     decode buffersize = 19200 : blocksize = 256 : format = 2
-[LOG] SystemI::createSample                    :     mode 02010082 length 19200 samples, lengthbytes 221664
-[LOG] SystemI::createSample                    :     channels = 2
-[LOG] SystemI::createSample                    :     output = 000000002FEA4B78
-[LOG] OutputSoftware::createSample             :     lengthpcm 19200, lengthbytes 221664, channels 2, format 2, freq 48000, mode 0201008a
-[LOG] System::createSoundInternal              :     1 subsounds detected.
-[LOG] System::createSoundInternal              :     Seek stream to start
-[LOG] System::createSoundInternal              :     flush stream buffer
-[LOG] System::createSoundInternal              :     flush successful.
-[LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
-[LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
-
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000000301CD2B8
-[LOG] SoundI::getSubSound                      : sound 00000000301CD2B8.  Subsound index 0 / 1
-[LOG] SoundI::getSubSound                      : starting non blocking seek and setting sound to not ready state
-[LOG] SoundI::getSubSound                      : finished preparing nonblocking getSubSound seek
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000000301CD468
-[LOG] AsyncThread::threadFunc                  :     done setposition
-[LOG] AsyncThread::threadFunc                  :     done flush
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000000301CD468
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000000301CD108
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000000301CD108
 [LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
 [LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
 [LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000000301CCF58
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000000301CCF58
-[LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
-[LOG] SoundI::release                          : BELL (00000000301CD2B8)
-[LOG] SoundI::release                          : remove stream samples. (00000000301CD2B8)
-[LOG] SoundI::release                          :     BELL (0000000028655E58)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (00000000301CD2B8)
-[LOG] SoundI::release                          :     BELL (00000000301CD468)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (00000000301CD2B8)
-[LOG] SoundI::release                          : done
 [LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
 [LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
-[LOG] SoundI::release                          : LOOP wind (00000000301CDCD8)
-[LOG] SoundI::release                          : remove stream samples. (00000000301CDCD8)
-[LOG] SoundI::release                          :     LOOP wind (0000000028656818)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (00000000301CDCD8)
-[LOG] SoundI::release                          :     LOOP wind (00000000301CDE88)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (00000000301CDCD8)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : music_perc (000000003FF6BD08)
-[LOG] SoundI::release                          : remove stream samples. (000000003FF6BD08)
-[LOG] SoundI::release                          :     music_perc (0000000010B79D88)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000003FF6BD08)
-[LOG] SoundI::release                          :     music_perc (00000000301CCDA8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000003FF6BD08)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : music_1 (000000003FF6BB58)
-[LOG] SoundI::release                          : remove stream samples. (000000003FF6BB58)
-[LOG] SoundI::release                          :     music_1 (0000000010B79BE8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000003FF6BB58)
-[LOG] SoundI::release                          :     music_1 (00000000301CD108)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000003FF6BB58)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : music_2 (000000003FF6B9A8)
-[LOG] SoundI::release                          : remove stream samples. (000000003FF6B9A8)
-[LOG] SoundI::release                          :     music_2 (0000000010B79A48)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000003FF6B9A8)
-[LOG] SoundI::release                          :     music_2 (00000000301CCF58)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000003FF6B9A8)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : music_3 (000000003FF6B7F8)
-[LOG] SoundI::release                          : remove stream samples. (000000003FF6B7F8)
-[LOG] SoundI::release                          :     music_3 (0000000010B798A8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000003FF6B7F8)
-[LOG] SoundI::release                          :     music_3 (00000000301CDB28)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000003FF6B7F8)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (00000000301CB388)
-[LOG] SoundI::release                          : release subsounds. (00000000301CB388)
-[LOG] SoundI::release                          :     fsteps3 (0000000010C67DE8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (00000000301CB388)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (00000000301CA978)
-[LOG] SoundI::release                          : release subsounds. (00000000301CA978)
-[LOG] SoundI::release                          :     fsteps4 (0000000010C66DA8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (00000000301CA978)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (00000000301CBD98)
-[LOG] SoundI::release                          : release subsounds. (00000000301CBD98)
-[LOG] SoundI::release                          :     fsteps5 (0000000010C66588)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (00000000301CBD98)
-[LOG] SoundI::release                          : done
-[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 3
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
 [LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
@@ -161,11 +44,4 @@
 [LOG] SystemI::close                           : Free channel pool.
 [LOG] SystemI::close                           : done.
 
-[LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
-[LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
-[LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
-[LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
-[LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
-[LOG] Manager::readBank                        : fileversion = 88, compatVersion = 86 (oldest = 44, newest = 88)
-[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 3
 [LOG] System::create                           : Header version = 1.09.01. Current version = 1.09.01.
