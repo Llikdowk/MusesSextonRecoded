@@ -1,4 +1,5 @@
-﻿using Game.PlayerComponents.Movement;
+﻿using Game.Entities;
+using Game.PlayerComponents.Movement;
 using UnityEngine;
 
 
@@ -82,6 +83,7 @@ namespace Game.PlayerComponents {
 			_poem.Add(verse);
 			if (_poem.Count == 9) {
 				Debug.Log("OPEN GIANT DOOR");
+				GameObject.Find("LandmarkGIANTDOOR").GetComponent<GiantDoorComponent>().Open();
 			}
 		}
 	}
