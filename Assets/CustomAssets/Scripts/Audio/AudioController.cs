@@ -1,9 +1,5 @@
 ﻿using System.Collections;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using FMOD.Studio;
 using UnityEngine;
-using FMODUnity;
 
 namespace Audio {
 
@@ -50,6 +46,10 @@ namespace Audio {
 				DontDestroyOnLoad(gameObject);
 
 				_music = new FMODObject("event:/Music");
+				_music.SetParameter("Music1", 0.0f);
+				_music.SetParameter("Music2", 0.0f);
+				_music.SetParameter("Music3", 0.0f);
+				_music.SetParameter("Percussion", 0.0f);
 				_music.Play();
 				_wind = new FMODObject("event:/Wind");
 				_bell = new FMODObject("event:/Bell");
@@ -69,7 +69,15 @@ namespace Audio {
 		}
 
 		public void Update() {
+#if UNITY_EDITOR
 			_steps.SetParameter("Volume", StepsVolume);
+			if (IsMute) {
+				Mute();
+			}
+			else {
+				Unmute();
+			}
+#endif
 		}
 
 		public void PlaySteps() {
@@ -86,31 +94,25 @@ namespace Audio {
 		}
 
 		public void PlayBell() {
-			if (IsMute) return;
 			_bell.Play();
 		}
 
 		public void FadeInWind() {
-			if (IsMute) return;
 			_wind.Play();
 			StartCoroutine(Fade(_wind, "Volume", Wind, WindFadeTime));
 		}
 
 		public void FadeInMusic1(AudioAction f = null) {
-			if (IsMute) return;
 			StartCoroutine(Fade(_music, "Music1", Music1, Music1FadeTime, f));
 		}
 		public void FadeInMusic2(AudioAction f = null) {
-			if (IsMute) return;
 			StartCoroutine(Fade(_music, "Music2", Music2, Music2FadeTime, f));
 		}
 		public void FadeInMusic3(AudioAction f = null) {
-			if (IsMute) return;
 			StartCoroutine(Fade(_music, "Music3", Music3, Music3FadeTime, f));
 			
 		}
 		public void FadeInPercussion() {
-			if (IsMute) return;
 			StartCoroutine(Fade(_music, "Percussion", Percussion, PercussionFadeTime));
 		}
 
@@ -129,12 +131,12 @@ namespace Audio {
 		}
 
 		public void Mute() {
-			IsMute = true;
-			StopAllCoroutines();
-			_music.StopImmediate();
-			_steps.StopImmediate();
-			_bell.StopImmediate();
 			FMODUnity.RuntimeManager.MuteAllEvents(true);
+		}
+
+		public void Unmute() {
+			FMODUnity.RuntimeManager.MuteAllEvents(false);
+			
 		}
 	}
 }

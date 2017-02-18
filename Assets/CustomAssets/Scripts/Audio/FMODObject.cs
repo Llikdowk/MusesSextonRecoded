@@ -1,4 +1,5 @@
-﻿using FMOD.Studio;
+﻿using System;
+using FMOD.Studio;
 
 namespace Audio {
 	public class FMODObject {
@@ -39,16 +40,29 @@ namespace Audio {
 			_audio.start();
 		}
 
+		public void Mute() {
+			_audio.setVolume(0.0f);
+		}
+
+		public void Unmute() {
+			_audio.setVolume(1.0f);
+		}
+
 		public void StopFading() {
 			_audio.stop(STOP_MODE.ALLOWFADEOUT);
+			_audio.release();
 		}
 
 		public void StopImmediate() {
 			_audio.stop(STOP_MODE.IMMEDIATE);
+			_audio.release();
 		}
 
 		public void SetParameter(string paramName, float value) {
-			_audio.setParameterValue(paramName, value);
+			FMOD.RESULT r = _audio.setParameterValue(paramName, value);
+			if (r != FMOD.RESULT.OK) {
+				throw new NullReferenceException("Audio parameter <" + paramName + "> not found in audio");
+			}
 		}
 
 		public float GetParameter(string paramName) {

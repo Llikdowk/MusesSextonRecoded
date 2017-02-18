@@ -7,7 +7,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		private readonly VersesDisplayer _displayMeshText = VersesDisplayer.NormalPoem;
 		private LandmarkVerses _verses;
 		protected VerseInfo _selectedVerse;
-		private GameObject _selectedGameObject;
+		protected GameObject _selectedGameObject;
 		protected bool _hasHit;
 
 
