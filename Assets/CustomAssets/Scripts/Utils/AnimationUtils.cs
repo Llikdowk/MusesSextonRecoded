@@ -8,22 +8,31 @@ namespace Utils {
 
 	public static class AnimationUtils {
 
-		public static void SlerpTowards(Transform target, Transform destination, float durationSecs, AnimationDelegate callback) {
+		public static void SlerpTowards(Transform target, Vector3 destination, float durationSecs, AnimationDelegate callback = null) {
 			SlerpForwardComponent c = target.gameObject.AddComponent<SlerpForwardComponent>();
 			c.Init(target, destination, durationSecs, callback);
 			c.Run();
 		}
+
+
 	}
 
 	internal class SlerpForwardComponent : MonoBehaviour {
 		private Transform _target;
-		private Transform _destination;
+		private Vector3 _destination;
 		private float _durationSecs;
 		private AnimationDelegate _callback;
 
-		public void Init(Transform target, Transform destiny, float durationSecs, AnimationDelegate callback) {
+		public void Init(Transform target, Transform destination, float durationSecs, AnimationDelegate callback) {
 			_target = target;
-			_destination = destiny;
+			_destination = destination.forward;
+			_durationSecs = durationSecs;
+			_callback = callback;
+		}
+
+		public void Init(Transform target, Vector3 destination, float durationSecs, AnimationDelegate callback) {
+			_target = target;
+			_destination = destination;
 			_durationSecs = durationSecs;
 			_callback = callback;
 		}
@@ -38,11 +47,13 @@ namespace Utils {
 			float t = 0.0f;
 			Vector3 originalForward = _target.forward;
 			while (t < 1.0f) {
-				_target.forward = Vector3.Slerp(originalForward, _destination.forward, t);
+				_target.forward = Vector3.Slerp(originalForward, _destination, t);
 				t += Time.deltaTime / _durationSecs;
 				yield return null;
 			}
-			_callback();
+			if (_callback != null) {
+				_callback();
+			}
 			Destroy(this);
 		}
 	

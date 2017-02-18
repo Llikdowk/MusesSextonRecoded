@@ -5,7 +5,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public class DigInteraction : Interaction {
 		private readonly GameObject _ground;
 		private int _counter = 0;
-		private const int MaxCount = 3;
+		private const int MaxCount = 2;
 
 		public DigInteraction(GameObject ground) {
 			_ground = ground;

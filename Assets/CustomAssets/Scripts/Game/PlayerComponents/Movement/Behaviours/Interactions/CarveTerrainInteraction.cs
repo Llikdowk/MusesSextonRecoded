@@ -45,11 +45,12 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			}
 		}
 
+		// positions are hardcoded as terrain carving is based on fixed coordinates and it is not going to change
 		public override void DoInteraction() {
 			HideFeedback();
 
 			Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_player.transform.position, _player.Camera.transform.forward));
-			v[0] = v[0] + new Vector3(-1, 0, 0); // hardcoded offset
+			v[0] = v[0] + new Vector3(-1, 0, 0);
 			v[1] = v[1] + new Vector3(0, 0, -1);
 			Vector3 position = (v[1] - v[0]) / 2.0f + v[0];
 
@@ -64,10 +65,11 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			Vector3 upperLeft = v[0];
 			Vector3 lowerRight = v[1];
 			Vector3 middleLow = new Vector3(upperLeft.x - 1.75f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
-			Player.GetInstance().MoveImmediatlyTo(middleLow);
-			Player.GetInstance().transform.rotation = Quaternion.AngleAxis(80, Vector3.up);
-			Player.GetInstance().CurrentState = new DigState(tombComponent.GetGround());
-			Player.GetInstance().PlayDigAnimation();
+			Player player = Player.GetInstance();
+			player.MoveSmoothlyTo(middleLow, 0.50f);
+			AnimationUtils.SlerpTowards(player.transform, new Vector3(1, 0, 0), 0.5f);
+			player.CurrentState = new DigState(tombComponent.GetGround());
+			player.PlayDigAnimation();
 		}
 
 		public override void ShowFeedback() {

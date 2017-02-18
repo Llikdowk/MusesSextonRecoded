@@ -1,4 +1,5 @@
-﻿using Audio;
+﻿using System.Collections;
+using Audio;
 using Game.Entities;
 using Game.PlayerComponents.Movement;
 using UnityEngine;
@@ -69,8 +70,27 @@ namespace Game.PlayerComponents {
 			_isEyeSightValid = false;
 		}
 
+		private Vector3 CalcFeetPosition(Vector3 position) {
+			return position + Vector3.up * (_collider.height/2.0f + _collider.radius);
+		}
+
 		public void MoveImmediatlyTo(Vector3 position) {
-			transform.position = position + Vector3.up * _collider.height/2.0f;
+			transform.position = CalcFeetPosition(position);
+		}
+
+		public void MoveSmoothlyTo(Vector3 position, float duration_s) {
+			StartCoroutine(MoveSmoothlyToCoroutine(CalcFeetPosition(position), duration_s));
+		}
+
+		public IEnumerator MoveSmoothlyToCoroutine(Vector3 end, float duration_s) {
+			Vector3 start = transform.position;
+			float t = 0.0f;
+			while (t < 1.0f) {
+				transform.position = Vector3.Slerp(start, end, t);
+				t += Time.deltaTime / duration_s;
+				yield return null;
+			}
+
 		}
 
 		public bool GetEyeSight(out RaycastHit hit) {
