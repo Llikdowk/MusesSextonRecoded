@@ -19,11 +19,18 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			if (Player.GetInstance().GetEyeSight(out hit)) {
 				Debug.DrawLine(Player.GetInstance().transform.position, hit.point, Color.magenta);
 				if (hit.collider.gameObject.tag == TagManager.Get(Tag.Landmark)) {
-					_landmarkVisuals = hit.collider.gameObject.transform.parent;
-					Transform landmarkParent = _landmarkVisuals.transform.parent;
-					_verses = landmarkParent.GetComponent<LandmarkVersesComponent>();
-					ShowFeedback();
-					return this;
+					GameObject LandmarkParent = null;
+					Transform current = hit.collider.transform;
+					while (current.parent != null && !current.parent.name.Contains("Landmark")) {
+						current = current.parent;
+					}
+					if (current != null) {
+						_landmarkVisuals = current;
+						Transform landmarkParent = _landmarkVisuals.transform.parent;
+						_verses = landmarkParent.GetComponent<LandmarkVersesComponent>();
+						ShowFeedback();
+						return this;
+					}
 				}
 			}
 

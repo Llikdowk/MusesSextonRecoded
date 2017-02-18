@@ -1,4 +1,5 @@
 ﻿
+using C5;
 using Game.PlayerComponents;
 using Game.PlayerComponents.Movement;
 using Game.PlayerComponents.Movement.Behaviours;
@@ -59,11 +60,15 @@ namespace Game {
 	}
 
 	public class PoemState : PlayerState {
+		public static IList<string> PlayerPoem;
+
 		public enum Gender {
 			Undefined, Masculine, Feminine, Plural, FirstPerson
 		}
 
 		private Gender _gender;
+		private int _selectedVersesCount = 0;
+		private const int _maxVerses = 3;
 
 		public PoemState() {
 			_gender = Gender.Undefined;
@@ -73,6 +78,16 @@ namespace Game {
 
 		public void SetGender(Gender gender) {
 			_gender = gender;
+		}
+
+		public void CalcNextInteraction() {
+			++_selectedVersesCount;
+			if (_selectedVersesCount == _maxVerses) {
+				Player.GetInstance().CurrentState = new WalkRunState();
+			}
+			else {
+				SetLandmarkSelectionInteraction();
+			}
 		}
 
 		public void SetLandmarkSelectionInteraction() {

@@ -26,6 +26,7 @@ namespace Game.PlayerComponents {
 		private RaycastHit _hit;
 		private bool _hasHit;
 		private bool _isEyeSightValid = false;
+		private readonly C5.IList<string> _poem = new C5.ArrayList<string>();
 
 
 		private static Player _instance = null;
@@ -75,6 +76,13 @@ namespace Game.PlayerComponents {
 			}
 			hit = _hit;
 			return _hasHit;
+		}
+
+		public void AddPoemVerse(string verse) {
+			_poem.Add(verse);
+			if (_poem.Count == 9) {
+				Debug.Log("OPEN GIANT DOOR");
+			}
 		}
 	}
 }

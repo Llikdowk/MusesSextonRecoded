@@ -24,24 +24,32 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				case PoemState.Gender.Undefined:
 					versesText[0].Verse = _verses.Masculine[0];
 					versesText[0].Gender = PoemState.Gender.Masculine;
+					versesText[0].FirstPersonVerse = _verses.FirstPerson[0];
 					versesText[1].Verse = _verses.Masculine[1];
 					versesText[1].Gender = PoemState.Gender.Masculine;
+					versesText[1].FirstPersonVerse = _verses.FirstPerson[1];
 
 					versesText[2].Verse = _verses.Feminine[2];
 					versesText[2].Gender = PoemState.Gender.Feminine;
+					versesText[2].FirstPersonVerse = _verses.FirstPerson[2];
 					versesText[3].Verse = _verses.Feminine[3];
 					versesText[3].Gender = PoemState.Gender.Feminine;
+					versesText[3].FirstPersonVerse = _verses.FirstPerson[3];
 
 					versesText[4].Verse = _verses.Plural[4];
-					versesText[3].Gender = PoemState.Gender.Plural;
+					versesText[4].Gender = PoemState.Gender.Plural;
+					versesText[4].FirstPersonVerse = _verses.FirstPerson[4];
+
 					versesText[5].Verse = _verses.Plural[5];
-					versesText[3].Gender = PoemState.Gender.Plural;
+					versesText[5].Gender = PoemState.Gender.Plural;
+					versesText[5].FirstPersonVerse = _verses.FirstPerson[5];
 					break;
 
 				case PoemState.Gender.Masculine:
 					for (int i = 0; i < versesText.Length; ++i) {
 						versesText[i].Verse = _verses.Masculine[i];
 						versesText[i].Gender = PoemState.Gender.Masculine;
+						versesText[i].FirstPersonVerse = _verses.FirstPerson[i];
 					}
 					break;
 
@@ -49,6 +57,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 					for (int i = 0; i < versesText.Length; ++i) {
 						versesText[i].Verse = _verses.Feminine[i];
 						versesText[i].Gender = PoemState.Gender.Feminine;
+						versesText[i].FirstPersonVerse = _verses.FirstPerson[i];
 					}
 					break;
 
@@ -56,6 +65,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 					for (int i = 0; i < versesText.Length; ++i) {
 						versesText[i].Verse = _verses.Plural[i];
 						versesText[i].Gender = PoemState.Gender.Plural;
+						versesText[i].FirstPersonVerse = _verses.FirstPerson[i];
 					}
 					break;
 			}
@@ -69,11 +79,11 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public override void DoInteraction() {
 			PoemState poemState = ((PoemState)Player.GetInstance().CurrentState); // TODO: send in constructor
 			if (_hasHit) {
-				Debug.Log(_selectedVerse);
 				poemState.SetGender(_selectedVerse.Gender);
+				Player.GetInstance().AddPoemVerse(_selectedVerse.FirstPersonVerse);
 			}
 			_displayMeshText.Hide();
-			poemState.SetLandmarkSelectionInteraction();
+			poemState.CalcNextInteraction();
 		}
 
 		public override void ShowFeedback() {
