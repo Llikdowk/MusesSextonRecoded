@@ -14,4 +14,8 @@ public static class DebugMsg {
 	public static void NoExistantInteraction(DebugLog log) {
 		log("Trying to remove a non-existant interaction");
 	}
+
+	public static void SingletonNotCreated(DebugLog log) {
+		log("Singleton has not been created!");
+	}
 }

@@ -32,14 +32,12 @@ namespace Game.PlayerComponents {
 		private bool _hasHit;
 		private bool _isEyeSightValid = false;
 		private readonly C5.IList<string> _poem = new C5.ArrayList<string>();
+		private ShovelMovementComponent _shovel;
 
 
 		private static Player _instance = null;
 
 		public static Player GetInstance() {
-			if (_instance == null) {
-				Debug.LogError("Player singleton called but it is not yet built"); // TODO extract to DebugMsg
-			}
 			return _instance;
 		}
 
@@ -55,6 +53,7 @@ namespace Game.PlayerComponents {
 				Animator = GetComponent<Animator>();
 				_collider = GetComponent<CapsuleCollider>();
 				_layerMaskAllButPlayer = ~(1 << LayerMaskManager.Get(Layer.Player));
+				_shovel = GetComponentInChildren<ShovelMovementComponent>();
 			}
 			else {
 				Debug.LogWarning("Player singleton instance destroyed!");
@@ -134,10 +133,19 @@ namespace Game.PlayerComponents {
 				Animator.Play(name);
 				return true;
 			}
+			
 		}
 
 		public void OnDigAnimationEvent() {
 			AudioController.GetInstance().PlayShovel();
+		}
+
+		public void ShowShovel() {
+			_shovel.Show();
+		}
+
+		public void HideShovel() {
+			_shovel.Hide();
 		}
 
 	}

@@ -16,6 +16,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			if (_slot == null) Debug.LogError("Camera/_slotCoffin not found in PlayerGameobject"); // TODO extract to Error class
 			coffin.transform.parent = _slot;
 			coffin.transform.LocalReset();
+			Player.GetInstance().HideShovel();
 		}
 
 	}
