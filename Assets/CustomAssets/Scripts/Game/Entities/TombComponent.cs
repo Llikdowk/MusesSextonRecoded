@@ -4,21 +4,22 @@ using Triggers;
 using UnityEngine;
 
 namespace Game.Entities {
-	class CreateTombComponent : MonoBehaviour {
+	class TombComponent : MonoBehaviour {
 
 		private GameObject _groundInstantiator;
 		private GameObject _ground;
+		private SpriteRenderer icon;
 
 		public void Awake() {
 			_groundInstantiator = Resources.Load<GameObject>("Prefabs/Ground");
 			_groundInstantiator.name = "_ground";
 			_groundInstantiator.SetActive(false);
 
-			SpriteRenderer sr = gameObject.AddComponent<SpriteRenderer>();
-			sr.sprite = Resources.Load<Sprite>("Sprites/bury");
-			sr.material = new Material(Shader.Find("Custom/UniformSpriteFaceCamera")); // TODO extract all shader references
-			sr.material.color = new Color(0, 81.0f/255.0f, 240.0f/255.0f);
-			sr.enabled = false;
+			icon = gameObject.AddComponent<SpriteRenderer>();
+			icon.sprite = Resources.Load<Sprite>("Sprites/bury");
+			icon.material = new Material(Shader.Find("Custom/UniformSpriteFaceCamera")); // TODO extract all shader references
+			icon.material.color = new Color(0, 81.0f/255.0f, 240.0f/255.0f);
+			icon.enabled = false;
 
 			_ground = Object.Instantiate(_groundInstantiator);
 			_ground.transform.parent = transform;
@@ -40,6 +41,10 @@ namespace Game.Entities {
 
 		public GameObject GetGround() {
 			return _ground;
+		}
+
+		public void ShowActionIcon(bool show) {
+			icon.enabled = show;
 		}
 
 		public void Start() {

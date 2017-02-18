@@ -54,7 +54,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			Vector3 position = (v[1] - v[0]) / 2.0f + v[0];
 
 			GameObject tomb = new GameObject("_tomb");
-			CreateTombComponent tombComponent = tomb.AddComponent<CreateTombComponent>();
+			TombComponent tombComponent = tomb.AddComponent<TombComponent>();
 
 			RaycastHit hit;
 			_player.GetEyeSight(out hit);

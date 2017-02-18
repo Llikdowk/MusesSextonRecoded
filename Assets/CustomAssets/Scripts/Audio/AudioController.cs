@@ -22,7 +22,7 @@ namespace Audio {
 		[Range(0, 1)] public float StepsSpeed = 0.0f;
 		[Range(0, 1)] public float StepsVolume = 0.5f;
 
-		public bool IsMute;
+		public bool IsMuted;
 
 		private FMODObject _music;
 		private FMODObject _wind;
@@ -66,7 +66,7 @@ namespace Audio {
 		}
 
 		public void Start() {
-			if (IsMute) {
+			if (IsMuted) {
 				Mute();
 			}
 		}
@@ -74,7 +74,7 @@ namespace Audio {
 		public void Update() {
 #if UNITY_EDITOR
 			_steps.SetParameter("Volume", StepsVolume);
-			if (IsMute) {
+			if (IsMuted) {
 				Mute();
 			}
 			else {
@@ -92,7 +92,7 @@ namespace Audio {
 		}
 
 		public void PlaySteps() {
-			if (IsMute) return;
+			if (IsMuted) return;
 			if (StepsSpeed == 0.0f) return;
 			if (_steps.IsPlaying()) {
 				if (_steps.GetNormalizedTimelinePosition() >= 1 - StepsSpeed) {

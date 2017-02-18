@@ -1,21 +1,9 @@
 ﻿using Game.PlayerComponents.Movement.Behaviours;
 using UnityEngine;
 
-
-
 namespace Game.PlayerComponents {
-
-
-
-
-
 	[RequireComponent(typeof(InputController))]
 	public class CharacterMovement : MonoBehaviour {
-
-
-
-
-
 		public MovementBehaviour MovementBehaviour {
 			set {
 				_movementBehaviour.OnDestroy();
@@ -37,15 +25,7 @@ namespace Game.PlayerComponents {
 		public Vector3 SelfDir { get { return _movementBehaviour.SelfDir; } }
 		public Vector3 WorldDir { get { return _movementBehaviour.WorldDir; } }
 		private bool _canInteract = true;
-
-
-
-
-
-
-
-
-
+ 
 		public void Awake() {
 			_movementBehaviour = new NullMovementBehaviour(transform);
 		}

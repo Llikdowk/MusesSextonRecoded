@@ -1,4 +1,5 @@
-﻿using Game.PlayerComponents.Movement.Behaviours.Interactions;
+﻿using C5;
+using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours {
@@ -24,8 +25,13 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			AvailableInteractions.Insert(0, interaction);
 		}
 
-		public bool RemoveInteraction(Interaction interaction) {
-			return AvailableInteractions.Remove(interaction);
+		public void RemoveInteraction(Interaction interaction) {
+			try {
+				AvailableInteractions.Remove(interaction);
+			}
+			catch (NoSuchItemException) {
+				DebugMsg.NoExistantInteraction(Debug.LogWarning);
+			}
 		}
 
 		public void ClearInteractions() {

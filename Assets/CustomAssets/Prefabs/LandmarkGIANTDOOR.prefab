@@ -185,7 +185,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 477584}
-  - component: {fileID: 11463572}
   m_Layer: 0
   m_Name: GatesAsset
   m_TagString: Untagged
@@ -1404,18 +1403,6 @@ MonoBehaviour:
   - They were left behind, trapped in the valley.
   - I was left behind, trapped in the valley.
   initGenderDisplayed: 2
---- !u!114 &11463572
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 123326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0ac6249e56ab3f48a7581754b2f1227, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 0
 --- !u!114 &11486452
 MonoBehaviour:
   m_ObjectHideFlags: 1

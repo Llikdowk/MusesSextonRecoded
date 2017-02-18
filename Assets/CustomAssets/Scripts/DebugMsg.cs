@@ -10,4 +10,8 @@ public static class DebugMsg {
 	public static void GameObjectNotFound(DebugLog log, string gameObjectName, string extraInfo = "") {
 		log("GameObject with name <b>" + gameObjectName + "</b> not found" + sep + extraInfo);
 	}
+
+	public static void NoExistantInteraction(DebugLog log) {
+		log("Trying to remove a non-existant interaction");
+	}
 }
