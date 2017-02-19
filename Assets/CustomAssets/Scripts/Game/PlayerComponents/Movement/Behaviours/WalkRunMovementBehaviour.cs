@@ -18,7 +18,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			var runAction = Player.GetInstance().Actions.GetAction(PlayerAction.Run);
 			runAction.StartBehaviour = () => _currentConfig = runConfig;
 			runAction.FinishBehaviour = () => _currentConfig = walkConfig;
-			Player.GetInstance().ShowShovel();
 
 		}
 

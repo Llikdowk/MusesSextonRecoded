@@ -18,4 +18,8 @@ public static class DebugMsg {
 	public static void SingletonNotCreated(DebugLog log) {
 		log("Singleton has not been created!");
 	}
+
+	public static void ChildObjectNotFound(DebugLog log, string childObjectName) {
+		log("Child object <b>" + childObjectName + "</b> not found in current gameObject");
+}
 }

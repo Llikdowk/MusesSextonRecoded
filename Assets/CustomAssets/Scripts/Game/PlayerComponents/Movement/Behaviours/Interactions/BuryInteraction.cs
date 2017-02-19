@@ -14,12 +14,14 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public override void DoInteraction() {
-			_ground.transform.position += _ground.transform.up * _upStep;
-			++_counter;
-			if (_counter >= MaxCount) {
-				Player.GetInstance().CurrentState = new PoemState();
-				_ground.transform.parent = null;
-				_tomb.SetActive(false);
+			if (Player.GetInstance().PlayDigAnimation()) {
+				_ground.transform.position += _ground.transform.up * _upStep;
+				++_counter;
+				if (_counter >= MaxCount) {
+					Player.GetInstance().CurrentState = new PoemState();
+					_ground.transform.parent = null;
+					_tomb.SetActive(false);
+				}
 			}
 		}
 

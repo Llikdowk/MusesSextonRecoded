@@ -23,6 +23,7 @@ namespace Game {
 	public class WalkRunState : PlayerState {
 		public WalkRunState() {
 			_movement.MovementBehaviour = new WalkRunMovementBehaviour(_transform, _config);
+			Player.GetInstance().ShowShovel();
 			_movement.MovementBehaviour.AddInteraction(new PickUpCoffinInteraction());
 			_movement.MovementBehaviour.AddInteraction(new CarveTerrainInteraction());
 		}
@@ -33,6 +34,7 @@ namespace Game {
 		public DragCoffinState(GameObject coffin) {
 			Coffin = coffin;
 			_movement.MovementBehaviour = new DragCoffinBehaviour(_transform, coffin, _config);
+			Player.GetInstance().HideShovel();
 			_movement.MovementBehaviour.AddInteraction(new ThrowCoffinInteraction(coffin));
 		}
 	}
@@ -40,6 +42,7 @@ namespace Game {
 	public class DriveCartState : PlayerState {
 		public DriveCartState(GameObject cart) {
 			_movement.MovementBehaviour = new CartMovementBehaviour(_transform, cart, _config);
+			Player.GetInstance().HideShovel();
 			_movement.MovementBehaviour.AddInteraction(new StopDrivingCartInteraction());
 		}
 	}
@@ -48,6 +51,7 @@ namespace Game {
 	public class DigState : PlayerState {
 		public DigState(GameObject ground) {
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			Player.GetInstance().ShowShovel();
 			_movement.MovementBehaviour.AddInteraction(new DigInteraction(ground));
 		}
 	}
@@ -55,6 +59,7 @@ namespace Game {
 	public class BuryState : PlayerState {
 		public BuryState(GameObject tomb, GameObject ground) {
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			Player.GetInstance().ShowShovel();
 			_movement.MovementBehaviour.AddInteraction(new BuryInteraction(tomb, ground));
 		}
 	}
@@ -73,6 +78,7 @@ namespace Game {
 		public PoemState() {
 			_gender = Gender.Undefined;
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			Player.GetInstance().HideShovel();
 			_movement.MovementBehaviour.AddInteraction(new PoemLandmarkSelectionInteraction());
 		}
 

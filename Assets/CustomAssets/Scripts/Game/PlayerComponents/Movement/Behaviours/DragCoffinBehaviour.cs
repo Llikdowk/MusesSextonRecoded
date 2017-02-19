@@ -12,11 +12,11 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_coffin.GetComponent<Rigidbody>().isKinematic = true;
 			_coffin.GetComponent<Collider>().enabled = false;
 
-			_slot = Player.GetInstance().transform.Find("Camera/_slotCoffin");
-			if (_slot == null) Debug.LogError("Camera/_slotCoffin not found in PlayerGameobject"); // TODO extract to Error class
+			_slot = Player.GetInstance().Camera.transform.Find("_slotCoffin");
+			if (_slot == null)
+				DebugMsg.ChildObjectNotFound(Debug.LogError, "_slotCoffin");
 			coffin.transform.parent = _slot;
 			coffin.transform.LocalReset();
-			Player.GetInstance().HideShovel();
 		}
 
 	}

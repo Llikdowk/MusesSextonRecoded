@@ -27,7 +27,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_moveBackAction = Player.GetInstance().Actions.GetAction(PlayerAction.MoveBack);
 
 			Utils.AnimationUtils.SlerpTowards(transform, transform.forward, cart.transform.forward, _cartConfig.GoInsideTimeSeconds, () => { });
-			Player.GetInstance().HideShovel();
 		}
 
 		public override void OnDestroy() {
