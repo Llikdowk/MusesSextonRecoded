@@ -16,7 +16,8 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				_ground.transform.position -= _ground.transform.up;
 				++_counter;
 				if (_counter >= MaxCount) {
-					Player.GetInstance().CurrentState = new WalkRunState();
+					Player.GetInstance().AnimationEnding = 
+						() => Player.GetInstance().CurrentState = new WalkRunState();
 				}
 			}
 		}

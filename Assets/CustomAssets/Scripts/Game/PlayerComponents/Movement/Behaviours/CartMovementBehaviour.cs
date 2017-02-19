@@ -13,7 +13,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		public CartMovementBehaviour(Transform transform, GameObject cart, SuperConfig config) : base(transform) {
 			Player.GetInstance().Look.Config = config.DriveCartLook;
 
-			config.DriveCartLook.FixedForward = transform;
 			_cartConfig = config.DriveCartMovement;
 			_movement = new SmoothMovementHandler(config.CartAcceleration).SetMovement();
 			_cartTransform = cart.transform;

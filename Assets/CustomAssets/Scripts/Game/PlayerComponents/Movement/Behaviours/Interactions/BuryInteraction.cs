@@ -18,9 +18,12 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				_ground.transform.position += _ground.transform.up * _upStep;
 				++_counter;
 				if (_counter >= MaxCount) {
-					Player.GetInstance().CurrentState = new PoemState();
-					_ground.transform.parent = null;
-					_tomb.SetActive(false);
+					Player.GetInstance().AnimationEnding = () => {
+						++GameState.CoffinsBuried;
+						Player.GetInstance().CurrentState = new PoemState();
+						_ground.transform.parent = null;
+						_tomb.SetActive(false);
+					};
 				}
 			}
 		}

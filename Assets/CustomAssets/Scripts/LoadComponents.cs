@@ -41,6 +41,7 @@ public class LoadComponents : MonoBehaviour {
 				Time.timeScale = _originalTimeScale;
 			}));
 			
+			/*
 			AudioController.GetInstance().FadeInMusic1(
 				()=>AudioController.GetInstance().FadeInMusic2(
 					() => AudioController.GetInstance().FadeInMusic3(
@@ -48,6 +49,7 @@ public class LoadComponents : MonoBehaviour {
 					)
 				)
 			);
+			*/
 			
 		}
 		else {

@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Game;
+using Game.PlayerComponents.Movement.Behaviours;
 using UnityEngine;
 
 namespace Audio {
@@ -72,7 +76,7 @@ namespace Audio {
 		}
 
 		public void Update() {
-#if UNITY_EDITOR
+		#if UNITY_EDITOR
 			_steps.SetParameter("Volume", StepsVolume);
 			if (IsMuted) {
 				Mute();
@@ -80,7 +84,7 @@ namespace Audio {
 			else {
 				Unmute();
 			}
-#endif
+		#endif
 		}
 
 		public void Mute() {
@@ -115,6 +119,20 @@ namespace Audio {
 		public void FadeInWind() {
 			_wind.Play();
 			StartCoroutine(Fade(_wind, "Volume", Wind, WindFadeTime));
+		}
+
+		public void AddMusicChannel() {
+			switch (GameState.CoffinsBuried) {
+				case 0:
+					FadeInMusic1();
+					break;
+				case 1:
+					FadeInMusic2();
+					break;
+				case 2:
+					FadeInMusic3();
+					break;
+			}
 		}
 
 		public void FadeInMusic1(AudioAction f = null) {

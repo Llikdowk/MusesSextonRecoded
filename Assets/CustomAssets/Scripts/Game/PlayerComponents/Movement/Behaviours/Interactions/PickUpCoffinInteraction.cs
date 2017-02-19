@@ -20,7 +20,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			bool hasHit = player.GetEyeSight(out hit);
 			if (!hasHit) return null;
 			GameObject g = hit.collider.gameObject;
-			if (g.tag == TagManager.Get(Tag.Coffin) && hit.distance < 2.5f) {
+			if (g.tag == TagManager.Get(Tag.Coffin) && hit.distance < 3.0f) {
 				if (Coffin != null) { HideFeedback(); }
 				Coffin = g;
 				_backupLayer = g.layer;

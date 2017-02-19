@@ -1,6 +1,8 @@
+using Audio;
 using Game.Entities;
 using UnityEngine;
 using Utils;
+using Debug = System.Diagnostics.Debug;
 
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public class SendCoffinToTombInteraction : Interaction {
@@ -24,6 +26,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				_coffin.transform.parent = _tomb.transform;
 				Player.GetInstance().CurrentState = new BuryState(_tomb, _ground);
 			});
+			AudioController.GetInstance().AddMusicChannel();
 		}
 
 		public override void ShowFeedback() {

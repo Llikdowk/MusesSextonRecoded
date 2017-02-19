@@ -3,6 +3,7 @@ using Audio;
 using Game.Entities;
 using Game.PlayerComponents.Movement;
 using UnityEngine;
+using Utils;
 
 
 namespace Game.PlayerComponents {
@@ -104,40 +105,36 @@ namespace Game.PlayerComponents {
 
 		public void AddPoemVerse(string verse) {
 			_poem.Add(verse);
-			if (_poem.Count == 9) {
-				Debug.Log("OPEN GIANT DOOR");
-				GameObject.Find("LandmarkGIANTDOOR").GetComponent<GiantDoorComponent>().Open();
-			}
 		}
 
-		private int _currentTomb = 0;
-
 		public string[] GetNextTombPoem() {
-			if (_currentTomb < 3) {
-				string[] result = _poem.View(_currentTomb * PoemState.MaxVerses, PoemState.MaxVerses).ToArray();
-				++_currentTomb;
+			if (GameState.CoffinsBuried < 3) {
+				string[] result = _poem.View(GameState.CoffinsBuried * PoemState.MaxVerses, PoemState.MaxVerses).ToArray();
 				return result;
 			}
-			else {
-				return null;
-			}
+			return null;
 		}
 
 
 		public bool PlayDigAnimation() {
-			string name = "ShovelDig";
-			if (Animator.GetCurrentAnimatorStateInfo(0).IsName(name)) {
+			const string animationName = "ShovelDig";
+			if (Animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
 				return false;
 			}
-			else {
-				Animator.Play(name);
-				return true;
-			}
-			
+			Animator.Play(animationName);
+			return true;
 		}
 
 		public void OnDigAnimationEvent() {
 			AudioController.GetInstance().PlayShovel();
+		}
+
+		public AnimationDelegate AnimationEnding = null;
+		public void OnDigAnimationEnding() {
+			if (AnimationEnding != null) {
+				AnimationEnding();
+				AnimationEnding = null;
+			}
 		}
 
 		public void ShowShovel() {
