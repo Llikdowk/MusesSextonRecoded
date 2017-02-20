@@ -13,14 +13,16 @@ namespace Game.CameraComponents {
 			_alwaysFrontCamera.transform.parent = transform;
 			_alwaysFrontCamera.transform.localPosition = Vector3.zero;
 			_alwaysFrontCamera.transform.eulerAngles = Vector3.zero;
+			_alwaysFrontCamera.depth = 100;
 			_layerMaskDrawFront = 1 << LayerMaskManager.Get(Layer.DrawFront);
-		}
 
-		public void Update() { // TODO: should be a listener of MainCamera changes
 			_alwaysFrontCamera.CopyFrom(_mainCamera);
 			_alwaysFrontCamera.clearFlags = CameraClearFlags.Depth;
 			_alwaysFrontCamera.depth = _mainCamera.depth + 1;
 			_alwaysFrontCamera.cullingMask = _layerMaskDrawFront;
+		}
+
+		public void Update() { // TODO: should be a listener of MainCamera changes
 		}
 
 	}

@@ -5,18 +5,21 @@ Shader "Custom/PostOutline"
     Properties
     {
 		_MainTex("Main Texture", 2D) = "white" {}
+        _SourceTex("Source Texture", 2D) = "white" {}
 		_Color("Main Color", Color) = (1, 0, 1, 1)
 		_Thickness("Thickness", Int) = 9
 		
     }
     SubShader 
     {
+    ZWrite Off
     Blend SrcAlpha OneMinusSrcAlpha
         Pass 
         {
             CGPROGRAM
      
             sampler2D _MainTex;
+            sampler2D _SourceTex;
 			half4 _Color;
 			int _Thickness;
  
@@ -32,19 +35,21 @@ Shader "Custom/PostOutline"
 
             struct v2f {
                 float4 pos : SV_POSITION;
-                float2 uvs : TEXCOORD0;
+                float2 uv : TEXCOORD0;
+                float2 uvSource : TEXCOORD1;
             };
              
             v2f vert (appdata input) {
                 v2f o;
                 o.pos = mul(UNITY_MATRIX_MVP, input.pos);
-                o.uvs = o.pos.xy / 2.0 + 0.5;
+                o.uv = o.pos.xy / 2.0 + 0.5;
+                o.uvSource = o.pos.xy / 2.0f + 0.5;
                 return o;
             }
              
              
             half4 frag(v2f input) : COLOR {
-                if(tex2D(_MainTex, input.uvs.xy).r > 0) { // Potential performance issue: conditional
+                if(tex2D(_MainTex, input.uv).r > 0) { // Potential performance issue: conditional
                     discard;
                 }
 
@@ -52,10 +57,12 @@ Shader "Custom/PostOutline"
                 for(int i = -_Thickness/2.0; i < _Thickness/2.0; ++i) {
                     for(int j = -_Thickness/2.0; j < _Thickness/2.0; ++j) {
                         ColorIntensityInRadius += 
-                            tex2D(_MainTex, input.uvs.xy + float2(i*_MainTex_TexelSize.x, j*_MainTex_TexelSize.y)).r; // Potential performance issue: lots of lookups
+                            tex2D(_MainTex, input.uv + float2(i*_MainTex_TexelSize.x, j*_MainTex_TexelSize.y)).r; // Potential performance issue: lots of lookups
                     }
                 }
-                return ColorIntensityInRadius * _Color;
+
+                half4 sourceColor = tex2D(_SourceTex, input.uvSource);
+                return lerp(sourceColor, _Color, ColorIntensityInRadius);
             }
             ENDCG
         }
