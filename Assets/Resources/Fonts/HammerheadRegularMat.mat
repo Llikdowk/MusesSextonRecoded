@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: HammerheadRegularMat
-  m_Shader: {fileID: 4800000, guid: 0e4f18fb5e190284085caf53b60521bf, type: 3}
+  m_Shader: {fileID: 4800000, guid: c5a95f021517be842893344514cb152d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2

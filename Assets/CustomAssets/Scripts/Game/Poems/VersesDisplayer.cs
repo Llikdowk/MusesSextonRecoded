@@ -24,7 +24,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 			_container = new GameObject("_textMeshContainer");
 			Font font = Resources.Load<Font>("Fonts/HammerheadRegular");
-			Material fontMat = Resources.Load<Material>("Fonts/HammerheadRegularMat");
+			Material fontMat = Resources.Load<Material>("Fonts/HammerheadRegularAlwaysFrontMat");
 
 			for (int i = 0; i < _displayMeshText.Length; ++i) {
 				GameObject child = new GameObject("_child"+i);

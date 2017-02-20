@@ -50,21 +50,28 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			HideFeedback();
 
 			Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_player.transform.position, _player.Camera.transform.forward));
-			v[0] = v[0] + new Vector3(-1, 0, 0);
-			v[1] = v[1] + new Vector3(0, 0, -1);
-			Vector3 position = (v[1] - v[0]) / 2.0f + v[0];
+			Vector3 upperLeft = v[0];
+			Vector3 lowerRight = v[1];
+			upperLeft = upperLeft + new Vector3(-1, 0, 0);
+			lowerRight = lowerRight + new Vector3(0, 0, -1);
+			Vector3 position = (lowerRight - upperLeft) / 2.0f + upperLeft;
 
 			GameObject tomb = new GameObject("_tomb");
 			TombComponent tombComponent = tomb.AddComponent<TombComponent>();
+
+			GameObject gravestone = tombComponent.Gravestone; 
+			gravestone.transform.parent = tomb.transform;
 
 			RaycastHit hit;
 			_player.GetEyeSight(out hit);
 			tomb.transform.position = position;
 			tomb.transform.up = hit.normal;
 
-			Vector3 upperLeft = v[0];
-			Vector3 lowerRight = v[1];
-			Vector3 middleLow = new Vector3(upperLeft.x - 1.75f, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
+			const float offset = 1.75f;
+			Vector3 middleUp = new Vector3(lowerRight.x + offset, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
+			gravestone.transform.position = middleUp;
+
+			Vector3 middleLow = new Vector3(upperLeft.x - offset, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
 			Player player = Player.GetInstance();
 			player.MoveSmoothlyTo(middleLow, 0.50f);
 			AnimationUtils.SlerpTowards(player.transform, player.transform.forward, new Vector3(1, 0, 0), 0.5f);

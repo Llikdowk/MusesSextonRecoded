@@ -6,11 +6,18 @@ using UnityEngine;
 namespace Game.Entities {
 	class TombComponent : MonoBehaviour {
 
+		public GameObject Gravestone;
 		private GameObject _groundInstantiator;
 		private GameObject _ground;
 		private SpriteRenderer icon;
 
 		public void Awake() {
+			Gravestone = new GameObject("_gravestone");
+			Mesh gravestoneMesh = Resources.Load<Mesh>("Models/Tombstone");
+			Gravestone.AddComponent<MeshRenderer>();
+			Gravestone.AddComponent<MeshFilter>().mesh = gravestoneMesh;
+			Gravestone.AddComponent<MeshCollider>().sharedMesh = gravestoneMesh;
+
 			_groundInstantiator = Resources.Load<GameObject>("Prefabs/Ground");
 			_groundInstantiator.name = "_ground";
 			_groundInstantiator.SetActive(false);
