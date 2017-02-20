@@ -10,7 +10,7 @@ namespace Game.Entities {
 		private GameObject _gravestone;
 		private GameObject _groundInstantiator;
 		private GameObject _ground;
-		private SpriteRenderer _icon;
+		private IconMarkerComponent _icon;
 
 
 		public void Awake() {
@@ -19,11 +19,8 @@ namespace Game.Entities {
 			_groundInstantiator.name = "_ground";
 			_groundInstantiator.SetActive(false);
 
-			_icon = gameObject.AddComponent<SpriteRenderer>();
-			_icon.sprite = Resources.Load<Sprite>("Sprites/bury");
-			_icon.material = new Material(Shader.Find("Custom/UniformSpriteFaceCamera")); // TODO extract all shader references
-			_icon.material.color = new Color(0, 81.0f/255.0f, 240.0f/255.0f);
-			_icon.enabled = false;
+			_icon = gameObject.AddComponent<IconMarkerComponent>();
+			_icon.Init("Sprites/bury");
 
 			_ground = Object.Instantiate(_groundInstantiator);
 			_ground.transform.parent = transform;

@@ -1,0 +1,14 @@
+{773ce8a7-203e-47ef-ac77-e70ce47b9667} event:/Bell
+{e195de13-e1a0-4adc-a211-2747f0ceef01} event:/BurningHouse
+{4733ab49-1c63-4d90-977c-90e92a04e7ae} event:/CartLoop
+{3bc23fca-9f56-4300-a788-79ae69815798} event:/Music
+{d817980d-5b69-47c4-9ca6-ccbc6e6bea94} event:/PickupCoffin
+{240c466d-138b-4763-ab54-2c7a78b843ca} event:/RaiseTomb
+{2f4359dc-ec6f-4478-a6d2-6f57939ee4bb} event:/Shovel
+{93be42ce-5263-4d79-9d9d-165ef05e565a} event:/Steps
+{c8c88bc5-9aad-4c4c-9ca8-f06e3a5c04b7} event:/ThrowCoffin
+{6a74273d-58f1-4a48-b9fe-0fe68d291213} event:/Tones
+{36045478-d77f-474b-9522-d33237aadfb5} event:/Wind
+{b49386c2-0982-4fc0-ac7a-98d3738f5f65} bus:/
+{828a81a6-94d9-43e5-8298-09b7028a3764} bus:/Reverb
+{a130db2e-0862-43a2-954e-e9e203513732} bank:/Master Bank
