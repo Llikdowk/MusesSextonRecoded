@@ -20,13 +20,8 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				_digMarker.transform.localScale = new Vector3(4, 0.1f, 4);
 				_digMarker.layer = LayerMaskManager.Get(Layer.Outline);
 				_digMarker.GetComponent<MeshRenderer>().material = new Material(Shader.Find("UI/Default"));
-				GameObject marker = new GameObject("_marker");
-				marker.transform.parent = _digMarker.transform;
-				marker.transform.LocalReset();
-				SpriteRenderer sr = marker.AddComponent<SpriteRenderer>();
-				sr.sprite = Resources.Load<Sprite>("Sprites/dig");
-				sr.material = new Material(Shader.Find("Custom/UniformSpriteFaceCamera"));
-				sr.material.color = new Color(0, 81.0f / 255.0f, 240.0f / 255.0f);
+				IconMarkerComponent icon = _digMarker.AddComponent<IconMarkerComponent>();
+				icon.Init("Sprites/dig", new Color(0, 81.0f / 255.0f, 240.0f / 255.0f));
 			}
 
 			_player = Player.GetInstance();

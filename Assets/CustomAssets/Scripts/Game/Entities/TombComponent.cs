@@ -20,7 +20,7 @@ namespace Game.Entities {
 			_groundInstantiator.SetActive(false);
 
 			_icon = gameObject.AddComponent<IconMarkerComponent>();
-			_icon.Init("Sprites/bury");
+			_icon.Init("Sprites/bury", new Color(0, 81.0f/255.0f, 240.0f/255.0f));
 
 			_ground = Object.Instantiate(_groundInstantiator);
 			_ground.transform.parent = transform;
