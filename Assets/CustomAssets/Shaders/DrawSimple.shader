@@ -12,8 +12,8 @@ Shader "Custom/DrawSimple"
         Pass
         {
             CGPROGRAM
-            #pragma vertex VShader
-            #pragma fragment FShader
+            #pragma vertex vert
+            #pragma fragment frag
 
 			struct appdata {
 				float4 pos : POSITION;
@@ -23,13 +23,13 @@ Shader "Custom/DrawSimple"
                 float4 pos : SV_POSITION;
             };
  
-            v2f VShader(appdata input) {
+            v2f vert(appdata input) {
                 v2f output;
                 output.pos = mul(UNITY_MATRIX_MVP, input.pos);
                 return output;
             }
  
-            half4 FShader() : COLOR {
+            half4 frag() : COLOR {
                 return half4(1,0,0,0);
             }
  

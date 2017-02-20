@@ -1,4 +1,4 @@
-//SHADER CODE FROM: https://willweissman.wordpress.com/tutorials/shaders/unity-shaderlab-object-outlines/
+//ORIGINAL SHADER CODE FROM: https://willweissman.wordpress.com/tutorials/shaders/unity-shaderlab-object-outlines/
 
 Shader "Custom/PostOutline"
 {
@@ -25,73 +25,39 @@ Shader "Custom/PostOutline"
  
             #pragma vertex vert
             #pragma fragment frag
-            #include "UnityCG.cginc"
              
-            struct v2f 
-            {
+            struct appdata {
+                float4 pos : POSITION;
+            };
+
+            struct v2f {
                 float4 pos : SV_POSITION;
                 float2 uvs : TEXCOORD0;
             };
              
-            v2f vert (appdata_base v) 
-            {
+            v2f vert (appdata input) {
                 v2f o;
-                 
-                //Despite the fact that we are only drawing a quad to the screen, Unity requires us to multiply vertices by our MVP matrix, presumably to keep things working when inexperienced people try copying code from other shaders.
-                o.pos = mul(UNITY_MATRIX_MVP,v.vertex);
-                 
-                //Also, we need to fix the UVs to match our screen space coordinates. There is a Unity define for this that should normally be used.
-                o.uvs = o.pos.xy / 2 + 0.5;
-                 
+                o.pos = mul(UNITY_MATRIX_MVP, input.pos);
+                o.uvs = o.pos.xy / 2.0 + 0.5;
                 return o;
             }
              
              
-            half4 frag(v2f i) : COLOR 
-            {
-                //arbitrary number of iterations for now
-                int NumberOfIterations = _Thickness;
- 
-                //split texel size into smaller words
-                float TX_x=_MainTex_TexelSize.x;
-                float TX_y=_MainTex_TexelSize.y;
- 
-                //and a final intensity that increments based on surrounding intensities.
-                float ColorIntensityInRadius;
- 
-                //if something already exists underneath the fragment, discard the fragment.
-                if(tex2D(_MainTex,i.uvs.xy).r>0)
-                {
+            half4 frag(v2f input) : COLOR {
+                if(tex2D(_MainTex, input.uvs.xy).r > 0) { // Potential performance issue: conditional
                     discard;
                 }
- 
-                //for every iteration we need to do horizontally
-                for(int k=0;k<NumberOfIterations;k+=1)
-                {
-                    //for every iteration we need to do vertically
-                    for(int j=0;j<NumberOfIterations;j+=1)
-                    {
-                        //increase our output color by the pixels in the area
-                        ColorIntensityInRadius+=tex2D(
-                                                      _MainTex, 
-                                                      i.uvs.xy + float2
-														   (
-																(k-NumberOfIterations/2)*TX_x,
-																(j-NumberOfIterations/2)*TX_y
-														   )
-                                                     ).r;
+
+                half ColorIntensityInRadius = 0.0f;
+                for(int i = -_Thickness/2.0; i < _Thickness/2.0; ++i) {
+                    for(int j = -_Thickness/2.0; j < _Thickness/2.0; ++j) {
+                        ColorIntensityInRadius += 
+                            tex2D(_MainTex, input.uvs.xy + float2(i*_MainTex_TexelSize.x, j*_MainTex_TexelSize.y)).r; // Potential performance issue: lots of lookups
                     }
                 }
- 
-                //output some intensity of teal
-                return ColorIntensityInRadius*_Color;
+                return ColorIntensityInRadius * _Color;
             }
-             
             ENDCG
- 
         }
-        //end pass        
     }
-    //end subshader
 }
-//end shader
