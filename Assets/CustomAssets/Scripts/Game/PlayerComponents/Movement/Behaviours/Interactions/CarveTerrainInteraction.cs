@@ -59,9 +59,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			GameObject tomb = new GameObject("_tomb");
 			TombComponent tombComponent = tomb.AddComponent<TombComponent>();
 
-			GameObject gravestone = tombComponent.Gravestone; 
-			gravestone.transform.parent = tomb.transform;
-
 			RaycastHit hit;
 			_player.GetEyeSight(out hit);
 			tomb.transform.position = position;
@@ -69,7 +66,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 			const float offset = 1.75f;
 			Vector3 middleUp = new Vector3(lowerRight.x + offset, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
-			gravestone.transform.position = middleUp;
+			tombComponent.AddGravestone(middleUp);
 
 			Vector3 middleLow = new Vector3(upperLeft.x - offset, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
 			Player player = Player.GetInstance();

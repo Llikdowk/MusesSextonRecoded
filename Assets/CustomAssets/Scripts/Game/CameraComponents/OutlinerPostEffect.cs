@@ -20,12 +20,12 @@ namespace Game.CameraComponents {
 			_outlinerCamera.enabled = false;
 			_outlinerCamera.transform.parent = transform;
 			_layerMaskOnlyOutline = 1 << LayerMaskManager.Get(Layer.Outline);
+			_material = new Material(_outlineShader) {color = OutlineColor};
+			_material.SetInt("_Thickness", Thickness);
 
 		}
 
 		public void Start() {
-			_material = new Material(_outlineShader) {color = OutlineColor};
-			_material.SetInt("_Thickness", Thickness);
 		}
 
 		public void OnRenderImage(RenderTexture source, RenderTexture destination) {
