@@ -26,14 +26,14 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public override void ShowFeedback() {
-			_mark.DisableMark();
+			_mark.enabled = false;
 			foreach (MeshRenderer r in _model.GetComponentsInChildren<MeshRenderer>()) {
 				r.gameObject.layer = LayerMaskManager.Get(Layer.Outline);
 			}
 		}
 
 		public override void HideFeedback() {
-			_mark.EnableMark();
+			_mark.enabled = true;
 			foreach (MeshRenderer r in _model.GetComponentsInChildren<MeshRenderer>()) {
 				r.gameObject.layer = LayerMaskManager.Get(Layer.Default);
 			}

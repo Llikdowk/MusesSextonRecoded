@@ -34,7 +34,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			Coffin.layer = LayerMaskManager.Get(Layer.DrawFront);
 			MarkableComponent m = Coffin.GetComponent<MarkableComponent>();
 			if (m != null) {
-				m.DisableMark();
+				m.enabled = false;
 			} else {
 				DebugMsg.ComponentNotFound(Debug.LogWarning, typeof(MarkableComponent));
 			}

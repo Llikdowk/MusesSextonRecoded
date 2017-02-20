@@ -22,7 +22,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			}
 			else {
 				//TODO: ADD GUARD -> enable only if not throwed into a hole
-				m.EnableMark();
+				m.enabled = true;
 			}
 
 			Player.GetInstance().CurrentState = new WalkRunState();
