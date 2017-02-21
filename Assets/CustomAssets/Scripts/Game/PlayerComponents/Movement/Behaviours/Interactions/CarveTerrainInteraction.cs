@@ -53,7 +53,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			GameObject tomb = new GameObject("_tomb");
 			TombComponent tombComponent = tomb.AddComponent<TombComponent>();
 			tombComponent.Init(upperLeft, lowerRight);
-			tombComponent.PlayerTombTransition(new DigState(tombComponent.GetGround()));
+			tombComponent.PlayerTombTransition(new DigState(tombComponent), true);
 		}
 
 		public override void ShowFeedback() {

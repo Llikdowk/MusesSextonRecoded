@@ -9,14 +9,12 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		private readonly GameObject _tomb;
 		private readonly TombComponent _tombComponent;
-		private readonly GameObject _ground;
 		private readonly GameObject _coffin;
 
-		public SendCoffinToTombInteraction(GameObject tomb, GameObject ground, GameObject coffin) {
-			_tomb = tomb;
+		public SendCoffinToTombInteraction(TombComponent tombComponent, GameObject coffin) {
 			_coffin = coffin;
-			_ground = ground;
-			_tombComponent = _tomb.GetComponent<TombComponent>();
+			_tombComponent = tombComponent;
+			_tomb = _tombComponent.gameObject;
 		}
 
 		public override void DoInteraction() {
@@ -25,7 +23,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			AnimationUtils.SlerpTowards(_coffin.transform, _coffin.transform.forward, _tomb.transform.right, 0.5f, () => {
 				_coffin.transform.parent = _tomb.transform;
 			});
-			_tombComponent.PlayerTombTransition(new BuryState(_tomb, _ground));
+			_tombComponent.PlayerTombTransition(new BuryState(_tombComponent), false);
 			AudioController.GetInstance().AddMusicChannel();
 		}
 

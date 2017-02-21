@@ -2,6 +2,7 @@
 
 using C5;
 using Game.CameraComponents;
+using Game.Entities;
 using Game.PlayerComponents;
 using Game.PlayerComponents.Movement;
 using Game.PlayerComponents.Movement.Behaviours;
@@ -59,9 +60,9 @@ namespace Game {
 
 
 	public class DigState : PlayerState {
-		public DigState(GameObject ground) {
+		public DigState(TombComponent tombComponent) {
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
-			_movement.MovementBehaviour.AddInteraction(new DigInteraction(ground));
+			_movement.MovementBehaviour.AddInteraction(new DigInteraction(tombComponent));
 
 			Player.GetInstance().ShowShovel();
 			Player.GetInstance().Look.SetScopedLook(_lookConfig.DiggingScopedLook, _transform.rotation);
@@ -69,9 +70,9 @@ namespace Game {
 	}
 
 	public class BuryState : PlayerState {
-		public BuryState(GameObject tomb, GameObject ground) {
+		public BuryState(TombComponent tombComponent) {
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
-			_movement.MovementBehaviour.AddInteraction(new BuryInteraction(tomb, ground));
+			_movement.MovementBehaviour.AddInteraction(new BuryInteraction(tombComponent));
 			
 			Player.GetInstance().ShowShovel();
 			Player.GetInstance().Look.SetScopedLook(_lookConfig.DiggingScopedLook, _transform.rotation);
