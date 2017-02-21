@@ -12,13 +12,7 @@ Shader "Custom/PostOutline"
     }
     SubShader 
     {
-     Tags {
-        "Queue" = "Overlay" 
-        "IgnoreProjector" = "True" 
-        "RenderType" = "Transparent" 
-     }
-    ZWrite On
-    ZTest Always
+    ZWrite Off
     Blend SrcAlpha OneMinusSrcAlpha
         Pass 
         {
@@ -34,9 +28,12 @@ Shader "Custom/PostOutline"
  
             #pragma vertex vert
             #pragma fragment frag
+            #include "UnityCG.cginc"
              
             struct appdata {
                 float4 pos : POSITION;
+                float2 uv : TEXCOORD0;
+                float2 uvSource : TEXCOORD1;
             };
 
             struct v2f {
@@ -48,8 +45,9 @@ Shader "Custom/PostOutline"
             v2f vert (appdata input) {
                 v2f o;
                 o.pos = mul(UNITY_MATRIX_MVP, input.pos);
-                o.uv = o.pos.xy / 2.0 + 0.5;
-                o.uvSource = o.pos.xy / 2.0f + 0.5;
+                o.uv = o.pos.xy/2.0f + 0.5f;
+                o.uvSource.x = o.pos.x/2.0f + 0.5f;
+                o.uvSource.y = o.pos.y/-2.0f + 0.5f; // TODO: check why vertical Y is flipped!
                 return o;
             }
              

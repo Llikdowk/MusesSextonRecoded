@@ -25,6 +25,7 @@ Shader "Custom/Unsaturate"
              
             struct appdata {
                 float4 pos : POSITION;
+                float2 uv : TEXCOORD0;
             };
 
             struct v2f {
@@ -35,7 +36,7 @@ Shader "Custom/Unsaturate"
             v2f vert (appdata input) {
                 v2f o;
                 o.pos = mul(UNITY_MATRIX_MVP, input.pos);
-                o.uv = o.pos.xy / 2.0 + 0.5;
+                o.uv = input.uv;
                 return o;
             }
              

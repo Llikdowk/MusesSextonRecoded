@@ -6,6 +6,7 @@ namespace Game.CameraComponents {
 		private Camera _mainCamera;
 		private Camera _alwaysFrontCamera;
 		private int _layerMaskDrawFront;
+		public float Depth = 100;
 
 		public void Awake() {
 			_mainCamera = GetComponent<Camera>();
@@ -13,10 +14,10 @@ namespace Game.CameraComponents {
 			_alwaysFrontCamera.transform.parent = transform;
 			_alwaysFrontCamera.transform.localPosition = Vector3.zero;
 			_alwaysFrontCamera.transform.eulerAngles = Vector3.zero;
-			_alwaysFrontCamera.depth = 100;
 			_layerMaskDrawFront = 1 << LayerMaskManager.Get(Layer.DrawFront);
 
 			_alwaysFrontCamera.CopyFrom(_mainCamera);
+			_alwaysFrontCamera.depth = Depth;
 			_alwaysFrontCamera.clearFlags = CameraClearFlags.Depth;
 			_alwaysFrontCamera.depth = _mainCamera.depth + 1;
 			_alwaysFrontCamera.cullingMask = _layerMaskDrawFront;
