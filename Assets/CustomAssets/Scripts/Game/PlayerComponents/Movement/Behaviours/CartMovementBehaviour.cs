@@ -34,6 +34,8 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 		public override void Step() {
 			base.Step();
+
+			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().Controller.WorldMovementProcessed); // TODO clean this
 			_transform.position += _stepMovement;
 			_stepMovement = Vector3.zero;
 
@@ -69,9 +71,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				_transform.position - _cartTransform.forward * _cartConfig.DistanceToPlayer,
 				_cartTransform.position,
 				_cartConfig.MovementLag);
-
-
-
 		}
 	}
 }
