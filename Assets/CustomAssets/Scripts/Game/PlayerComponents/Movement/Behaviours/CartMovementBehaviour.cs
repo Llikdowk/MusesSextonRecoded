@@ -30,6 +30,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			foreach (Collider c in _disabledColliders) {
 				c.enabled = true;
 			}
+			_moveBackAction.Enable();
 		}
 
 		public override void Step() {
@@ -43,7 +44,9 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			RaycastHit hit;
 			float cartLength = 7.5f; // TODO parametrice this distance (maybe using a bounding box?)
 			Debug.DrawRay(ray.origin, ray.direction * cartLength, Color.magenta);
-			if (Physics.Raycast(ray, out hit, cartLength, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
+			if (Physics.BoxCast(_cartTransform.position - Vector3.up*0.3f, new Vector3(2.5f, 0.5f, cartLength), -_cartTransform.forward, out hit, _cartTransform.rotation,
+				1.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) 
+			{
 				_moveBackAction.Disable();
 			}
 			else {
