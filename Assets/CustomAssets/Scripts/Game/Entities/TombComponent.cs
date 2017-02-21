@@ -54,6 +54,7 @@ namespace Game.Entities {
 			c.isTrigger = false;
 			c.radius = 2.75f;
 			c.center = new Vector3(0, 0.85f, 0);
+			c.gameObject.layer = LayerMaskManager.Get(Layer.IgnoreRaycast);
 			
 			SphereCollider trigger = gameObject.AddComponent<SphereCollider>();
 			trigger.isTrigger = true;
@@ -107,6 +108,23 @@ namespace Game.Entities {
 			AnimationUtils.SlerpTowards(player.transform, player.transform.forward, new Vector3(1, 0, 0), 0.5f, () => {
 				player.CurrentState = newPlayerState;
 			});
+		}
+
+		public void PlayerTombRefocus(PlayerState newPlayerState) {
+			Player player = Player.GetInstance();
+			AnimationUtils.SlerpTowards(player.transform, player.transform.forward, new Vector3(1, 0, 0), 0.5f, () => {
+				player.CurrentState = newPlayerState;
+			});
+		}
+
+		public void HideMarker() {
+			_icon.enabled = false;
+		}
+
+		public void HideColliders() {
+			foreach (Collider c in gameObject.GetComponents<Collider>()) {
+				c.enabled = false;
+			}
 		}
 
 		public void Hide() {

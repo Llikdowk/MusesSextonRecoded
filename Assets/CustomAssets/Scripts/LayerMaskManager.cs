@@ -9,10 +9,10 @@ public enum Layer {
 
 public class LayerMaskManager {
 	private static LayerMaskManager _instance;
-	private readonly Dictionary<string, int> _map;
+	private readonly Dictionary<Layer, int> _map;
 
 	private LayerMaskManager() {
-		_map = new Dictionary<string, int>();
+		_map = new Dictionary<Layer, int>();
 		foreach (Layer item in Enum.GetValues(typeof(Layer))) {
 			AddLayer(item);
 		}
@@ -23,12 +23,12 @@ public class LayerMaskManager {
 		if (layer == Layer.IgnoreRaycast) {
 			name = "Ignore Raycast";
 		}
-		_map.Add(name, LayerMask.NameToLayer(name));
+		_map.Add(layer, LayerMask.NameToLayer(name));
 	}
 
 	public static int Get(Layer layer) {
 		if (_instance == null) _instance = new LayerMaskManager();
-		return _instance._map[layer.ToString()];
+		return _instance._map[layer];
 	}
 
 }

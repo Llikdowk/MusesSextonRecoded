@@ -23,7 +23,9 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			AnimationUtils.SlerpTowards(_coffin.transform, _coffin.transform.forward, _tomb.transform.right, 0.5f, () => {
 				_coffin.transform.parent = _tomb.transform;
 			});
-			_tombComponent.PlayerTombTransition(new BuryState(_tombComponent), false);
+			_tombComponent.PlayerTombTransition(new PoemState(_tombComponent), false);
+			_tombComponent.HideMarker();
+			_tombComponent.HideColliders();
 			AudioController.GetInstance().AddMusicChannel();
 		}
 

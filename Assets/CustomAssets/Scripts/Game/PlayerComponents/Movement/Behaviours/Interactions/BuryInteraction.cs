@@ -1,10 +1,9 @@
 ﻿using Game.Entities;
-using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public class BuryInteraction : Interaction {
 		private readonly TombComponent _tombComponent;
-		private int _counter = 0;
+		private static int _counter = 0;
 		private const int MaxCount = 3;
 
 		public BuryInteraction(TombComponent tombComponent) {
@@ -15,18 +14,25 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			if (Player.GetInstance().PlayDigAnimation()) {
 				_tombComponent.Bury();
 				++_counter;
+				Player.GetInstance().AnimationEnding = () => {
+					//++GameState.CoffinsBuried;
+					Player.GetInstance().CurrentState = new PoemState(_tombComponent);
+					//_tombComponent.Hide();
+				};
 				if (_counter >= MaxCount) {
 					Player.GetInstance().AnimationEnding = () => {
 						++GameState.CoffinsBuried;
-						Player.GetInstance().CurrentState = new PoemState();
+						Player.GetInstance().CurrentState = new WalkRunState();
 						_tombComponent.Hide();
 					};
+					_counter = 0;
 				}
 			}
 		}
 
 		public override Interaction CheckForPromotion() {
-			return this;
+			DoInteraction();
+			return null;
 		}
 	}
 }

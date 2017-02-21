@@ -22,12 +22,12 @@ GameObject:
   - component: {fileID: 33293941650811970}
   - component: {fileID: 23676759035745144}
   m_Layer: 0
-  m_Name: DirtAsset
+  m_Name: _groundHeap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4759698460505610
 Transform:
   m_ObjectHideFlags: 1

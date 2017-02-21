@@ -1,6 +1,4 @@
-﻿
-
-using C5;
+﻿using C5;
 using Game.CameraComponents;
 using Game.Entities;
 using Game.PlayerComponents;
@@ -17,6 +15,9 @@ namespace Game {
 			_transform = Player.GetInstance().transform;
 			_config = Player.GetInstance().Config;
 			_lookConfig = Player.GetInstance().LookConfig;
+		}
+
+		public virtual void RunState() {
 		}
 
 		protected CharacterMovement _movement;
@@ -69,15 +70,22 @@ namespace Game {
 		}
 	}
 
+	
 	public class BuryState : PlayerState {
+		private TombComponent _tombComponent;
 		public BuryState(TombComponent tombComponent) {
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
-			_movement.MovementBehaviour.AddInteraction(new BuryInteraction(tombComponent));
-			
+			_tombComponent = tombComponent;
+		}
+
+		public override void RunState() {
+			_movement.MovementBehaviour.AddInteraction(new BuryInteraction(_tombComponent));
 			Player.GetInstance().ShowShovel();
 			Player.GetInstance().Look.SetScopedLook(_lookConfig.DiggingScopedLook, _transform.rotation);
+			
 		}
 	}
+	
 
 	public class PoemState : PlayerState {
 		public static IList<string> PlayerPoem;
@@ -86,15 +94,17 @@ namespace Game {
 			Undefined, Masculine, Feminine, Plural, FirstPerson
 		}
 
+		private TombComponent _tombComponent;
 		private Gender _gender;
 		private int _selectedVersesCount = 0;
 		public const int MaxVerses = 3;
 
-		public PoemState() {
+		public PoemState(TombComponent tombComponent) {
 			_gender = Gender.Undefined;
 			Player.GetInstance().HideShovel();
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
 			SetLandmarkSelectionInteraction();
+			_tombComponent = tombComponent;
 		}
 
 		public void SetGender(Gender gender) {
@@ -120,7 +130,8 @@ namespace Game {
 
 		public void SetVerseInteraction(LandmarkVerses verses) {
 			_movement.MovementBehaviour.ClearInteractions();
-			_movement.MovementBehaviour.AddInteraction(new VerseSelectionInteraction(verses, _gender));
+			_movement.MovementBehaviour.AddInteraction(new VerseSelectionInteraction(verses, _gender, _tombComponent));
+
 			Player.GetInstance().Camera.GetComponent<UnsaturatePostEffect>().Intensity = 0.0f;
 			Player.GetInstance().Look.SetScopedLook(_lookConfig.PoemScopedLook, _transform.rotation);
 		}

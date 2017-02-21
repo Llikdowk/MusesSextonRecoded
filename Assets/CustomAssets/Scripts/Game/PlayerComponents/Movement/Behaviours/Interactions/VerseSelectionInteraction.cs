@@ -1,4 +1,5 @@
-﻿using Game.Poems;
+﻿using Game.Entities;
+using Game.Poems;
 using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
@@ -9,11 +10,13 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		protected VerseInfo _selectedVerse;
 		protected GameObject _selectedGameObject;
 		protected bool _hasHit;
+		private readonly TombComponent _tombComponent;
 
 
-		public VerseSelectionInteraction(LandmarkVerses verses, PoemState.Gender gender) {
+		public VerseSelectionInteraction(LandmarkVerses verses, PoemState.Gender gender, TombComponent tombComponent) {
 			_verses = verses;
 			DisplayVerses(gender);
+			_tombComponent = tombComponent;
 		}
 
 
@@ -80,9 +83,13 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			if (_hasHit) {
 				poemState.SetGender(_selectedVerse.Gender);
 				Player.GetInstance().AddPoemVerse(_selectedVerse.FirstPersonVerse);
+				_tombComponent.PlayerTombRefocus(new BuryState(_tombComponent));
+				//Player.GetInstance().CurrentState = new BuryState(_tombComponent);
+			}
+			else {
+				poemState.CalcNextInteraction();
 			}
 			_displayMeshText.Hide();
-			poemState.CalcNextInteraction();
 		}
 
 		public override void ShowFeedback() {

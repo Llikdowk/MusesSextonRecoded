@@ -15,7 +15,17 @@ namespace Game.PlayerComponents {
 	[RequireComponent(typeof(CharacterController))]
 	public class Player : MonoBehaviour {
 
-		public PlayerState CurrentState;
+		public PlayerState CurrentState {
+			get {
+				return _currentState;
+			}
+			set {
+				_currentState = value;
+				_currentState.RunState();
+			}
+		}
+
+		private PlayerState _currentState;
 		public SuperConfig Config;
 		public SuperLookConfig LookConfig;
 
