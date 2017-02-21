@@ -78,9 +78,43 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			if (!hasHit || hit.distance > 5.0f) return null;
 			GameObject g = hit.collider.gameObject;
 			if (g.tag == TagManager.Get(Tag.Terrain) && hit.distance > 2.0f) {
-				return this;
+				if (Vector3.Dot(Vector3.up, hit.normal) > 0.92f) {
+					if (PassHeightRestrictions(hit.point, hit.normal)) {
+						return this;
+					}
+				}
 			}
 			return null;
+		}
+
+		public bool PassHeightRestrictions(Vector3 point, Vector3 normal) {
+			RaycastHit[] hits = Physics.BoxCastAll(point + Vector3.up*5.0f, _digMarker.transform.localScale, Vector3.down,
+				Quaternion.identity, 10.0f, ~(1 << LayerMaskManager.Get(Layer.Player)), QueryTriggerInteraction.Collide);
+			if (hits.Length == 0) {
+				return true;
+			}
+
+			float maxHeight = -99;
+			float minHeight = 99;
+
+			foreach (RaycastHit hit in hits) {
+				if (hit.collider.gameObject.tag != TagManager.Get(Tag.Terrain)) {
+					return false;
+				}
+				if (hit.distance == 0.0f) {
+					return false;
+				}
+				if (hit.distance > maxHeight) {
+					maxHeight = hit.distance;
+				}
+				if (hit.distance < minHeight) {
+					minHeight = hit.distance;
+				}
+			}
+			if (maxHeight - minHeight > 1.0f) {
+				return false;
+			}
+			return true;
 		}
 	}
 }
