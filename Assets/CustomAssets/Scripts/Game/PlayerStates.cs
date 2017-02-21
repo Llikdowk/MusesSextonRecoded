@@ -1,5 +1,6 @@
 ﻿
 using C5;
+using Game.CameraComponents;
 using Game.PlayerComponents;
 using Game.PlayerComponents.Movement;
 using Game.PlayerComponents.Movement.Behaviours;
@@ -77,9 +78,9 @@ namespace Game {
 
 		public PoemState() {
 			_gender = Gender.Undefined;
-			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
 			Player.GetInstance().HideShovel();
-			_movement.MovementBehaviour.AddInteraction(new PoemLandmarkSelectionInteraction());
+			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			SetLandmarkSelectionInteraction();
 		}
 
 		public void SetGender(Gender gender) {
@@ -99,11 +100,13 @@ namespace Game {
 		public void SetLandmarkSelectionInteraction() {
 			_movement.MovementBehaviour.ClearInteractions();
 			_movement.MovementBehaviour.AddInteraction(new PoemLandmarkSelectionInteraction());
+			Player.GetInstance().Camera.GetComponent<UnsaturatePostEffect>().Intensity = 1.0f;
 		}
 
 		public void SetVerseInteraction(LandmarkVerses verses) {
 			_movement.MovementBehaviour.ClearInteractions();
 			_movement.MovementBehaviour.AddInteraction(new VerseSelectionInteraction(verses, _gender));
+			Player.GetInstance().Camera.GetComponent<UnsaturatePostEffect>().Intensity = 0.0f;
 		}
 
 	}

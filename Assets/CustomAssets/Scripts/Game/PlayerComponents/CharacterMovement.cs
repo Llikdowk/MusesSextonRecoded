@@ -27,10 +27,10 @@ namespace Game.PlayerComponents {
 		private bool _canInteract = true;
  
 		public void Awake() {
+			_movementBehaviour = new NullMovementBehaviour(transform);
 		}
 
 		public void Start() {
-			_movementBehaviour = new NullMovementBehaviour(transform);
 		}
 
 		public void Update() {

@@ -25,15 +25,15 @@ namespace Game.CameraComponents {
 			_layerMaskOnlyOutline = 1 << LayerMaskManager.Get(Layer.Outline);
 			_material = new Material(_outlineShader) {color = OutlineColor};
 			_material.SetInt("_Thickness", Thickness);
+			
+			_outlinerCamera.CopyFrom(_mainCamera);
+			_outlinerCamera.clearFlags = CameraClearFlags.Color; // TODO: these params should be changed based on a MainCamera listener, not per frame
+			_outlinerCamera.backgroundColor = Color.black;
+			_outlinerCamera.cullingMask = _layerMaskOnlyOutline;
 
 		}
 
 		public void OnRenderImage(RenderTexture source, RenderTexture destination) {
-			_outlinerCamera.CopyFrom(_mainCamera);
-			_outlinerCamera.depth = 50;
-			_outlinerCamera.clearFlags = CameraClearFlags.Color; // TODO: these params should be changed based on a MainCamera listener, not per frame
-			_outlinerCamera.backgroundColor = Color.black;
-			_outlinerCamera.cullingMask = _layerMaskOnlyOutline;
 
 			RenderTexture rt = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.R8);
 			_outlinerCamera.targetTexture = rt;

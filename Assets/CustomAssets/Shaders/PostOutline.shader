@@ -12,7 +12,13 @@ Shader "Custom/PostOutline"
     }
     SubShader 
     {
-    ZWrite Off
+     Tags {
+        "Queue" = "Overlay" 
+        "IgnoreProjector" = "True" 
+        "RenderType" = "Transparent" 
+     }
+    ZWrite On
+    ZTest Always
     Blend SrcAlpha OneMinusSrcAlpha
         Pass 
         {
@@ -21,7 +27,7 @@ Shader "Custom/PostOutline"
             sampler2D _MainTex;
             sampler2D _SourceTex;
 			half4 _Color;
-			int _Thickness;
+			half _Thickness;
  
             //<SamplerName>_TexelSize is a float2 that says how much screen space a texel occupies.
             float2 _MainTex_TexelSize;
@@ -52,17 +58,16 @@ Shader "Custom/PostOutline"
                 if(tex2D(_MainTex, input.uv).r > 0) { // Potential performance issue: conditional
                     discard;
                 }
-
                 half ColorIntensityInRadius = 0.0f;
-                for(int i = -_Thickness/2.0; i < _Thickness/2.0; ++i) {
-                    for(int j = -_Thickness/2.0; j < _Thickness/2.0; ++j) {
+                for(half i = -_Thickness/2.0; i < _Thickness/2.0; ++i) {
+                    for(half j = -_Thickness/2.0; j < _Thickness/2.0; ++j) {
                         ColorIntensityInRadius += 
                             tex2D(_MainTex, input.uv + float2(i*_MainTex_TexelSize.x, j*_MainTex_TexelSize.y)).r; // Potential performance issue: lots of lookups
                     }
                 }
 
                 half4 sourceColor = tex2D(_SourceTex, input.uvSource);
-                return lerp(sourceColor, _Color, ColorIntensityInRadius);
+                return lerp(sourceColor, _Color, ceil(ColorIntensityInRadius));
             }
             ENDCG
         }
