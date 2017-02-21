@@ -49,27 +49,11 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			Vector3 lowerRight = v[1];
 			upperLeft = upperLeft + new Vector3(-1, 0, 0);
 			lowerRight = lowerRight + new Vector3(0, 0, -1);
-			Vector3 position = (lowerRight - upperLeft) / 2.0f + upperLeft;
 
 			GameObject tomb = new GameObject("_tomb");
 			TombComponent tombComponent = tomb.AddComponent<TombComponent>();
-
-			RaycastHit hit;
-			_player.GetEyeSight(out hit);
-			tomb.transform.position = position;
-			tomb.transform.up = hit.normal;
-
-			const float offset = 1.75f;
-			Vector3 middleUp = new Vector3(lowerRight.x + offset, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
-			tombComponent.AddGravestone(middleUp);
-
-			Vector3 middleLow = new Vector3(upperLeft.x - offset, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
-			Player player = Player.GetInstance();
-			player.MoveSmoothlyTo(middleLow, 0.50f);
-			player.PlayDigAnimation();
-			AnimationUtils.SlerpTowards(player.transform, player.transform.forward, new Vector3(1, 0, 0), 0.5f, () => {
-				player.CurrentState = new DigState(tombComponent.GetGround());
-			});
+			tombComponent.Init(upperLeft, lowerRight);
+			tombComponent.PlayerTombTransition(new DigState(tombComponent.GetGround()));
 		}
 
 		public override void ShowFeedback() {

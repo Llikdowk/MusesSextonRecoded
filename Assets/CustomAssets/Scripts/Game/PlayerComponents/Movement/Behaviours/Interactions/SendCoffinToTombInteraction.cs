@@ -24,8 +24,8 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			AnimationUtils.MoveSmoothlyTo(_coffin.transform, _coffin.transform.position, _tomb.transform.position - Vector3.up*1.5f, 0.5f);
 			AnimationUtils.SlerpTowards(_coffin.transform, _coffin.transform.forward, _tomb.transform.right, 0.5f, () => {
 				_coffin.transform.parent = _tomb.transform;
-				Player.GetInstance().CurrentState = new BuryState(_tomb, _ground);
 			});
+			_tombComponent.PlayerTombTransition(new BuryState(_tomb, _ground));
 			AudioController.GetInstance().AddMusicChannel();
 		}
 
