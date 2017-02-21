@@ -9,16 +9,15 @@ using Game.Poems;
 using UnityEngine;
 
 namespace Game {
-	public abstract class PlayerState {
-		protected PlayerState() {
+	public abstract class PlayerState { // TODO: all states could be sotred here as static vars
+		protected PlayerState() { 
 			_movement = Player.GetInstance().Movement;
 			_transform = Player.GetInstance().transform;
 			_config = Player.GetInstance().Config;
 			_lookConfig = Player.GetInstance().LookConfig;
 		}
 
-		public virtual void RunState() {
-		}
+		public abstract void RunState();
 
 		protected CharacterMovement _movement;
 		protected Transform _transform;
@@ -28,10 +27,12 @@ namespace Game {
 
 	public class WalkRunState : PlayerState {
 		public WalkRunState() {
+		}
+
+		public override void RunState() {
 			_movement.MovementBehaviour = new WalkRunMovementBehaviour(_transform, _config);
 			_movement.MovementBehaviour.AddInteraction(new PickUpCoffinInteraction());
 			_movement.MovementBehaviour.AddInteraction(new CarveTerrainInteraction());
-
 			Player.GetInstance().ShowShovel();
 			Player.GetInstance().Look.SetFreeLook(_lookConfig.FreeLook);
 		}
@@ -41,30 +42,42 @@ namespace Game {
 		public GameObject Coffin { get; private set; }
 		public DragCoffinState(GameObject coffin) {
 			Coffin = coffin;
-			_movement.MovementBehaviour = new DragCoffinBehaviour(_transform, coffin, _config);
-			_movement.MovementBehaviour.AddInteraction(new ThrowCoffinInteraction(coffin));
+		}
 
+		public override void RunState() {
+			_movement.MovementBehaviour = new DragCoffinBehaviour(_transform, Coffin, _config);
+			_movement.MovementBehaviour.AddInteraction(new ThrowCoffinInteraction(Coffin));
 			Player.GetInstance().HideShovel();
 			Player.GetInstance().Look.SetFreeLook(_lookConfig.FreeLook);
 		}
 	}
 
 	public class DriveCartState : PlayerState {
+		private GameObject _cart;
+
 		public DriveCartState(GameObject cart) {
-			_movement.MovementBehaviour = new CartMovementBehaviour(_transform, cart, _config);
+			_cart = cart;
+		}
+
+		public override void RunState() {
+			_movement.MovementBehaviour = new CartMovementBehaviour(_transform, _cart, _config);
 			_movement.MovementBehaviour.AddInteraction(new StopDrivingCartInteraction());
 
 			Player.GetInstance().HideShovel();
-			Player.GetInstance().Look.SetScopedLook(_lookConfig.DriveScopedLook, cart.transform);
+			Player.GetInstance().Look.SetScopedLook(_lookConfig.DriveScopedLook, _cart.transform);
 		}
 	}
 
 
 	public class DigState : PlayerState {
+		private TombComponent _tombComponent;
 		public DigState(TombComponent tombComponent) {
-			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
-			_movement.MovementBehaviour.AddInteraction(new DigInteraction(tombComponent));
+			_tombComponent = tombComponent;
+		}
 
+		public override void RunState() {
+			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			_movement.MovementBehaviour.AddInteraction(new DigInteraction(_tombComponent));
 			Player.GetInstance().ShowShovel();
 			Player.GetInstance().Look.SetScopedLook(_lookConfig.DiggingScopedLook, _transform.rotation);
 		}
@@ -72,7 +85,7 @@ namespace Game {
 
 	
 	public class BuryState : PlayerState {
-		private TombComponent _tombComponent;
+		private readonly TombComponent _tombComponent;
 		public BuryState(TombComponent tombComponent) {
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
 			_tombComponent = tombComponent;
@@ -101,10 +114,13 @@ namespace Game {
 
 		public PoemState(TombComponent tombComponent) {
 			_gender = Gender.Undefined;
+			_tombComponent = tombComponent;
+		}
+
+		public override void RunState() {
 			Player.GetInstance().HideShovel();
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
 			SetLandmarkSelectionInteraction();
-			_tombComponent = tombComponent;
 		}
 
 		public void SetGender(Gender gender) {
@@ -135,11 +151,13 @@ namespace Game {
 			Player.GetInstance().Camera.GetComponent<UnsaturatePostEffect>().Intensity = 0.0f;
 			Player.GetInstance().Look.SetScopedLook(_lookConfig.PoemScopedLook, _transform.rotation);
 		}
-
 	}
 
 	public class PlayerPoemState : PlayerState {
 		public PlayerPoemState() {
+		}
+
+		public override void RunState() {
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
 			_movement.MovementBehaviour.AddInteraction(new PlayerPoemInteraction());
 		}
@@ -147,6 +165,9 @@ namespace Game {
 
 	public class FinalGameState : PlayerState {
 		public FinalGameState() {
+		}
+
+		public override void RunState() {
 			Debug.Log("GAME FINISHED");
 			Player.GetInstance().CurrentState = new WalkRunState();
 		}
