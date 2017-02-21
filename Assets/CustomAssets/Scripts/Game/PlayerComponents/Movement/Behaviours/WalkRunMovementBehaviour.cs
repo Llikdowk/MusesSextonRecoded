@@ -8,7 +8,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		private MovementConfig _currentConfig;
 
 		public WalkRunMovementBehaviour(Transform transform, SuperConfig config) : base(transform) {
-			Player.GetInstance().Look.Config = config.WalkRunLook;
 			MovementConfig walkConfig = config.WalkMovement;
 			MovementConfig runConfig = config.RunMovement;
 			_movement = new SmoothMovementHandler(config.WalkRunAcceleration);

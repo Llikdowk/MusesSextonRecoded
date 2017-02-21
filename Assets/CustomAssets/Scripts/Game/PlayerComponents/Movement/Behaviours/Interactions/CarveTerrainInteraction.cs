@@ -66,9 +66,10 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			Vector3 middleLow = new Vector3(upperLeft.x - offset, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
 			Player player = Player.GetInstance();
 			player.MoveSmoothlyTo(middleLow, 0.50f);
-			AnimationUtils.SlerpTowards(player.transform, player.transform.forward, new Vector3(1, 0, 0), 0.5f);
-			player.CurrentState = new DigState(tombComponent.GetGround());
 			player.PlayDigAnimation();
+			AnimationUtils.SlerpTowards(player.transform, player.transform.forward, new Vector3(1, 0, 0), 0.5f, () => {
+				player.CurrentState = new DigState(tombComponent.GetGround());
+			});
 		}
 
 		public override void ShowFeedback() {

@@ -11,8 +11,6 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		private readonly Action<PlayerAction> _moveBackAction;
 
 		public CartMovementBehaviour(Transform transform, GameObject cart, SuperConfig config) : base(transform) {
-			Player.GetInstance().Look.Config = config.DriveCartLook;
-
 			_cartConfig = config.DriveCartMovement;
 			_movement = new SmoothMovementHandler(config.CartAcceleration).SetMovement();
 			_cartTransform = cart.transform;

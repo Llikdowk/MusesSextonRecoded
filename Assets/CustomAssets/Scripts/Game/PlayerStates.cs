@@ -1,4 +1,5 @@
 ﻿
+
 using C5;
 using Game.CameraComponents;
 using Game.PlayerComponents;
@@ -14,19 +15,23 @@ namespace Game {
 			_movement = Player.GetInstance().Movement;
 			_transform = Player.GetInstance().transform;
 			_config = Player.GetInstance().Config;
+			_lookConfig = Player.GetInstance().LookConfig;
 		}
 
 		protected CharacterMovement _movement;
 		protected Transform _transform;
 		protected SuperConfig _config;
+		protected SuperLookConfig _lookConfig;
 	}
 
 	public class WalkRunState : PlayerState {
 		public WalkRunState() {
 			_movement.MovementBehaviour = new WalkRunMovementBehaviour(_transform, _config);
-			Player.GetInstance().ShowShovel();
 			_movement.MovementBehaviour.AddInteraction(new PickUpCoffinInteraction());
 			_movement.MovementBehaviour.AddInteraction(new CarveTerrainInteraction());
+
+			Player.GetInstance().ShowShovel();
+			Player.GetInstance().Look.SetFreeLook(_lookConfig.FreeLook);
 		}
 	}
 
@@ -35,16 +40,20 @@ namespace Game {
 		public DragCoffinState(GameObject coffin) {
 			Coffin = coffin;
 			_movement.MovementBehaviour = new DragCoffinBehaviour(_transform, coffin, _config);
-			Player.GetInstance().HideShovel();
 			_movement.MovementBehaviour.AddInteraction(new ThrowCoffinInteraction(coffin));
+
+			Player.GetInstance().HideShovel();
+			Player.GetInstance().Look.SetFreeLook(_lookConfig.FreeLook);
 		}
 	}
 
 	public class DriveCartState : PlayerState {
 		public DriveCartState(GameObject cart) {
 			_movement.MovementBehaviour = new CartMovementBehaviour(_transform, cart, _config);
-			Player.GetInstance().HideShovel();
 			_movement.MovementBehaviour.AddInteraction(new StopDrivingCartInteraction());
+
+			Player.GetInstance().HideShovel();
+			Player.GetInstance().Look.SetScopedLook(_lookConfig.DriveScopedLook, cart.transform);
 		}
 	}
 
@@ -52,16 +61,20 @@ namespace Game {
 	public class DigState : PlayerState {
 		public DigState(GameObject ground) {
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
-			Player.GetInstance().ShowShovel();
 			_movement.MovementBehaviour.AddInteraction(new DigInteraction(ground));
+
+			Player.GetInstance().ShowShovel();
+			Player.GetInstance().Look.SetScopedLook(_lookConfig.DiggingScopedLook, _transform.rotation);
 		}
 	}
 
 	public class BuryState : PlayerState {
 		public BuryState(GameObject tomb, GameObject ground) {
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
-			Player.GetInstance().ShowShovel();
 			_movement.MovementBehaviour.AddInteraction(new BuryInteraction(tomb, ground));
+			
+			Player.GetInstance().ShowShovel();
+			Player.GetInstance().Look.SetScopedLook(_lookConfig.DiggingScopedLook, _transform.rotation);
 		}
 	}
 
@@ -101,12 +114,14 @@ namespace Game {
 			_movement.MovementBehaviour.ClearInteractions();
 			_movement.MovementBehaviour.AddInteraction(new PoemLandmarkSelectionInteraction());
 			Player.GetInstance().Camera.GetComponent<UnsaturatePostEffect>().Intensity = 1.0f;
+			Player.GetInstance().Look.SetFreeLook(_lookConfig.PoemLandmarkFreeLook);
 		}
 
 		public void SetVerseInteraction(LandmarkVerses verses) {
 			_movement.MovementBehaviour.ClearInteractions();
 			_movement.MovementBehaviour.AddInteraction(new VerseSelectionInteraction(verses, _gender));
 			Player.GetInstance().Camera.GetComponent<UnsaturatePostEffect>().Intensity = 0.0f;
+			Player.GetInstance().Look.SetScopedLook(_lookConfig.PoemScopedLook, _transform.rotation);
 		}
 
 	}

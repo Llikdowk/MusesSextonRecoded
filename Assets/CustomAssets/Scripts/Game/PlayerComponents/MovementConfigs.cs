@@ -31,17 +31,20 @@ namespace Game.PlayerComponents.Movement {
 
 	[Serializable]
 	public class SuperConfig {
-		// Walk & Run
-		public Look.LookConfig WalkRunLook;
 		public MovementConfig WalkMovement;
 		public MovementConfig RunMovement;
 		public AccelerationConfig WalkRunAcceleration;
-
-		// Cart
-		public Look.LookConfig DriveCartLook;
 		public CartMovementConfig DriveCartMovement;
 		public AccelerationConfig CartAcceleration;
+	}
 
+	[Serializable]
+	public class SuperLookConfig {
+		public LookConfig FreeLook;
+		public LookConfig DriveScopedLook;
+		public LookConfig DiggingScopedLook;
+		public LookConfig PoemScopedLook;
+		public LookConfig PoemLandmarkFreeLook;
 	}
 
 }

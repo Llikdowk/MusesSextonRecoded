@@ -17,6 +17,7 @@ namespace Game.PlayerComponents {
 
 		public PlayerState CurrentState;
 		public SuperConfig Config;
+		public SuperLookConfig LookConfig;
 
 		// TODO: should movement be accessible from everywhere? its changes should be limited in PlayerState classes
 		// TODO: what about actions?
@@ -49,12 +50,12 @@ namespace Game.PlayerComponents {
 
 				Movement = GetComponent<CharacterMovement>();
 				Controller = GetComponent<CharacterController>();
-				Look = GetComponent<Look>();
 				Camera = GetComponentInChildren<Camera>();
 				Animator = GetComponent<Animator>();
 				_collider = GetComponent<CapsuleCollider>();
 				_layerMaskAllButPlayer = ~(1 << LayerMaskManager.Get(Layer.Player));
 				_shovel = GetComponentInChildren<ShovelMovementComponent>();
+				Look = new Look(gameObject);
 			}
 			else {
 				Debug.LogWarning("Player singleton instance destroyed!");
