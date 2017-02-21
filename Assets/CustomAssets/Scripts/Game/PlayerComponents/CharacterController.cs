@@ -189,6 +189,9 @@ namespace Game.PlayerComponents {
 					WorldMovementProcessed = Vector3.zero;
 					break;
 				}
+				if (hit.distance == 0.0f) {
+					WorldMovementProcessed = hit.normal * 0.5f;
+				}
 				
 			}
 
