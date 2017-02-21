@@ -14,7 +14,7 @@
 [LOG] Thread::initThread                       : Init FMOD stream thread. Priority: 2, Stack Size: 65536, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Priority: 3, Stack Size: 49152, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 0000000010752198 isAsync 1 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 000000004629F4C8 isAsync 1 updatePeriod 0.02
 [LOG] Thread::initThread                       : Init FMOD Studio update thread. Priority: 0, Stack Size: 65536, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
@@ -32,14 +32,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -58,14 +58,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -84,14 +84,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -110,14 +110,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -136,14 +136,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -162,14 +162,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -188,14 +188,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -214,14 +214,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -240,14 +240,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -266,14 +266,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -292,14 +292,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -318,14 +318,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -344,14 +344,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -370,14 +370,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -396,14 +396,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000004C85FAF8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000000060D4FAF8
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFCF846AA0
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFCF846A70
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFCF846B70
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFCF846C20
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002DA39348
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000000107D46C8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
@@ -420,30 +420,30 @@
 [LOG] SystemI::createSound                     : filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
 [LOG] Thread::initThread                       : Init FMOD nonblocking thread (0). Priority: 1, Stack Size: 81920, Semaphore: Yes, Sleep Time: 0, Looping: Yes.
-[LOG] SystemI::createSound                     : setdata soundi = 000000002D6EE0B8 : node = 000000000E5D5330
-[LOG] SystemI::createSound                     : add node to async list : head = 000000001065C448.  list count = 0
+[LOG] SystemI::createSound                     : setdata soundi = 000000002D6EE778 : node = 000000002DBA4A30
+[LOG] SystemI::createSound                     : add node to async list : head = 000000001065C2A8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002D6EE778
 [LOG] SystemI::createSound                     : filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002D6EE0B8
-[LOG] SystemI::createSound                     : setdata soundi = 000000002D6EDF08 : node = 000000000E5D5480
-[LOG] SystemI::createSound                     :     add node to async list : head = 000000001065C448.  list count = 0
 [LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSound                     :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
-[LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     :     setdata soundi = 000000002D6EDF08 : node = 000000002DBA4250
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 6218624
-[LOG] SystemI::createSound                     :     setdata soundi = 000000002D6EE778 : node = 000000000E5D4760
+[LOG] SystemI::createSound                     :     add node to async list : head = 000000001065C2A8.  list count = 0
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 31136
-[LOG] SystemI::createSound                     :     add node to async list : head = 000000001065C448.  list count = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000000E5D5448
 [LOG] SystemI::createSound                     :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000002DBA4B48
 [LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSound                     :     setdata soundi = 000000002D6EE0B8 : node = 000000000E5D51E0
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSound                     :     add node to async list : head = 000000001065C2A8.  list count = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSound                     :     setdata soundi = 000000002D6EE928 : node = 00000000430EB2B0
-[LOG] SystemI::createSound                     :     add node to async list : head = 000000001065C448.  list count = 2
+[LOG] SystemI::createSound                     :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     :     setdata soundi = 000000002D6EE268 : node = 000000002DC33FB0
+[LOG] SystemI::createSound                     :     add node to async list : head = 000000001065C2A8.  list count = 2
 [LOG] SystemI::createSoundInternal             :     Format has 1 subsounds.
 [LOG] SystemI::createSoundInternal             :     Create as FMOD_CREATESTREAM
 [LOG] System::createSoundInternal              :     decode buffersize = 19200 : blocksize = 256 : format = 2
@@ -456,21 +456,21 @@
 [LOG] System::createSoundInternal              :     flush stream buffer
 [LOG] SystemI::createSound                     :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     :     setdata soundi = 000000002D6EE418 : node = 00000000430EB400
-[LOG] SystemI::createSound                     :     add node to async list : head = 000000001065C448.  list count = 3
+[LOG] SystemI::createSound                     :     setdata soundi = 000000002D6EE928 : node = 000000002DC34100
+[LOG] SystemI::createSound                     :     add node to async list : head = 000000001065C2A8.  list count = 3
 [LOG] System::createSoundInternal              :     flush successful.
 [LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
 [LOG] Thread::initThread                       :         Init FMOD file thread. Priority: 1, Stack Size: 16384, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
 
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002D6EE0B8
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002D6EE778
 [LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002D6EDF08
 [LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000000E5D5598
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000002DBA4368
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
@@ -489,13 +489,13 @@
 [LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
 
 [LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002D6EDF08
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002D6EE778
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002D6EE0B8
 [LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000000E5D4878
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000000E5D52F8
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
@@ -513,14 +513,14 @@
 [LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
 [LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
 
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002D6EE778
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002D6EE928
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002D6EE0B8
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002D6EE268
 [LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000000430EB3C8
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000002DC340C8
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
@@ -538,14 +538,14 @@
 [LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
 [LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
 
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002D6EE928
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002D6EE418
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002D6EE268
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002D6EE928
 [LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000000430EB518
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000002DC34218
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
@@ -563,23 +563,23 @@
 [LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
 [LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
 
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002D6EE418
-[LOG] SoundI::getSubSound                      : sound 000000002D6EE0B8.  Subsound index 0 / 1
-[LOG] SoundI::getSubSound                      : sound 000000002D6EDF08.  Subsound index 0 / 1
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002D6EE928
 [LOG] SoundI::getSubSound                      : sound 000000002D6EE778.  Subsound index 0 / 1
+[LOG] SoundI::getSubSound                      : sound 000000002D6EDF08.  Subsound index 0 / 1
+[LOG] SoundI::getSubSound                      : sound 000000002D6EE0B8.  Subsound index 0 / 1
+[LOG] SoundI::getSubSound                      : sound 000000002D6EE268.  Subsound index 0 / 1
 [LOG] SoundI::getSubSound                      : sound 000000002D6EE928.  Subsound index 0 / 1
-[LOG] SoundI::getSubSound                      : sound 000000002D6EE418.  Subsound index 0 / 1
 [LOG] SystemI::createSound                     : filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 000000002E0CCF98 : node = 00000000430EB550
-[LOG] SystemI::createSound                     : add node to async list : head = 000000001065C448.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CCF98
+[LOG] SystemI::createSound                     : setdata soundi = 000000002E0CEA98 : node = 000000002DC337D0
+[LOG] SystemI::createSound                     : add node to async list : head = 000000001065C2A8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CEA98
 [LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000000430EB668
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000002DC338E8
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
@@ -597,34 +597,36 @@
 [LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
 [LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
 
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CCF98
-[LOG] SoundI::getSubSound                      : sound 000000002E0CCF98.  Subsound index 0 / 1
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CEA98
+[LOG] SoundI::getSubSound                      : sound 000000002E0CEA98.  Subsound index 0 / 1
 [LOG] SoundI::getSubSound                      : starting non blocking seek and setting sound to not ready state
 [LOG] SoundI::getSubSound                      : finished preparing nonblocking getSubSound seek
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CD4A8
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CDD18
 [LOG] AsyncThread::threadFunc                  :     done setposition
 [LOG] AsyncThread::threadFunc                  :     done flush
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CD4A8
-[LOG] SoundI::release                          : BELL (000000002E0CCF98)
-[LOG] SoundI::release                          : remove stream samples. (000000002E0CCF98)
-[LOG] SoundI::release                          :     BELL (0000000028958CA8)
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CDD18
+[LOG] SoundI::release                          : BELL (000000002E0CEA98)
+[LOG] SoundI::release                          : remove stream samples. (000000002E0CEA98)
+[LOG] SoundI::release                          :     BELL (0000000043D78E48)
 [LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000002E0CCF98)
-[LOG] SoundI::release                          :     BELL (000000002E0CD4A8)
+[LOG] SoundI::release                          : release subsounds. (000000002E0CEA98)
+[LOG] SoundI::release                          :     BELL (000000002E0CDD18)
 [LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0CCF98)
+[LOG] SoundI::release                          : release codec. (000000002E0CEA98)
 [LOG] SoundI::release                          : done
+[LOG] SystemI::mixerSuspend                    : Suspending output.
+[LOG] SystemI::mixerResume                     : Resuming output.
 [LOG] SystemI::createSound                     : filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 000000002E0CD4A8 : node = 00000000430EB7F0
-[LOG] SystemI::createSound                     : add node to async list : head = 000000001065C448.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CD4A8
+[LOG] SystemI::createSound                     : setdata soundi = 000000002E0CE3D8 : node = 000000002DC33D10
+[LOG] SystemI::createSound                     : add node to async list : head = 000000001065C2A8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CE3D8
 [LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 6218624
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 31136
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000000430EB908
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000002DC33E28
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
@@ -642,313 +644,153 @@
 [LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
 [LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
 
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CD4A8
-[LOG] SoundI::getSubSound                      : sound 000000002E0CD4A8.  Subsound index 0 / 1
-[LOG] SoundI::release                          : LOOP wind (000000002D6EE418)
-[LOG] SoundI::release                          : remove stream samples. (000000002D6EE418)
-[LOG] SoundI::release                          :     LOOP wind (0000000028959CE8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000002D6EE418)
-[LOG] SoundI::release                          :     LOOP wind (000000002E0CDD18)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002D6EE418)
-[LOG] SoundI::release                          : done
-[LOG] SystemI::createSound                     : filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 000000002E0CCF98 : node = 00000000430EB400
-[LOG] SystemI::createSound                     : add node to async list : head = 000000001065C448.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CCF98
-[LOG] SystemI::createSound                     : filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
-[LOG] SystemI::createSound                     :     setdata soundi = 000000002E0CD808 : node = 00000000430EA830
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6218624
-[LOG] SystemI::createSound                     :     add node to async list : head = 000000001065C448.  list count = 0
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 31136
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSound                     :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000000430EB518
-[LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSound                     :     setdata soundi = 000000002E0CD2F8 : node = 00000000430EB940
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSound                     :     add node to async list : head = 000000001065C448.  list count = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 50
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSound                     :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     :     setdata soundi = 000000002E0CD658 : node = 00000000430EBE80
-[LOG] SystemI::createSound                     :     add node to async list : head = 000000001065C448.  list count = 2
-[LOG] SystemI::createSoundInternal             :     Format has 1 subsounds.
-[LOG] SystemI::createSoundInternal             :     Create as FMOD_CREATESTREAM
-[LOG] System::createSoundInternal              :     decode buffersize = 19200 : blocksize = 256 : format = 2
-[LOG] SystemI::createSample                    :     mode 02010082 length 19200 samples, lengthbytes 966144
-[LOG] SystemI::createSample                    :     channels = 2
-[LOG] SystemI::createSample                    :     output = 00000000288E3D18
-[LOG] OutputSoftware::createSample             :     lengthpcm 19200, lengthbytes 966144, channels 2, format 2, freq 48000, mode 0201008a
-[LOG] System::createSoundInternal              :     1 subsounds detected.
-[LOG] System::createSoundInternal              :     Seek stream to start
-[LOG] System::createSoundInternal              :     flush stream buffer
-[LOG] System::createSoundInternal              :     flush successful.
-[LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
-[LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
-
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CCF98
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CD808
-[LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6218624
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 31136
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000000430EA948
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 50
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Format has 1 subsounds.
-[LOG] SystemI::createSoundInternal             :     Create as FMOD_CREATESTREAM
-[LOG] System::createSoundInternal              :     decode buffersize = 19200 : blocksize = 256 : format = 2
-[LOG] SystemI::createSample                    :     mode 02010082 length 19200 samples, lengthbytes 1168864
-[LOG] SystemI::createSample                    :     channels = 2
-[LOG] SystemI::createSample                    :     output = 00000000288E3D18
-[LOG] OutputSoftware::createSample             :     lengthpcm 19200, lengthbytes 1168864, channels 2, format 2, freq 48000, mode 0201008a
-[LOG] System::createSoundInternal              :     1 subsounds detected.
-[LOG] System::createSoundInternal              :     Seek stream to start
-[LOG] System::createSoundInternal              :     flush stream buffer
-[LOG] System::createSoundInternal              :     flush successful.
-[LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
-[LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
-
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CD808
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CD2F8
-[LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6218624
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 31136
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000000430EBA58
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 50
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Format has 1 subsounds.
-[LOG] SystemI::createSoundInternal             :     Create as FMOD_CREATESTREAM
-[LOG] System::createSoundInternal              :     decode buffersize = 19200 : blocksize = 256 : format = 2
-[LOG] SystemI::createSample                    :     mode 02010082 length 19200 samples, lengthbytes 998464
-[LOG] SystemI::createSample                    :     channels = 2
-[LOG] SystemI::createSample                    :     output = 00000000288E3D18
-[LOG] OutputSoftware::createSample             :     lengthpcm 19200, lengthbytes 998464, channels 2, format 2, freq 48000, mode 0201008a
-[LOG] System::createSoundInternal              :     1 subsounds detected.
-[LOG] System::createSoundInternal              :     Seek stream to start
-[LOG] System::createSoundInternal              :     flush stream buffer
-[LOG] System::createSoundInternal              :     flush successful.
-[LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
-[LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
-
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CD2F8
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CD658
-[LOG] SystemI::createSoundInternal             :     filename = FMODProject\MusesSexton\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6218624
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 31136
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000000430EBF98
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 50
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Format has 1 subsounds.
-[LOG] SystemI::createSoundInternal             :     Create as FMOD_CREATESTREAM
-[LOG] System::createSoundInternal              :     decode buffersize = 19200 : blocksize = 256 : format = 2
-[LOG] SystemI::createSample                    :     mode 02010082 length 19200 samples, lengthbytes 1178528
-[LOG] SystemI::createSample                    :     channels = 2
-[LOG] SystemI::createSample                    :     output = 00000000288E3D18
-[LOG] OutputSoftware::createSample             :     lengthpcm 19200, lengthbytes 1178528, channels 2, format 2, freq 48000, mode 0201008a
-[LOG] System::createSoundInternal              :     1 subsounds detected.
-[LOG] System::createSoundInternal              :     Seek stream to start
-[LOG] System::createSoundInternal              :     flush stream buffer
-[LOG] System::createSoundInternal              :     flush successful.
-[LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
-[LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
-
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CD658
-[LOG] SoundI::getSubSound                      : sound 000000002E0CCF98.  Subsound index 0 / 1
-[LOG] SoundI::getSubSound                      : sound 000000002E0CD808.  Subsound index 0 / 1
-[LOG] SoundI::getSubSound                      : sound 000000002E0CD2F8.  Subsound index 0 / 1
-[LOG] SoundI::getSubSound                      : sound 000000002E0CD658.  Subsound index 0 / 1
-[LOG] SoundI::release                          : music_perc (000000002D6EE928)
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CE3D8
+[LOG] SoundI::getSubSound                      : sound 000000002E0CE3D8.  Subsound index 0 / 1
+[LOG] SoundI::release                          : LOOP wind (000000002D6EE928)
 [LOG] SoundI::release                          : remove stream samples. (000000002D6EE928)
-[LOG] SoundI::release                          :     music_perc (00000000289587C8)
+[LOG] SoundI::release                          :     LOOP wind (0000000043D78B08)
 [LOG] SoundI::release                          :     done
 [LOG] SoundI::release                          : release subsounds. (000000002D6EE928)
-[LOG] SoundI::release                          :     music_perc (000000002E0CE3D8)
+[LOG] SoundI::release                          :     LOOP wind (000000002E0CE738)
 [LOG] SoundI::release                          :     done
 [LOG] SoundI::release                          : release codec. (000000002D6EE928)
 [LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : music_1 (000000002D6EE778)
-[LOG] SoundI::release                          : remove stream samples. (000000002D6EE778)
-[LOG] SoundI::release                          :     music_1 (0000000028959B48)
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CD148
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CD148
+[LOG] SoundI::release                          : LOOP wind (000000002E0CE3D8)
+[LOG] SoundI::release                          : remove stream samples. (000000002E0CE3D8)
+[LOG] SoundI::release                          :     LOOP wind (0000000043D79808)
 [LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000002D6EE778)
-[LOG] SoundI::release                          :     music_1 (000000002E0CDB68)
+[LOG] SoundI::release                          : release subsounds. (000000002E0CE3D8)
+[LOG] SoundI::release                          :     LOOP wind (000000002E0CD148)
 [LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002D6EE778)
+[LOG] SoundI::release                          : release codec. (000000002E0CE3D8)
 [LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : music_2 (000000002D6EDF08)
-[LOG] SoundI::release                          : remove stream samples. (000000002D6EDF08)
-[LOG] SoundI::release                          :     music_2 (0000000028959188)
+[LOG] SoundI::release                          : music_perc (000000002D6EE268)
+[LOG] SoundI::release                          : remove stream samples. (000000002D6EE268)
+[LOG] SoundI::release                          :     music_perc (0000000043D7A508)
 [LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000002D6EDF08)
-[LOG] SoundI::release                          :     music_2 (000000002E0CD148)
+[LOG] SoundI::release                          : release subsounds. (000000002D6EE268)
+[LOG] SoundI::release                          :     music_perc (000000002E0CE228)
 [LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002D6EDF08)
+[LOG] SoundI::release                          : release codec. (000000002D6EE268)
 [LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : music_3 (000000002D6EE0B8)
+[LOG] SoundI::release                          : music_1 (000000002D6EE0B8)
 [LOG] SoundI::release                          : remove stream samples. (000000002D6EE0B8)
-[LOG] SoundI::release                          :     music_3 (0000000028959808)
+[LOG] SoundI::release                          :     music_1 (0000000043D7A368)
 [LOG] SoundI::release                          :     done
 [LOG] SoundI::release                          : release subsounds. (000000002D6EE0B8)
-[LOG] SoundI::release                          :     music_3 (000000002D6EE268)
+[LOG] SoundI::release                          :     music_1 (000000002E0CDB68)
 [LOG] SoundI::release                          :     done
 [LOG] SoundI::release                          : release codec. (000000002D6EE0B8)
 [LOG] SoundI::release                          : done
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002E0CE588
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002E0CE588
-[LOG] SoundI::release                          : LOOP wind (000000002E0CD4A8)
-[LOG] SoundI::release                          : remove stream samples. (000000002E0CD4A8)
-[LOG] SoundI::release                          :     LOOP wind (0000000028959E88)
+[LOG] SoundI::release                          : music_2 (000000002D6EDF08)
+[LOG] SoundI::release                          : remove stream samples. (000000002D6EDF08)
+[LOG] SoundI::release                          :     music_2 (0000000043D7A1C8)
 [LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000002E0CD4A8)
-[LOG] SoundI::release                          :     LOOP wind (000000002E0CE588)
+[LOG] SoundI::release                          : release subsounds. (000000002D6EDF08)
+[LOG] SoundI::release                          :     music_2 (000000002E0CE8E8)
 [LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0CD4A8)
+[LOG] SoundI::release                          : release codec. (000000002D6EDF08)
 [LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : music_perc (000000002E0CD658)
-[LOG] SoundI::release                          : remove stream samples. (000000002E0CD658)
-[LOG] SoundI::release                          :     music_perc (0000000028958FE8)
+[LOG] SoundI::release                          : music_3 (000000002D6EE778)
+[LOG] SoundI::release                          : remove stream samples. (000000002D6EE778)
+[LOG] SoundI::release                          :     music_3 (0000000043D78968)
 [LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000002E0CD658)
-[LOG] SoundI::release                          :     music_perc (000000002E0CE228)
+[LOG] SoundI::release                          : release subsounds. (000000002D6EE778)
+[LOG] SoundI::release                          :     music_3 (000000002D6EE418)
 [LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0CD658)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : music_1 (000000002E0CD2F8)
-[LOG] SoundI::release                          : remove stream samples. (000000002E0CD2F8)
-[LOG] SoundI::release                          :     music_1 (00000000289582E8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000002E0CD2F8)
-[LOG] SoundI::release                          :     music_1 (000000002E0CDEC8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0CD2F8)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : music_2 (000000002E0CD808)
-[LOG] SoundI::release                          : remove stream samples. (000000002E0CD808)
-[LOG] SoundI::release                          :     music_2 (0000000028959CE8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000002E0CD808)
-[LOG] SoundI::release                          :     music_2 (000000002E0CDD18)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0CD808)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : music_3 (000000002E0CCF98)
-[LOG] SoundI::release                          : remove stream samples. (000000002E0CCF98)
-[LOG] SoundI::release                          :     music_3 (00000000289594C8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (000000002E0CCF98)
-[LOG] SoundI::release                          :     music_3 (000000002E0CD9B8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0CCF98)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0AE618)
-[LOG] SoundI::release                          : release subsounds. (000000002E0AE618)
-[LOG] SoundI::release                          :     pickup coffin (000000003E003828)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0AE618)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0ACF18)
-[LOG] SoundI::release                          : release subsounds. (000000002E0ACF18)
-[LOG] SoundI::release                          :     tone1 (000000001065C638)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0ACF18)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0AC958)
-[LOG] SoundI::release                          : release subsounds. (000000002E0AC958)
-[LOG] SoundI::release                          :     tone2 (000000003E003688)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0AC958)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0AD1F8)
-[LOG] SoundI::release                          : release subsounds. (000000002E0AD1F8)
-[LOG] SoundI::release                          :     tone3 (000000003E003348)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0AD1F8)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0AE1C8)
-[LOG] SoundI::release                          : release subsounds. (000000002E0AE1C8)
-[LOG] SoundI::release                          :     tone4 (000000003E0039C8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0AE1C8)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0ADD78)
-[LOG] SoundI::release                          : release subsounds. (000000002E0ADD78)
-[LOG] SoundI::release                          :     tone5 (000000003E0027E8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0ADD78)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0ACDA8)
-[LOG] SoundI::release                          : release subsounds. (000000002E0ACDA8)
-[LOG] SoundI::release                          :     tone6 (000000003E0034E8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0ACDA8)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0ADEE8)
-[LOG] SoundI::release                          : release subsounds. (000000002E0ADEE8)
-[LOG] SoundI::release                          :     cart loop (000000003E002E68)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0ADEE8)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0ACC38)
-[LOG] SoundI::release                          : release subsounds. (000000002E0ACC38)
-[LOG] SoundI::release                          :     throw coffin (000000003E003008)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0ACC38)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0ADC08)
-[LOG] SoundI::release                          : release subsounds. (000000002E0ADC08)
-[LOG] SoundI::release                          :     fsteps3 (000000003E001FC8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0ADC08)
+[LOG] SoundI::release                          : release codec. (000000002D6EE778)
 [LOG] SoundI::release                          : done
 [LOG] SoundI::release                          :  (000000002E0ACAC8)
 [LOG] SoundI::release                          : release subsounds. (000000002E0ACAC8)
-[LOG] SoundI::release                          :     fsteps4 (000000001065CFF8)
+[LOG] SoundI::release                          :     pickup coffin (000000003E0034E8)
 [LOG] SoundI::release                          :     done
 [LOG] SoundI::release                          : release codec. (000000002E0ACAC8)
 [LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0AE058)
-[LOG] SoundI::release                          : release subsounds. (000000002E0AE058)
-[LOG] SoundI::release                          :     fsteps5 (000000003E0031A8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0AE058)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          :  (000000002E0AE4A8)
-[LOG] SoundI::release                          : release subsounds. (000000002E0AE4A8)
-[LOG] SoundI::release                          :     shovel1 (000000003E002308)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (000000002E0AE4A8)
-[LOG] SoundI::release                          : done
 [LOG] SoundI::release                          :  (000000002E0AD4D8)
 [LOG] SoundI::release                          : release subsounds. (000000002E0AD4D8)
-[LOG] SoundI::release                          :     shovel2 (000000003E002988)
+[LOG] SoundI::release                          :     tone1 (000000001065D4D8)
 [LOG] SoundI::release                          :     done
 [LOG] SoundI::release                          : release codec. (000000002E0AD4D8)
 [LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0AC958)
+[LOG] SoundI::release                          : release subsounds. (000000002E0AC958)
+[LOG] SoundI::release                          :     tone2 (000000003E0027E8)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0AC958)
+[LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0AD928)
+[LOG] SoundI::release                          : release subsounds. (000000002E0AD928)
+[LOG] SoundI::release                          :     tone3 (000000003E0031A8)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0AD928)
+[LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0AD368)
+[LOG] SoundI::release                          : release subsounds. (000000002E0AD368)
+[LOG] SoundI::release                          :     tone4 (000000003E002CC8)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0AD368)
+[LOG] SoundI::release                          : done
 [LOG] SoundI::release                          :  (000000002E0ADA98)
 [LOG] SoundI::release                          : release subsounds. (000000002E0ADA98)
-[LOG] SoundI::release                          :     shovel3 (000000003E002CC8)
+[LOG] SoundI::release                          :     tone5 (000000003E0039C8)
 [LOG] SoundI::release                          :     done
 [LOG] SoundI::release                          : release codec. (000000002E0ADA98)
+[LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0AE4A8)
+[LOG] SoundI::release                          : release subsounds. (000000002E0AE4A8)
+[LOG] SoundI::release                          :     tone6 (000000003E003688)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0AE4A8)
+[LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0ADD78)
+[LOG] SoundI::release                          : release subsounds. (000000002E0ADD78)
+[LOG] SoundI::release                          :     cart loop (000000003E002308)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0ADD78)
+[LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0AE788)
+[LOG] SoundI::release                          : release subsounds. (000000002E0AE788)
+[LOG] SoundI::release                          :     throw coffin (000000003E003828)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0AE788)
+[LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0ADEE8)
+[LOG] SoundI::release                          : release subsounds. (000000002E0ADEE8)
+[LOG] SoundI::release                          :     fsteps3 (000000003E002E68)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0ADEE8)
+[LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0AD1F8)
+[LOG] SoundI::release                          : release subsounds. (000000002E0AD1F8)
+[LOG] SoundI::release                          :     fsteps4 (000000001065C638)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0AD1F8)
+[LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0AE058)
+[LOG] SoundI::release                          : release subsounds. (000000002E0AE058)
+[LOG] SoundI::release                          :     fsteps5 (000000003E002988)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0AE058)
+[LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0AD088)
+[LOG] SoundI::release                          : release subsounds. (000000002E0AD088)
+[LOG] SoundI::release                          :     shovel1 (000000003E003008)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0AD088)
+[LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0AD7B8)
+[LOG] SoundI::release                          : release subsounds. (000000002E0AD7B8)
+[LOG] SoundI::release                          :     shovel2 (000000003E0024A8)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0AD7B8)
+[LOG] SoundI::release                          : done
+[LOG] SoundI::release                          :  (000000002E0ACF18)
+[LOG] SoundI::release                          : release subsounds. (000000002E0ACF18)
+[LOG] SoundI::release                          :     shovel3 (000000003E002648)
+[LOG] SoundI::release                          :     done
+[LOG] SoundI::release                          : release codec. (000000002E0ACF18)
 [LOG] SoundI::release                          : done
 [LOG] Thread::callback                         : FMOD Studio update thread finished.
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.

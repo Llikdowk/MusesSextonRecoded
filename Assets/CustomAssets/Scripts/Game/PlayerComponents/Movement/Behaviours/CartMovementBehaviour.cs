@@ -59,8 +59,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			ray = new Ray(_cartTransform.position, Vector3.down);
 			if (Physics.Raycast(ray, out hit, 10.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore)) {
 				Vector3 cross = Vector3.Cross(_cartTransform.right, hit.normal);
-				newForward += Vector3.RotateTowards(_cartTransform.forward, cross, Time.deltaTime * _cartConfig.VerticalRotationStep,
-					0.0f);
+				newForward += Vector3.RotateTowards(_cartTransform.forward, cross, Time.deltaTime * _cartConfig.VerticalRotationSpeed, 0.0f);
 			}
 
 			_cartTransform.rotation = Quaternion.LookRotation(newForward);
@@ -70,10 +69,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			dvelSelf.z += SelfMovement.z * (SelfMovement.z > 0 ? _cartConfig.ForwardSpeed : _cartConfig.BackwardSpeed);
 			_stepMovement += _transform.localToWorldMatrix.MultiplyVector(dvelSelf) * Time.deltaTime;
 
-			_cartTransform.position = Vector3.Lerp(
-				_transform.position - _cartTransform.forward * _cartConfig.DistanceToPlayer,
-				_cartTransform.position,
-				_cartConfig.MovementLag);
+			_cartTransform.position = _transform.position - _cartTransform.forward * _cartConfig.DistanceToPlayer;
 		}
 	}
 }

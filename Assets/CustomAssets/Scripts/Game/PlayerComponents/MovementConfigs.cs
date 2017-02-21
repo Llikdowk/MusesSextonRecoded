@@ -17,9 +17,8 @@ namespace Game.PlayerComponents.Movement {
 		public float ForwardSpeed = 7.5f;
 		public float BackwardSpeed = 2.0f;
 		public float DistanceToPlayer = 1.0f;
-		public float VerticalRotationStep = 5.0f;
+		public float VerticalRotationSpeed = 5.0f;
 
-		[Range(0, 1)] public float MovementLag = 0.9f;
 		[Range(0, 1)] public float LookLag = 0.9f;
 	}
 
