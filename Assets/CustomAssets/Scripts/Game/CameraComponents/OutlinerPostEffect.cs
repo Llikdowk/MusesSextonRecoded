@@ -3,7 +3,7 @@
 namespace Game.CameraComponents {
 	public class OutlinerPostEffect : MonoBehaviour {
 		public Color OutlineColor = Color.cyan;
-		public int Thickness = 9;
+		public int Thickness = 6;
 
 		private Shader _outlineShader;
 		private Shader _drawSimpleShader;
@@ -38,7 +38,6 @@ namespace Game.CameraComponents {
 			RenderTexture rt = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.R8);
 			_outlinerCamera.targetTexture = rt;
 			_outlinerCamera.RenderWithShader(_drawSimpleShader, "");
-			_material.SetTexture("_SourceTex", source);
 			Graphics.Blit(rt, destination, _material);
 			RenderTexture.ReleaseTemporary(rt);
 		}

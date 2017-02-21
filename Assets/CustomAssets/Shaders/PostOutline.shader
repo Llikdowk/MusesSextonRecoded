@@ -5,9 +5,8 @@ Shader "Custom/PostOutline"
     Properties
     {
 		_MainTex("Main Texture", 2D) = "white" {}
-        _SourceTex("Source Texture", 2D) = "white" {}
 		_Color("Main Color", Color) = (1, 0, 1, 1)
-		_Thickness("Thickness", Int) = 9
+		_Thickness("Thickness", Int) = 6
 		
     }
     SubShader 
@@ -19,7 +18,6 @@ Shader "Custom/PostOutline"
             CGPROGRAM
      
             sampler2D _MainTex;
-            sampler2D _SourceTex;
 			half4 _Color;
 			half _Thickness;
  
@@ -33,21 +31,17 @@ Shader "Custom/PostOutline"
             struct appdata {
                 float4 pos : POSITION;
                 float2 uv : TEXCOORD0;
-                float2 uvSource : TEXCOORD1;
             };
 
             struct v2f {
                 float4 pos : SV_POSITION;
                 float2 uv : TEXCOORD0;
-                float2 uvSource : TEXCOORD1;
             };
              
             v2f vert (appdata input) {
                 v2f o;
                 o.pos = mul(UNITY_MATRIX_MVP, input.pos);
                 o.uv = o.pos.xy/2.0f + 0.5f;
-                o.uvSource.x = o.pos.x/2.0f + 0.5f;
-                o.uvSource.y = o.pos.y/-2.0f + 0.5f; // TODO: check why vertical Y is flipped!
                 return o;
             }
              
@@ -64,8 +58,7 @@ Shader "Custom/PostOutline"
                     }
                 }
 
-                half4 sourceColor = tex2D(_SourceTex, input.uvSource);
-                return lerp(sourceColor, _Color, ceil(ColorIntensityInRadius));
+                return _Color*ColorIntensityInRadius; 
             }
             ENDCG
         }
