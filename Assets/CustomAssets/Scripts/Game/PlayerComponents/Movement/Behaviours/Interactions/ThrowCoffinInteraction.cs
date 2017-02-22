@@ -15,7 +15,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			_coffin.GetComponent<Collider>().enabled = true;
 			Rigidbody rb = _coffin.GetComponent<Rigidbody>();
 			rb.isKinematic = false;
-			_coffin.layer = LayerMaskManager.Get(Layer.Default);
+			_coffin.layer = LayerMaskManager.Get(Layer.Landmark);
 
 			MarkableComponent m = _coffin.GetComponent<MarkableComponent>();
 			if (m == null) {

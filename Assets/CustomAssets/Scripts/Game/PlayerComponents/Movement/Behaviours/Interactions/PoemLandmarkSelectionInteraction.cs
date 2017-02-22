@@ -18,16 +18,24 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			RaycastHit hit;
 			if (Player.GetInstance().GetEyeSight(out hit)) {
 				Debug.DrawLine(Player.GetInstance().transform.position, hit.point, Color.magenta);
-				if (hit.collider.gameObject.tag == TagManager.Get(Tag.Landmark)) {
-					GameObject LandmarkParent = null;
+				if (hit.collider.gameObject.tag == TagManager.Get(Tag.Landmark)
+					|| hit.collider.gameObject.tag == TagManager.Get(Tag.Coffin)) {
 					Transform current = hit.collider.transform;
-					while (current.parent != null && !current.parent.name.Contains("Landmark")) {
-						current = current.parent;
+					if (!current.name.Contains("Landmark")) {
+						while (current.parent != null && !current.parent.name.Contains("Landmark")) {
+							current = current.parent;
+						}
+						if (current != null) {
+							_landmarkVisuals = current;
+							Transform landmarkParent = _landmarkVisuals.transform.parent;
+							_verses = landmarkParent.GetComponent<LandmarkVersesComponent>();
+							ShowFeedback();
+							return this;
+						}
 					}
-					if (current != null) {
+					else {
 						_landmarkVisuals = current;
-						Transform landmarkParent = _landmarkVisuals.transform.parent;
-						_verses = landmarkParent.GetComponent<LandmarkVersesComponent>();
+						_verses = current.GetComponent<LandmarkVersesComponent>();
 						ShowFeedback();
 						return this;
 					}
@@ -42,6 +50,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public override void ShowFeedback() {
 			if (!_landmarkVisuals) return;
 
+			_landmarkVisuals.gameObject.layer = _outlineLayer;
 			foreach (Transform child in _landmarkVisuals.GetComponentsInChildren<Transform>()) {
 				child.gameObject.layer = _outlineLayer;
 			}
@@ -49,6 +58,8 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		public override void HideFeedback() {
 			if (!_landmarkVisuals) return;
+
+			_landmarkVisuals.gameObject.layer = _defaultLayer;
 			foreach (Transform child in _landmarkVisuals.GetComponentsInChildren<Transform>()) {
 				child.gameObject.layer = _defaultLayer;
 			}

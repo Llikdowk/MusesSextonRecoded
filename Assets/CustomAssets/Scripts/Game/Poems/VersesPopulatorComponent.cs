@@ -6,8 +6,10 @@ namespace Game.Poems {
 
 	public class VersesPopulatorComponent : MonoBehaviour {
 
-		public static LandmarkVerses TombPoem;
 		public GameObject CartLandmark;
+		public GameObject Coffin0;
+		public GameObject Coffin1;
+		public GameObject Coffin2;
 		// dynamic:
 		//     cart
 		//     coffin
@@ -30,16 +32,19 @@ namespace Game.Poems {
 			}
 
 			if (!CartLandmark) {
-				DebugMsg.GameObjectNotFound(Debug.LogWarning, "Cart", "Has not been set in Inspector");
+				DebugMsg.GameObjectNotFound(Debug.LogWarning, "Cart", "Has not been set in the Inspector");
+			}
+			if (!Coffin0 || !Coffin1 || !Coffin2) {
+				DebugMsg.GameObjectNotFound(Debug.LogWarning, "CoffinX", "One or more coffins have not been set in the Inspector");
 			}
 
 			foreach (LandmarkVerses v in verses) {
 				if (v.LandmarkName.Contains("CART")) {
-					if (CartLandmark) {
-						CartLandmark.AddComponent<LandmarkVersesComponent>().LandmarkVerses = v;
-					}
+					CartLandmark.AddComponent<LandmarkVersesComponent>().LandmarkVerses = v;
 				} else if (v.LandmarkName.Contains("COFFIN")) {
-					TombPoem = v;
+					Coffin0.AddComponent<LandmarkVersesComponent>().LandmarkVerses = v;
+					Coffin1.AddComponent<LandmarkVersesComponent>().LandmarkVerses = v;
+					Coffin2.AddComponent<LandmarkVersesComponent>().LandmarkVerses = v;
 				}
 			}
 		}

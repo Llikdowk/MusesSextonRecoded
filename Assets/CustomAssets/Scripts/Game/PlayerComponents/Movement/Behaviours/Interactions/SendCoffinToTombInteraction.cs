@@ -21,6 +21,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			AnimationUtils.MoveSmoothlyTo(_coffin.transform, _coffin.transform.position, _tomb.transform.position - Vector3.up*1.5f, 0.5f);
 			AnimationUtils.LookTowardsHorizontal(_coffin.transform, _tomb.transform.right, 0.5f, () => {
 				_coffin.transform.parent = _tomb.transform;
+				_coffin.GetComponent<Collider>().enabled = true;
 			});
 			_tombComponent.PlayerTombTransition(new PoemState(_tombComponent), false);
 			_tombComponent.HideMarker();
