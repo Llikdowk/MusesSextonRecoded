@@ -140,7 +140,10 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				QueryTriggerInteraction.Collide);
 
 			if (_hasHit) {
-				if (_selectedGameObject == null) _selectedGameObject = hit.collider.gameObject;
+				if (_selectedGameObject == null) {
+					_selectedGameObject = hit.collider.gameObject;
+					_selectedVerse = _selectedGameObject.GetComponent<VerseInfoComponent>().Info;
+				}
 				if (_selectedGameObject.GetInstanceID() != hit.collider.gameObject.GetInstanceID()) {
 					HideFeedback();
 					_selectedGameObject = hit.collider.gameObject;
