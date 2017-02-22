@@ -2,7 +2,6 @@ using Audio;
 using Game.Entities;
 using UnityEngine;
 using Utils;
-using Debug = System.Diagnostics.Debug;
 
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public class SendCoffinToTombInteraction : Interaction {
@@ -18,7 +17,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public override void DoInteraction() {
-			_coffin.layer = LayerMaskManager.Get(Layer.Default);
+			_coffin.layer = LayerMaskManager.Get(Layer.Landmark);
 			AnimationUtils.MoveSmoothlyTo(_coffin.transform, _coffin.transform.position, _tomb.transform.position - Vector3.up*1.5f, 0.5f);
 			AnimationUtils.LookTowardsHorizontal(_coffin.transform, _tomb.transform.right, 0.5f, () => {
 				_coffin.transform.parent = _tomb.transform;

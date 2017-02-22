@@ -93,7 +93,7 @@ namespace Game {
 			Undefined, Masculine, Feminine, Plural, FirstPerson
 		}
 
-		private TombComponent _tombComponent;
+		private readonly TombComponent _tombComponent;
 		private Gender _gender;
 		private int _selectedVersesCount = 0;
 		public const int MaxVerses = 3;
@@ -118,6 +118,10 @@ namespace Game {
 
 		public void SetGender(Gender gender) {
 			_gender = gender;
+		}
+
+		public Gender GetGender() {
+			return _gender;
 		}
 
 		public void CalcNextInteraction() {

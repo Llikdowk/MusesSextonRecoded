@@ -83,7 +83,9 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public override void DoInteraction() {
 			PoemState poemState = ((PoemState)Player.GetInstance().CurrentState); // TODO: send in constructor
 			if (_hasHit) {
-				poemState.SetGender(_selectedVerse.Gender);
+				if (poemState.GetGender() == PoemState.Gender.Undefined) {
+					poemState.SetGender(_selectedVerse.Gender);
+				}
 				Player.GetInstance().AddPoemVerse(_selectedVerse.FirstPersonVerse);
 				_tombComponent.AddVerse(_selectedVerse.Verse);
 				_tombComponent.PlayerTombRefocus();
@@ -95,7 +97,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				Player.GetInstance().AnimationEnding = () => Player.GetInstance().HideShovel();
 				if (Player.GetInstance().PlayDigAnimation()) {
 					_tombComponent.Bury(() => {
-						Player.GetInstance().CurrentState = new PoemState(_tombComponent);
+						poemState.SetLandmarkSelectionInteraction();
 					});
 					++_counter;
 					if (_counter >= MaxCount) {
