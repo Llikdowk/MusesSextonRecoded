@@ -8,6 +8,8 @@ namespace Game.Entities {
 	public class TombComponent : MonoBehaviour {
 		private static GameObject _groundInstantiator;
 		private static GameObject _groundHeapInstantiator;
+		private static GameObject _gravestoneInstantiator;
+		private int VerseIndex = 0;
 
 		public Vector3 MiddleLow { get; private set; }
 
@@ -32,6 +34,11 @@ namespace Game.Entities {
 				_groundHeapInstantiator = Resources.Load<GameObject>("Prefabs/GroundHeap");
 				_groundHeapInstantiator.name = "_groundHeap";
 				_groundHeapInstantiator.SetActive(false);
+			}
+			if (!_gravestoneInstantiator) {
+				_gravestoneInstantiator = Resources.Load<GameObject>("Prefabs/Tombstone");
+				_gravestoneInstantiator.name = "_gravestone";
+				_gravestoneInstantiator.SetActive(false);
 			}
 
 			_icon = gameObject.AddComponent<IconMarkerComponent>();
@@ -71,7 +78,12 @@ namespace Game.Entities {
 
 			const float offset = 1.75f;
 			Vector3 middleUp = new Vector3(lowerRight.x + offset, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
-			AddGravestone(middleUp);
+			_gravestone = Object.Instantiate(_gravestoneInstantiator);
+			_gravestone.SetActive(true);
+			_gravestone.transform.parent = transform;
+			_gravestone.transform.LocalReset();
+			_gravestone.transform.position = middleUp;
+			_gravestone.transform.localPosition -= Vector3.up * 3.0f;
 			MiddleLow = new Vector3(upperLeft.x - offset, hit.point.y, lowerRight.z - (lowerRight.z - upperLeft.z) / 2.0f);
 		}
 
@@ -88,15 +100,6 @@ namespace Game.Entities {
 			_ground.transform.position += _ground.transform.up * _upGroundStep;
 			_groundHeap.transform.position -= _ground.transform.up * _heapStep;
 			_gravestone.transform.position += _gravestone.transform.up * _upGravestoneStep;
-		}
-
-		private void AddGravestone(Vector3 position) {
-			GameObject gravestone = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Tombstone"));
-			gravestone.transform.parent = transform;
-			gravestone.transform.LocalReset();
-			gravestone.transform.position = position;
-			gravestone.transform.localPosition -= Vector3.up * 3.0f;
-			_gravestone = gravestone;
 		}
 
 		public void PlayerTombTransition(PlayerState newPlayerState, bool animate) {
@@ -126,6 +129,20 @@ namespace Game.Entities {
 				c.enabled = false;
 			}
 		}
+
+		public void AddVerse(string text) {
+			string splittedText = text;
+			const int cutIndex = 16;
+			for (int i = cutIndex; i < text.Length; ++i) {
+				if (text[i] == ' ') {
+					splittedText = text.Substring(0, i) + '\n' + text.Substring(i + 1, text.Length - (i+1));
+					break;
+				}
+			}
+			_gravestone.transform.GetChild(VerseIndex).GetComponent<TextMesh>().text = splittedText;
+			++VerseIndex;
+		}
+
 
 		public void Hide() {
 			_ground.transform.parent = null;
