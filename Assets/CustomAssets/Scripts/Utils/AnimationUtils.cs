@@ -81,7 +81,10 @@ namespace Utils {
 			public void Init(Vector3 focusPoint, float durationSecs, AnimationDelegate callback = null) {
 				base.Init(durationSecs, callback);
 				Vector3 lookDir = (focusPoint - transform.position).normalized;
-				float sign = Mathf.Sign(lookDir.y + transform.forward.y);
+				float sign = -1;
+				if (transform.forward.y > lookDir.y) {
+					sign = 1;
+				}
 				lookDir = new Vector3(transform.forward.x, lookDir.y, transform.forward.z);
 				_angle = Vector3.Angle(transform.forward, lookDir) * sign;
 			}
