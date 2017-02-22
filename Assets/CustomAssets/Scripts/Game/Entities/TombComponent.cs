@@ -1,4 +1,5 @@
 ﻿
+using System.Collections;
 using Game.PlayerComponents;
 using Triggers;
 using UnityEngine;
@@ -22,6 +23,21 @@ namespace Game.Entities {
 		private const float _upGroundStep = 0.6f;
 		private const float _heapStep = 0.5f;
 		private const float _upGravestoneStep = 1.5f;
+
+		private delegate void CoroutineAction(float t);
+		private delegate void CoroutineCallback();
+		private IEnumerator GenericCoroutine(CoroutineAction f, float duration_s, CoroutineCallback callback = null) {
+			float t = 0.0f;
+			while (t < 1.0f) {
+				t += Time.deltaTime / duration_s;
+				f(t);
+				yield return null;
+			}
+
+			if (callback != null) {
+				callback();
+			}
+		}
 
 		public void Init(Vector3 upperLeft, Vector3 lowerRight) {
 
@@ -92,14 +108,27 @@ namespace Game.Entities {
 		}
 
 		public void Dig() {
-			_ground.transform.position -= _ground.transform.up * _downGroundStep;
-			_groundHeap.transform.position += _ground.transform.up * _heapStep;
+			Vector3 groundStart = _ground.transform.position;
+			Vector3 groundEnd = groundStart - _ground.transform.up * _downGroundStep;
+			Vector3 groundHeapStart = _groundHeap.transform.position;
+			Vector3 groundHeapEnd = groundHeapStart + _ground.transform.up * _heapStep;
+
+			StartCoroutine(GenericCoroutine(
+				(t) => {
+					_ground.transform.position = Vector3.Lerp(groundStart, groundEnd, t);
+					_groundHeap.transform.position = Vector3.Lerp(groundHeapStart, groundHeapEnd, t);
+				}, 
+				0.5f));
 		}
 
 		public void Bury() {
-			_ground.transform.position += _ground.transform.up * _upGroundStep;
-			_groundHeap.transform.position -= _ground.transform.up * _heapStep;
-			_gravestone.transform.position += _gravestone.transform.up * _upGravestoneStep;
+			StartCoroutine(GenericCoroutine(
+				(t) => {
+					_ground.transform.position += _ground.transform.up * _upGroundStep;
+					_groundHeap.transform.position -= _ground.transform.up * _heapStep;
+					_gravestone.transform.position += _gravestone.transform.up * _upGravestoneStep;
+				}, 
+				0.5f));
 		}
 
 		public void PlayerTombTransition(PlayerState newPlayerState, bool animate) {
