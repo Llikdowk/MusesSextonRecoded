@@ -81,6 +81,16 @@ namespace Game.CameraComponents {
 			));
 		}
 
+		public void Shake(float duration_s) {
+			_shake.DurationSeconds = duration_s;
+			_shake.ForceCloseSpeedMultiplier = 5;
+			_shake.HeightScale = 1;
+			_shake.HeightSpeed = 8;
+			_shake.WidthScale = 1;
+			_shake.WidthSpeed = 8;
+			_shake.enabled = true;
+		}
+
 		private IEnumerator GenericCoroutine(CoroutineAction f, float duration_s, CoroutineCallback callback = null) {
 			float t = 0.0f;
 			while (t < 1.0f) {

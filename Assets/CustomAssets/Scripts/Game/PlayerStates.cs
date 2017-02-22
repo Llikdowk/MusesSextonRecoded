@@ -1,5 +1,5 @@
-﻿using C5;
-using Game.CameraComponents;
+﻿using Audio;
+using C5;
 using Game.Entities;
 using Game.PlayerComponents;
 using Game.PlayerComponents.Movement;
@@ -18,6 +18,9 @@ namespace Game {
 		}
 
 		public abstract void RunState();
+
+		public virtual void OnDestroy() {
+		}
 
 		protected CharacterMovement _movement;
 		protected Transform _transform;
@@ -117,6 +120,11 @@ namespace Game {
 		public PoemState(TombComponent tombComponent) {
 			_gender = Gender.Undefined;
 			_tombComponent = tombComponent;
+			AudioController.GetInstance().FadeInPercussion();
+		}
+
+		public override void OnDestroy() {
+			AudioController.GetInstance().FadeOutPercussion();
 		}
 
 		public override void RunState() {

@@ -14,7 +14,7 @@ namespace Audio {
 		[Range(0, 1)] public float Music3 = 1.0f;
 		public float Music3FadeTime = 15.0f;
 		[Range(0, 1)] public float Percussion = 1.0f;
-		public float PercussionFadeTime = 15.0f;
+		public float PercussionFadeTime = 1.50f;
 		[Range(0, 1)] public float Wind = 0.75f;
 		public float WindFadeTime = 5.0f;
 
@@ -33,7 +33,7 @@ namespace Audio {
 		private FMODObject _pickupCoffin;
 		private FMODObject _throwCoffin;
 		private FMODObject _cart;
-
+		private FMODObject _raiseTomb;
 
 		private static AudioController _instance;
 
@@ -66,6 +66,7 @@ namespace Audio {
 				_throwCoffin = new FMODObject("event:/ThrowCoffin");
 				_cart = new FMODObject("event:/CartLoop");
 				_cart.SetParameter("Volume", 0.75f);
+				_raiseTomb = new FMODObject("event:/RaiseTomb");
 			}
 			else {
 				Destroy(gameObject);
@@ -119,6 +120,11 @@ namespace Audio {
 			_cart.StopFading();
 		}
 
+		public void PlayRaiseTomb() {
+			Debug.Log("play raise tomb!");
+			_raiseTomb.Play();
+		}
+
 		public void PlaySteps() {
 			if (IsMuted) return;
 			if (StepsSpeed == 0.0f) return;
@@ -133,7 +139,9 @@ namespace Audio {
 		}
 
 		public void PlayBell() {
-			_bell.Play();
+			if (!_bell.IsPlaying()) {
+				_bell.Play();
+			}
 		}
 
 		public void PlayShovel() {
@@ -167,10 +175,13 @@ namespace Audio {
 		}
 		public void FadeInMusic3(AudioAction f = null) {
 			StartCoroutine(Fade(_music, "Music3", Music3, Music3FadeTime, f));
-			
 		}
 		public void FadeInPercussion() {
 			StartCoroutine(Fade(_music, "Percussion", Percussion, PercussionFadeTime));
+		}
+
+		public void FadeOutPercussion() {
+			StartCoroutine(Fade(_music, "Percussion", 0.0f, PercussionFadeTime));
 		}
 
 		private IEnumerator Fade(FMODObject audio, string paramName, float endVolume, float duration_s, AudioAction f = null) {

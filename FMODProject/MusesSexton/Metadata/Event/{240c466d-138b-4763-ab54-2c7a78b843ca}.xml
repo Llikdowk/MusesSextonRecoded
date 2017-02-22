@@ -5,7 +5,7 @@
             <value>RaiseTomb</value>
         </property>
         <property name="outputFormat">
-            <value>2</value>
+            <value>1</value>
         </property>
         <relationship name="folder">
             <destination>{3c366c63-b7f2-4200-b61a-c6a1a0ee94a4}</destination>
@@ -107,7 +107,7 @@
     </object>
     <object class="SingleSound" id="{1a31cddb-4d9e-47b0-9738-6f63c3dcb9e9}">
         <property name="length">
-            <value>6.2999999999999989</value>
+            <value>5.4000000000000004</value>
         </property>
         <property name="timelockedOffset">
             <value>1.8999999999999995</value>
@@ -134,12 +134,13 @@
         <relationship name="automationPoints">
             <destination>{e714d774-050d-4939-bf33-2158ce9bfe80}</destination>
             <destination>{6549a0d9-76e9-4289-94f9-223b8f77cbfb}</destination>
+            <destination>{dbe4c92f-66c7-4c13-8891-0de1f751244e}</destination>
+            <destination>{85969f07-e495-4b31-8f39-e9169a4e0fb7}</destination>
         </relationship>
     </object>
     <object class="MixerBusEffectChain" id="{3cbcd7b8-7b8a-45f2-8584-a1a515821d40}">
         <relationship name="effects">
             <destination>{59c6a342-ccf6-4ad4-9dc8-7977f6e9fd05}</destination>
-            <destination>{74f856a9-c45e-4779-831e-5008211f8223}</destination>
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{92dd9f52-0d0a-42a1-beb0-103fd605a07d}"/>
@@ -166,7 +167,22 @@
             <value>0</value>
         </property>
     </object>
+    <object class="AutomationPoint" id="{dbe4c92f-66c7-4c13-8891-0de1f751244e}">
+        <property name="position">
+            <value>4.0058490566037737</value>
+        </property>
+        <property name="value">
+            <value>0</value>
+        </property>
+    </object>
+    <object class="AutomationPoint" id="{85969f07-e495-4b31-8f39-e9169a4e0fb7}">
+        <property name="position">
+            <value>5.4619811320754712</value>
+        </property>
+        <property name="value">
+            <value>-80</value>
+        </property>
+    </object>
     <object class="MixerBusFader" id="{59c6a342-ccf6-4ad4-9dc8-7977f6e9fd05}"/>
-    <object class="SpatialiserEffect" id="{74f856a9-c45e-4779-831e-5008211f8223}"/>
     <object class="MixerBusFader" id="{63a56a19-c90f-40b9-b2e8-604ca998cc4d}"/>
 </objects>

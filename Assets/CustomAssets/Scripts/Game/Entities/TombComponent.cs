@@ -1,5 +1,6 @@
 ﻿
 using System.Collections;
+using Audio;
 using Game.PlayerComponents;
 using Triggers;
 using UnityEngine;
@@ -18,14 +19,16 @@ namespace Game.Entities {
 		private GameObject _ground;
 		private GameObject _groundHeap;
 		private IconMarkerComponent _icon;
+		private bool _isFinished = false;
 
 		private const float _downGroundStep = 1.0f;
 		private const float _upGroundStep = 0.6f;
 		private const float _heapStep = 0.5f;
-		private const float _upGravestoneStep = 1.5f;
+		private const float _upGravestoneStep = 1.35f;
 
 		private delegate void CoroutineAction(float t);
-		private delegate void CoroutineCallback();
+		public delegate void CoroutineCallback();
+
 		private IEnumerator GenericCoroutine(CoroutineAction f, float duration_s, CoroutineCallback callback = null) {
 			float t = 0.0f;
 			while (t < 1.0f) {
@@ -121,14 +124,35 @@ namespace Game.Entities {
 				0.5f));
 		}
 
-		public void Bury() {
+		public void MarkForFinished() {
+			_isFinished = true;
+		}
+
+		public void Bury(CoroutineCallback OnFinishedBury) {
+			Vector3 groundStart = _ground.transform.position;
+			Vector3 groundEnd = groundStart + _ground.transform.up * _upGroundStep;
+			Vector3 groundHeapStart = _groundHeap.transform.position;
+			Vector3 groundHeapEnd = groundHeapStart - _ground.transform.up * _heapStep;
+			Vector3 gravestoneStart = _gravestone.transform.position;
+			Vector3 gravestoneEnd = _gravestone.transform.position + _gravestone.transform.up * _upGravestoneStep;
+
+			Player.GetInstance().CameraController.Shake(4.0f);
+			AudioController.GetInstance().PlayRaiseTomb();
 			StartCoroutine(GenericCoroutine(
 				(t) => {
-					_ground.transform.position += _ground.transform.up * _upGroundStep;
-					_groundHeap.transform.position -= _ground.transform.up * _heapStep;
-					_gravestone.transform.position += _gravestone.transform.up * _upGravestoneStep;
+					_ground.transform.position = Vector3.Lerp(groundStart, groundEnd, t);
+					_groundHeap.transform.position = Vector3.Lerp(groundHeapStart, groundHeapEnd, t);
+					_gravestone.transform.position = Vector3.Lerp(gravestoneStart, gravestoneEnd, t);
 				}, 
-				0.5f));
+				3.0f,
+				() => {
+					if (_isFinished) {
+						Hide();
+					}
+					else {
+						OnFinishedBury();
+					}
+				}));
 		}
 
 		public void PlayerTombTransition(PlayerState newPlayerState, bool animate) {

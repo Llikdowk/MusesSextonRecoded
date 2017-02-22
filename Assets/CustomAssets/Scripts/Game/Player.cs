@@ -21,6 +21,7 @@ namespace Game.PlayerComponents {
 				return _currentState;
 			}
 			set {
+				_currentState.OnDestroy();
 				_currentState = value;
 				_currentState.RunState();
 			}
@@ -81,7 +82,8 @@ namespace Game.PlayerComponents {
 		}
 
 		public void Start() {
-			CurrentState = new WalkRunState();
+			_currentState = new WalkRunState();
+			_currentState.RunState();
 		}
 
 		public void Update() {

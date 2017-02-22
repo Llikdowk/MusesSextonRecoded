@@ -85,7 +85,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				Player.GetInstance().AddPoemVerse(_selectedVerse.FirstPersonVerse);
 				_tombComponent.AddVerse(_selectedVerse.Verse);
 				_tombComponent.PlayerTombRefocus(new BuryState(_tombComponent));
-				//Player.GetInstance().CurrentState = new BuryState(_tombComponent);
 			}
 			else {
 				poemState.CalcNextInteraction();
