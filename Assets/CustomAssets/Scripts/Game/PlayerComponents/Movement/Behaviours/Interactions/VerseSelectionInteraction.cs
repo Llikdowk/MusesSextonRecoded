@@ -78,13 +78,37 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 
+		private static int _counter = 0;
+		private const int MaxCount = 3;
 		public override void DoInteraction() {
 			PoemState poemState = ((PoemState)Player.GetInstance().CurrentState); // TODO: send in constructor
 			if (_hasHit) {
 				poemState.SetGender(_selectedVerse.Gender);
 				Player.GetInstance().AddPoemVerse(_selectedVerse.FirstPersonVerse);
 				_tombComponent.AddVerse(_selectedVerse.Verse);
-				_tombComponent.PlayerTombRefocus(new BuryState(_tombComponent));
+				_tombComponent.PlayerTombRefocus();
+
+
+				Player.GetInstance().CameraController.DisableDepthOfField(0.25f);
+				Player.GetInstance().CameraController.Unsaturate(0.0f, 1.0f);
+				Player.GetInstance().ShowShovel();
+				Player.GetInstance().AnimationEnding = () => Player.GetInstance().HideShovel();
+				if (Player.GetInstance().PlayDigAnimation()) {
+					_tombComponent.Bury(() => {
+						Player.GetInstance().CurrentState = new PoemState(_tombComponent);
+					});
+					++_counter;
+					if (_counter >= MaxCount) {
+						Player.GetInstance().AnimationEnding = () => {
+							++GameState.CoffinsBuried;
+							Player.GetInstance().CurrentState = new WalkRunState();
+							_tombComponent.MarkForFinished();
+						};
+						_counter = 0;
+					}
+				}
+
+
 			}
 			else {
 				poemState.CalcNextInteraction();

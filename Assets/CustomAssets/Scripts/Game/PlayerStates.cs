@@ -86,25 +86,6 @@ namespace Game {
 		}
 	}
 
-	
-	public class BuryState : PlayerState {
-		private readonly TombComponent _tombComponent;
-		public BuryState(TombComponent tombComponent) {
-			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
-			_tombComponent = tombComponent;
-		}
-
-		public override void RunState() {
-			_movement.MovementBehaviour.AddInteraction(new BuryInteraction(_tombComponent));
-			Player.GetInstance().ShowShovel();
-			Player.GetInstance().Look.SetScopedLook(_lookConfig.DiggingScopedLook, _transform.rotation);
-
-			Player.GetInstance().CameraController.DisableDepthOfField(0.25f);
-			Player.GetInstance().CameraController.Unsaturate(0.0f, 1.0f);
-		}
-	}
-	
-
 	public class PoemState : PlayerState {
 		public static IList<string> PlayerPoem;
 
