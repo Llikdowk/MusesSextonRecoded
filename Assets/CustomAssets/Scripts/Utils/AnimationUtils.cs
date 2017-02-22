@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Game.PlayerComponents;
 using UnityEngine;
 
 namespace Utils {
@@ -8,9 +7,16 @@ namespace Utils {
 
 	public class AnimationUtils {
 
-		public static void SlerpTowards(Transform target, Vector3 newHorizontalLookDir, float durationSecs, AnimationDelegate callback = null) {
-			SlerpAnimationComponent anim = target.gameObject.AddComponent<SlerpAnimationComponent>();
+		public static void LookTowardsHorizontal(Transform target, Vector3 newHorizontalLookDir, float durationSecs, AnimationDelegate callback = null) {
+			LookTowardsHorizontalComponent anim = target.gameObject.AddComponent<LookTowardsHorizontalComponent>();
 			anim.Init(newHorizontalLookDir, durationSecs, callback);
+			anim.Run();
+		}
+
+		public static void LookTowardsVertical(Transform target, Vector3 lookAt, float durationSecs,
+			AnimationDelegate callback = null) {
+			LookTowardsVerticalComponent anim = target.gameObject.AddComponent<LookTowardsVerticalComponent>();
+			anim.Init(lookAt, durationSecs, callback);
 			anim.Run();
 		}
 
@@ -23,7 +29,7 @@ namespace Utils {
 
 
 		private abstract class AnimationHelper : MonoBehaviour {
-			private float _durationSecs;
+			protected float _durationSecs;
 			private AnimationDelegate _callback;
 			protected float t = 0.0f;
 
@@ -52,7 +58,7 @@ namespace Utils {
 			}
 		}
 
-		private class SlerpAnimationComponent : AnimationHelper {
+		private class LookTowardsHorizontalComponent : AnimationHelper {
 			private Quaternion _horizontalRotation;
 
 			public void Init(Vector3 newHorizontalLookDir, float durationSecs, AnimationDelegate callback = null) {
@@ -62,15 +68,32 @@ namespace Utils {
 
 			public override void Run() {
 				Transform horizontal = transform;
-				Transform vertical = Player.GetInstance().Camera.transform;
 				Quaternion startHorizontal = horizontal.rotation;
-
 				ApplyCoroutine(() => {
 					horizontal.rotation = Quaternion.Slerp(startHorizontal, _horizontalRotation, t);
-					vertical.rotation *= Quaternion.AngleAxis(0.5f, Vector3.right);
 				});
 			}
+		}
 
+		private class LookTowardsVerticalComponent : AnimationHelper {
+			private float _angle = 0.0f;
+
+			public void Init(Vector3 lookAt, float durationSecs, AnimationDelegate callback = null) {
+				base.Init(durationSecs, callback);
+				Vector3 lookDir = lookAt - transform.position;
+				lookDir = new Vector3(transform.forward.x, lookDir.y, transform.forward.z);
+				float sign = Mathf.Sign(lookDir.y + transform.forward.y);
+				_angle = Vector3.Angle(transform.forward, lookDir) * sign;
+			}
+
+			public override void Run() {
+				Debug.Log(_angle);
+				ApplyCoroutine(() => {
+					float angleStep = Time.deltaTime / _durationSecs * _angle;
+					transform.rotation *= Quaternion.AngleAxis(angleStep, Vector3.right);
+				});
+				
+			}
 		}
 
 		private class MoveSmoothlyAnimationComponent : AnimationHelper {

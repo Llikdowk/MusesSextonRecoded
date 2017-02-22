@@ -108,14 +108,14 @@ namespace Game.Entities {
 			if (animate) {
 				player.PlayDigAnimation();
 			}
-			AnimationUtils.SlerpTowards(player.transform, new Vector3(1, 0, 0), 0.5f, () => {
+			AnimationUtils.LookTowardsHorizontal(player.transform, new Vector3(1, 0, 0), 0.5f, () => {
 				player.CurrentState = newPlayerState;
 			});
 		}
 
 		public void PlayerTombRefocus(PlayerState newPlayerState) {
 			Player player = Player.GetInstance();
-			AnimationUtils.SlerpTowards(player.transform, new Vector3(1, -1, 0).normalized, 0.5f, () => {
+			AnimationUtils.LookTowardsHorizontal(player.transform, new Vector3(1, -1, 0).normalized, 0.5f, () => {
 				player.CurrentState = newPlayerState;
 			});
 		}
