@@ -13,60 +13,60 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		private readonly TombComponent _tombComponent;
 		private const float _distanceFromPlayer = 10.0f;
 
-		public VerseSelectionInteraction(LandmarkVerses verses, PoemState.Gender gender, TombComponent tombComponent) {
+		public VerseSelectionInteraction(LandmarkVerses verses, PoemState.GenderEnum gender, TombComponent tombComponent) {
 			_verses = verses;
 			DisplayVerses(gender);
 			_tombComponent = tombComponent;
 		}
 
 
-		private void DisplayVerses(PoemState.Gender gender) {
+		private void DisplayVerses(PoemState.GenderEnum gender) {
 			VerseInfo[] versesText = new VerseInfo[6];
 
 			switch (gender) {
-				case PoemState.Gender.Undefined:
+				case PoemState.GenderEnum.Undefined:
 					versesText[0].Verse = _verses.Masculine[0];
-					versesText[0].Gender = PoemState.Gender.Masculine;
+					versesText[0].Gender = PoemState.GenderEnum.Masculine;
 					versesText[0].FirstPersonVerse = _verses.FirstPerson[0];
 					versesText[1].Verse = _verses.Masculine[1];
-					versesText[1].Gender = PoemState.Gender.Masculine;
+					versesText[1].Gender = PoemState.GenderEnum.Masculine;
 					versesText[1].FirstPersonVerse = _verses.FirstPerson[1];
 
 					versesText[2].Verse = _verses.Feminine[2];
-					versesText[2].Gender = PoemState.Gender.Feminine;
+					versesText[2].Gender = PoemState.GenderEnum.Feminine;
 					versesText[2].FirstPersonVerse = _verses.FirstPerson[2];
 					versesText[3].Verse = _verses.Feminine[3];
-					versesText[3].Gender = PoemState.Gender.Feminine;
+					versesText[3].Gender = PoemState.GenderEnum.Feminine;
 					versesText[3].FirstPersonVerse = _verses.FirstPerson[3];
 
 					versesText[4].Verse = _verses.Plural[4];
-					versesText[4].Gender = PoemState.Gender.Plural;
+					versesText[4].Gender = PoemState.GenderEnum.Plural;
 					versesText[4].FirstPersonVerse = _verses.FirstPerson[4];
 					versesText[5].Verse = _verses.Plural[5];
-					versesText[5].Gender = PoemState.Gender.Plural;
+					versesText[5].Gender = PoemState.GenderEnum.Plural;
 					versesText[5].FirstPersonVerse = _verses.FirstPerson[5];
 					break;
 
-				case PoemState.Gender.Masculine:
+				case PoemState.GenderEnum.Masculine:
 					for (int i = 0; i < versesText.Length; ++i) {
 						versesText[i].Verse = _verses.Masculine[i];
-						versesText[i].Gender = PoemState.Gender.Masculine;
+						versesText[i].Gender = PoemState.GenderEnum.Masculine;
 						versesText[i].FirstPersonVerse = _verses.FirstPerson[i];
 					}
 					break;
 
-				case PoemState.Gender.Feminine:
+				case PoemState.GenderEnum.Feminine:
 					for (int i = 0; i < versesText.Length; ++i) {
 						versesText[i].Verse = _verses.Feminine[i];
-						versesText[i].Gender = PoemState.Gender.Feminine;
+						versesText[i].Gender = PoemState.GenderEnum.Feminine;
 						versesText[i].FirstPersonVerse = _verses.FirstPerson[i];
 					}
 					break;
 
-				case PoemState.Gender.Plural:
+				case PoemState.GenderEnum.Plural:
 					for (int i = 0; i < versesText.Length; ++i) {
 						versesText[i].Verse = _verses.Plural[i];
-						versesText[i].Gender = PoemState.Gender.Plural;
+						versesText[i].Gender = PoemState.GenderEnum.Plural;
 						versesText[i].FirstPersonVerse = _verses.FirstPerson[i];
 					}
 					break;
@@ -83,8 +83,8 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public override void DoInteraction() {
 			PoemState poemState = ((PoemState)Player.GetInstance().CurrentState); // TODO: send in constructor
 			if (_hasHit) {
-				if (poemState.GetGender() == PoemState.Gender.Undefined) {
-					poemState.SetGender(_selectedVerse.Gender);
+				if (poemState.Gender == PoemState.GenderEnum.Undefined) {
+					poemState.Gender = _selectedVerse.Gender;
 				}
 				Player.GetInstance().AddPoemVerse(_selectedVerse.FirstPersonVerse);
 				_tombComponent.AddVerse(_selectedVerse.Verse);

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public struct VerseInfo {
 		public string Verse;
-		public PoemState.Gender Gender;
+		public PoemState.GenderEnum Gender;
 		public string FirstPersonVerse;
 	}
 

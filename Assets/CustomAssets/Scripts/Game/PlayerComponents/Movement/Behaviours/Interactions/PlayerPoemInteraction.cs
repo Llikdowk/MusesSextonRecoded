@@ -6,7 +6,7 @@ using Game.Poems;
 public class PlayerPoemInteraction : VerseSelectionInteraction {
 	private readonly VersesDisplayer _displayMeshText = VersesDisplayer.PlayerPoem;
 
-	public PlayerPoemInteraction() : base(default(LandmarkVerses), PoemState.Gender.FirstPerson, null) {
+	public PlayerPoemInteraction() : base(default(LandmarkVerses), PoemState.GenderEnum.FirstPerson, null) {
 		DisplayVerses();
 	}
 

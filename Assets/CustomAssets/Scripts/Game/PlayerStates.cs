@@ -89,17 +89,17 @@ namespace Game {
 	public class PoemState : PlayerState {
 		public static IList<string> PlayerPoem;
 
-		public enum Gender {
+		public enum GenderEnum {
 			Undefined, Masculine, Feminine, Plural, FirstPerson
 		}
 
 		private readonly TombComponent _tombComponent;
-		private Gender _gender;
+		public GenderEnum Gender;
 		private int _selectedVersesCount = 0;
 		public const int MaxVerses = 3;
 
 		public PoemState(TombComponent tombComponent) {
-			_gender = Gender.Undefined;
+			Gender = GenderEnum.Undefined;
 			_tombComponent = tombComponent;
 			AudioController.GetInstance().FadeInPercussion();
 			IconMarkerComponent.HideAll();
@@ -114,14 +114,6 @@ namespace Game {
 			Player.GetInstance().HideShovel();
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
 			SetLandmarkSelectionInteraction();
-		}
-
-		public void SetGender(Gender gender) {
-			_gender = gender;
-		}
-
-		public Gender GetGender() {
-			return _gender;
 		}
 
 		public void CalcNextInteraction() {
@@ -145,7 +137,7 @@ namespace Game {
 
 		public void SetVerseInteraction(LandmarkVerses verses) {
 			_movement.MovementBehaviour.ClearInteractions();
-			_movement.MovementBehaviour.AddInteraction(new VerseSelectionInteraction(verses, _gender, _tombComponent));
+			_movement.MovementBehaviour.AddInteraction(new VerseSelectionInteraction(verses, Gender, _tombComponent));
 
 			Player.GetInstance().CameraController.EnableDepthOfField(0.5f);
 			Player.GetInstance().Look.SetScopedLook(_lookConfig.PoemScopedLook, _transform.rotation);
