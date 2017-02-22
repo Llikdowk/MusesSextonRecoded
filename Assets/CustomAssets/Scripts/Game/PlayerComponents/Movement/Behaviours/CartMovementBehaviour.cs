@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours {
@@ -24,6 +25,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_moveBackAction = Player.GetInstance().Actions.GetAction(PlayerAction.MoveBack);
 
 			Utils.AnimationUtils.SlerpTowards(transform, transform.forward, cart.transform.forward, _cartConfig.GoInsideTimeSeconds, () => { });
+			AudioController.GetInstance().PlayCart();
 		}
 
 		public override void OnDestroy() {
@@ -31,12 +33,14 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 				c.enabled = true;
 			}
 			_moveBackAction.Enable();
+			AudioController.GetInstance().StopCart();
 		}
 
 		public override void Step() {
 			base.Step();
 
 			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().Controller.WorldMovementProcessed); // TODO clean this
+			AudioController.GetInstance().CartVolume(Mathf.Clamp(SelfMovement.magnitude, 0.0f, 0.75f));
 			_transform.position += _stepMovement;
 			_stepMovement = Vector3.zero;
 

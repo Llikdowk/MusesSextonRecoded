@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using Game;
-using Game.PlayerComponents.Movement.Behaviours;
 using UnityEngine;
 
 namespace Audio {
@@ -33,6 +30,9 @@ namespace Audio {
 		private FMODObject _bell;
 		private FMODObject _steps;
 		private FMODObject _shovel;
+		private FMODObject _pickupCoffin;
+		private FMODObject _throwCoffin;
+		private FMODObject _cart;
 
 
 		private static AudioController _instance;
@@ -62,6 +62,10 @@ namespace Audio {
 				_bell.SetParameter("Volume", Bell);
 				_steps = new FMODObject("event:/Steps");
 				_shovel = new FMODObject("event:/Shovel");
+				_pickupCoffin = new FMODObject("event:/PickupCoffin");
+				_throwCoffin = new FMODObject("event:/ThrowCoffin");
+				_cart = new FMODObject("event:/CartLoop");
+				_cart.SetParameter("Volume", 0.75f);
 			}
 			else {
 				Destroy(gameObject);
@@ -93,6 +97,26 @@ namespace Audio {
 
 		public void Unmute() {
 			FMODUnity.RuntimeManager.MuteAllEvents(false);
+		}
+
+		public void PlayPickupCoffin() {
+			_pickupCoffin.Play();
+		}
+
+		public void PlayThrowCoffin() {
+			_throwCoffin.Play();
+		}
+
+		public void CartVolume(float value) {
+			_cart.SetParameter("Volume", value);
+		}
+
+		public void PlayCart() {
+			_cart.Play();
+		}
+
+		public void StopCart() {
+			_cart.StopFading();
 		}
 
 		public void PlaySteps() {

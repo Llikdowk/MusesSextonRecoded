@@ -1,4 +1,5 @@
-﻿using MiscComponents;
+﻿using Audio;
+using MiscComponents;
 using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
@@ -25,6 +26,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				m.enabled = true;
 			}
 
+			AudioController.GetInstance().PlayThrowCoffin();
 			Player.GetInstance().CurrentState = new WalkRunState();
 		}
 

@@ -1,4 +1,5 @@
-﻿using MiscComponents;
+﻿using Audio;
+using MiscComponents;
 using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
@@ -38,6 +39,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			} else {
 				DebugMsg.ComponentNotFound(Debug.LogWarning, typeof(MarkableComponent));
 			}
+			AudioController.GetInstance().PlayPickupCoffin();
 			Player.GetInstance().CurrentState = new DragCoffinState(Coffin);
 		}
 	}

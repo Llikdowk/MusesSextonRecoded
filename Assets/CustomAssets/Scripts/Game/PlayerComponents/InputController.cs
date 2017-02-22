@@ -1,5 +1,4 @@
 ﻿using System;
-using Game.PlayerComponents;
 using UnityEngine;
 
 namespace Game.PlayerComponents {

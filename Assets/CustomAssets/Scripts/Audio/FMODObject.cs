@@ -50,11 +50,13 @@ namespace Audio {
 
 		public void StopFading() {
 			_audio.stop(STOP_MODE.ALLOWFADEOUT);
-			_audio.release();
 		}
 
 		public void StopImmediate() {
 			_audio.stop(STOP_MODE.IMMEDIATE);
+		}
+
+		public void ReleaseResource() {
 			_audio.release();
 		}
 
