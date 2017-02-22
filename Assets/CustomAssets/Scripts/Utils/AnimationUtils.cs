@@ -13,10 +13,10 @@ namespace Utils {
 			anim.Run();
 		}
 
-		public static void LookTowardsVertical(Transform target, Vector3 lookAt, float durationSecs,
+		public static void LookTowardsVertical(Transform target, Vector3 focusPoint, float durationSecs,
 			AnimationDelegate callback = null) {
 			LookTowardsVerticalComponent anim = target.gameObject.AddComponent<LookTowardsVerticalComponent>();
-			anim.Init(lookAt, durationSecs, callback);
+			anim.Init(focusPoint, durationSecs, callback);
 			anim.Run();
 		}
 
@@ -78,16 +78,15 @@ namespace Utils {
 		private class LookTowardsVerticalComponent : AnimationHelper {
 			private float _angle = 0.0f;
 
-			public void Init(Vector3 lookAt, float durationSecs, AnimationDelegate callback = null) {
+			public void Init(Vector3 focusPoint, float durationSecs, AnimationDelegate callback = null) {
 				base.Init(durationSecs, callback);
-				Vector3 lookDir = lookAt - transform.position;
-				lookDir = new Vector3(transform.forward.x, lookDir.y, transform.forward.z);
+				Vector3 lookDir = (focusPoint - transform.position).normalized;
 				float sign = Mathf.Sign(lookDir.y + transform.forward.y);
+				lookDir = new Vector3(transform.forward.x, lookDir.y, transform.forward.z);
 				_angle = Vector3.Angle(transform.forward, lookDir) * sign;
 			}
 
 			public override void Run() {
-				Debug.Log(_angle);
 				ApplyCoroutine(() => {
 					float angleStep = Time.deltaTime / _durationSecs * _angle;
 					transform.rotation *= Quaternion.AngleAxis(angleStep, Vector3.right);
