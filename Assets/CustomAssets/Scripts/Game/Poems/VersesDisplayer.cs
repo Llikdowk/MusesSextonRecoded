@@ -5,13 +5,13 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public static VersesDisplayer NormalPoem = new VersesDisplayer(6);
 		public static VersesDisplayer PlayerPoem = new VersesDisplayer(3);
 
-		public float VerticalSeparation = 1.0f;
+		public float VerticalSeparation = 1.5f;
 		public Color BaseColor = Color.white;
 		public Color BaseHighlightColor = Color.red;
 		public Color ShadowColor = Color.black;
 		public float Scale = 0.25f;
 		public int FontSize = 60;
-		public float ShadowOffset = 0.05f;
+		public float ShadowOffset = 0.4f;
 
 		private GameObject _container;
 

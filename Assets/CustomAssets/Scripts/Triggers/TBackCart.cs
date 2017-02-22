@@ -38,7 +38,7 @@ namespace Triggers {
 					}
 					if (slot) {
 						_cartInteraction = new SaveCoffinInCartInteraction(((DragCoffinState) _player.CurrentState).Coffin, slot);
-						_player.Movement.MovementBehaviour.AddInteractionWithPriority(_cartInteraction);
+						_player.CharMovement.MovementBehaviour.AddInteractionWithPriority(_cartInteraction);
 					}
 					_isChecked = true;
 				}
@@ -52,7 +52,7 @@ namespace Triggers {
 			if (other.tag != TagManager.Get(Tag.Player)) return;
 			if (_player.CurrentState.GetType() == typeof(DragCoffinState)) {
 				if (_cartInteraction != null) {
-					_player.Movement.MovementBehaviour.RemoveInteraction(_cartInteraction);
+					_player.CharMovement.MovementBehaviour.RemoveInteraction(_cartInteraction);
 				}
 			}
 			_isChecked = false;

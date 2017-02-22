@@ -34,7 +34,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				}
 			}
 
-			Debug.DrawRay(Player.GetInstance().transform.position, Player.GetInstance().Camera.transform.forward * 1000.0f, Color.cyan);
+			Debug.DrawRay(Player.GetInstance().transform.position, Player.GetInstance().MainCamera.transform.forward * 1000.0f, Color.cyan);
 			HideFeedback();
 			return null;
 		}

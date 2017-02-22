@@ -15,6 +15,7 @@ namespace Game.CameraComponents {
 			_alwaysFrontCamera.transform.localPosition = Vector3.zero;
 			_alwaysFrontCamera.transform.eulerAngles = Vector3.zero;
 			_layerMaskDrawFront = 1 << LayerMaskManager.Get(Layer.DrawFront);
+			_layerMaskDrawFront |= 1 << LayerMaskManager.Get(Layer.Verse);
 
 			_alwaysFrontCamera.CopyFrom(_mainCamera);
 			_alwaysFrontCamera.depth = Depth;

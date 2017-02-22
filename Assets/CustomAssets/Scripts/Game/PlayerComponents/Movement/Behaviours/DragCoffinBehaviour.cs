@@ -12,7 +12,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_coffin.GetComponent<Rigidbody>().isKinematic = true;
 			_coffin.GetComponent<Collider>().enabled = false;
 
-			_slot = Player.GetInstance().Camera.transform.Find("_slotCoffin");
+			_slot = Player.GetInstance().MainCamera.transform.Find("_slotCoffin");
 			if (_slot == null)
 				DebugMsg.ChildObjectNotFound(Debug.LogError, "_slotCoffin");
 			coffin.transform.parent = _slot;

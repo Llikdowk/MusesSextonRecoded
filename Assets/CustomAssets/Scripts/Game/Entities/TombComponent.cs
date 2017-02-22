@@ -111,14 +111,14 @@ namespace Game.Entities {
 			AnimationUtils.LookTowardsHorizontal(player.transform, new Vector3(1, 0, 0), 0.5f, () => {
 				player.CurrentState = newPlayerState;
 			});
-			AnimationUtils.LookTowardsVertical(player.Camera.transform, _ground.transform.position, 0.05f);
+			AnimationUtils.LookTowardsVertical(player.MainCamera.transform, _ground.transform.position, 0.05f);
 		}
 
 		public void PlayerTombRefocus(PlayerState newPlayerState) {
 			Player player = Player.GetInstance();
 			AnimationUtils.LookTowardsHorizontal(player.transform, new Vector3(1, -1, 0).normalized, 0.5f, () => {
 			});
-			AnimationUtils.LookTowardsVertical(player.Camera.transform, _gravestone.transform.position, 0.5f, () => {
+			AnimationUtils.LookTowardsVertical(player.MainCamera.transform, _gravestone.transform.position, 0.5f, () => {
 				player.CurrentState = newPlayerState;
 			});
 		}

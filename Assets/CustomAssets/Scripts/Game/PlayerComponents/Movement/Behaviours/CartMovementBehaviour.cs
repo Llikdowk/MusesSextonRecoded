@@ -25,7 +25,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 			_moveBackAction = Player.GetInstance().Actions.GetAction(PlayerAction.MoveBack);
 
 			Utils.AnimationUtils.LookTowardsHorizontal(transform, cart.transform.forward, _cartConfig.GoInsideTimeSeconds);
-			Utils.AnimationUtils.LookTowardsVertical(Player.GetInstance().Camera.transform, transform.position + cart.transform.forward, _cartConfig.GoInsideTimeSeconds);
+			Utils.AnimationUtils.LookTowardsVertical(Player.GetInstance().MainCamera.transform, transform.position + cart.transform.forward, _cartConfig.GoInsideTimeSeconds);
 			AudioController.GetInstance().PlayCart();
 		}
 
@@ -40,7 +40,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		public override void Step() {
 			base.Step();
 
-			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().Controller.WorldMovementProcessed); // TODO clean this
+			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().CharController.WorldMovementProcessed); // TODO clean this
 			AudioController.GetInstance().CartVolume(Mathf.Clamp(SelfMovement.magnitude, 0.0f, 0.75f));
 			_transform.position += _stepMovement;
 			_stepMovement = Vector3.zero;

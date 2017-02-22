@@ -11,7 +11,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		protected GameObject _selectedGameObject;
 		protected bool _hasHit;
 		private readonly TombComponent _tombComponent;
-
+		private const float _distanceFromPlayer = 10.0f;
 
 		public VerseSelectionInteraction(LandmarkVerses verses, PoemState.Gender gender, TombComponent tombComponent) {
 			_verses = verses;
@@ -74,7 +74,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 
 			Player player = Player.GetInstance();
-			_displayMeshText.Display(player.transform.position + player.transform.forward * 6.0f, player.transform.rotation, versesText); // TODO parametrice distance
+			_displayMeshText.Display(player.transform.position + player.transform.forward * _distanceFromPlayer, player.transform.rotation, versesText); // TODO parametrice distance
 		}
 
 
@@ -102,7 +102,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public override Interaction CheckForPromotion() {
-			Ray ray = new Ray(Player.GetInstance().Camera.transform.position, Player.GetInstance().Camera.transform.forward);
+			Ray ray = new Ray(Player.GetInstance().MainCamera.transform.position, Player.GetInstance().MainCamera.transform.forward);
 			RaycastHit hit;
 			Debug.DrawRay(ray.origin, ray.direction, Color.red);
 			_hasHit = Physics.SphereCast(ray, 0.05f, out hit, 1000.0f, 1 << LayerMaskManager.Get(Layer.Verse),

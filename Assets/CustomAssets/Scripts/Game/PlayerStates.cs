@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Game {
 	public abstract class PlayerState { // TODO: all states could be sotred here as static vars
 		protected PlayerState() { 
-			_movement = Player.GetInstance().Movement;
+			_movement = Player.GetInstance().CharMovement;
 			_transform = Player.GetInstance().transform;
 			_config = Player.GetInstance().Config;
 			_lookConfig = Player.GetInstance().LookConfig;
@@ -95,7 +95,9 @@ namespace Game {
 			_movement.MovementBehaviour.AddInteraction(new BuryInteraction(_tombComponent));
 			Player.GetInstance().ShowShovel();
 			Player.GetInstance().Look.SetScopedLook(_lookConfig.DiggingScopedLook, _transform.rotation);
-			
+
+			Player.GetInstance().CameraController.DisableDepthOfField(0.25f);
+			Player.GetInstance().CameraController.Unsaturate(0.0f, 1.0f);
 		}
 	}
 	
@@ -140,7 +142,9 @@ namespace Game {
 		public void SetLandmarkSelectionInteraction() {
 			_movement.MovementBehaviour.ClearInteractions();
 			_movement.MovementBehaviour.AddInteraction(new PoemLandmarkSelectionInteraction());
-			Player.GetInstance().Camera.GetComponent<UnsaturatePostEffect>().Intensity = 1.0f;
+			Player.GetInstance().CameraController.Unsaturate(1.0f, 1.0f);
+			Player.GetInstance().CameraController.DisableDepthOfField(0.5f);
+			//Player.GetInstance().MainCamera.GetComponent<UnsaturatePostEffect>().Intensity = 1.0f;
 			Player.GetInstance().Look.SetFreeLook(_lookConfig.PoemLandmarkFreeLook);
 		}
 
@@ -148,7 +152,7 @@ namespace Game {
 			_movement.MovementBehaviour.ClearInteractions();
 			_movement.MovementBehaviour.AddInteraction(new VerseSelectionInteraction(verses, _gender, _tombComponent));
 
-			Player.GetInstance().Camera.GetComponent<UnsaturatePostEffect>().Intensity = 0.0f;
+			Player.GetInstance().CameraController.EnableDepthOfField(0.5f);
 			Player.GetInstance().Look.SetScopedLook(_lookConfig.PoemScopedLook, _transform.rotation);
 		}
 	}

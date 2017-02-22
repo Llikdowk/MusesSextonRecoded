@@ -44,7 +44,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public override void DoInteraction() {
 			HideFeedback();
 
-			Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_player.transform.position, _player.Camera.transform.forward));
+			Vector3[] v = _terrainCarver.DoCarveAction(new Ray(_player.transform.position, _player.MainCamera.transform.forward));
 			Vector3 upperLeft = v[0];
 			Vector3 lowerRight = v[1];
 			upperLeft = upperLeft + new Vector3(-1, 0, 0);

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Audio;
+using Game.CameraComponents;
 using Game.Entities;
 using Game.PlayerComponents.Movement;
 using UnityEngine;
@@ -31,12 +32,13 @@ namespace Game.PlayerComponents {
 
 		// TODO: should movement be accessible from everywhere? its changes should be limited in PlayerState classes
 		// TODO: what about actions?
-		[HideInInspector] public CharacterMovement Movement;
-		[HideInInspector] public CharacterController Controller;
+		[HideInInspector] public CharacterMovement CharMovement;
+		[HideInInspector] public CharacterController CharController;
 		[HideInInspector] public Look Look;
-		[HideInInspector] public Camera Camera { get; private set; }
+		[HideInInspector] public Camera MainCamera { get; private set; }
 		[HideInInspector] public ActionManager<PlayerAction> Actions = new ActionManager<PlayerAction>();
 		[HideInInspector] public Animator Animator;
+		[HideInInspector] public CameraController CameraController;
 
 		private CapsuleCollider _collider;
 		private int _layerMaskAllButPlayer;
@@ -58,14 +60,19 @@ namespace Game.PlayerComponents {
 				_instance = this;
 				DontDestroyOnLoad(gameObject);
 
-				Movement = GetComponent<CharacterMovement>();
-				Controller = GetComponent<CharacterController>();
-				Camera = GetComponentInChildren<Camera>();
+				// TODO All of this should be GENERATED HERE instead of adquired by using GetComponent<>()
+				CharMovement = GetComponent<CharacterMovement>();
+				CharController = GetComponent<CharacterController>();
+				MainCamera = GetComponentInChildren<Camera>();
 				Animator = GetComponent<Animator>();
 				_collider = GetComponent<CapsuleCollider>();
 				_layerMaskAllButPlayer = ~(1 << LayerMaskManager.Get(Layer.Player));
 				_shovel = GetComponentInChildren<ShovelMovementComponent>();
 				Look = new Look(gameObject);
+				CameraController = gameObject.AddComponent<CameraController>();
+
+				Camera landmarkCamera = GameObject.Find("LandmarkCamera").GetComponent<Camera>();
+				CameraController.Init(MainCamera, landmarkCamera);
 			}
 			else {
 				Debug.LogWarning("Player singleton instance destroyed!");
@@ -81,6 +88,7 @@ namespace Game.PlayerComponents {
 			_isEyeSightValid = false;
 		}
 
+		// Utils
 		private Vector3 CalcFeetPosition(Vector3 position) {
 			return position + Vector3.up * (_collider.height/2.0f + _collider.radius);
 		}
@@ -106,7 +114,7 @@ namespace Game.PlayerComponents {
 
 		public bool GetEyeSight(out RaycastHit hit) {
 			if (!_isEyeSightValid) {
-				Ray ray = new Ray(Camera.transform.position, Camera.transform.forward);
+				Ray ray = new Ray(MainCamera.transform.position, MainCamera.transform.forward);
 				_hasHit = Physics.SphereCast(ray, 0.05f, out _hit, 1000.0f, _layerMaskAllButPlayer, QueryTriggerInteraction.Ignore);
 				_isEyeSightValid = true;
 			}
@@ -114,6 +122,7 @@ namespace Game.PlayerComponents {
 			return _hasHit;
 		}
 
+		// Poem Controller
 		public void AddPoemVerse(string verse) {
 			_poem.Add(verse);
 		}
@@ -127,6 +136,7 @@ namespace Game.PlayerComponents {
 		}
 
 
+		// Animation Controller
 		public bool PlayDigAnimation() {
 			const string animationName = "ShovelDig";
 			if (Animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {

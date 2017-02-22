@@ -23,7 +23,7 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 		public override void Step() {
 			base.Step();
 
-			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().Controller.WorldMovementProcessed); // TODO clean this
+			Vector3 SelfMovement = _transform.worldToLocalMatrix.MultiplyVector(Player.GetInstance().CharController.WorldMovementProcessed); // TODO clean this
 			if (SelfMovement != Vector3.zero) { 
 				AudioController.GetInstance().PlaySteps();
 			}
