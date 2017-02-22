@@ -11,7 +11,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public DriveCartInteraction(GameObject cart) {
 			_cart = cart;
 			foreach (Transform t in cart.GetComponentInChildren<Transform>()) {
-				if (t.gameObject.name == "Model") {
+				if (t.gameObject.name == "Visuals") {
 					_model = t.gameObject;
 					break;
 				}

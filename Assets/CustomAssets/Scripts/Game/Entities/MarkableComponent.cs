@@ -22,7 +22,7 @@ namespace MiscComponents {
 			_icon.Init(Icon, Color);
 			_icon.SetScaleX(Scale.x);
 			_icon.SetScaleY(Scale.y);
-			_icon.Show(StartEnabled);
+			_icon.enabled = StartEnabled;
 			enabled = StartEnabled;
 		}
 

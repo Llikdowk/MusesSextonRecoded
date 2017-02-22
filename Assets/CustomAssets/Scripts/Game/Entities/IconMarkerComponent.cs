@@ -2,8 +2,31 @@
 
 namespace Game.Entities {
 	public class IconMarkerComponent : MonoBehaviour {
+		private static readonly C5.ArrayList<IconMarkerComponent> AllVisibleMarkersInScene = new C5.ArrayList<IconMarkerComponent>();
 		private SpriteRenderer _icon;
 		private GameObject _iconGameObject;
+
+		public static void HideAll() {
+			/*
+			foreach (IconMarkerComponent item in AllVisibleMarkersInScene) {
+				item.Show(false);
+			}
+			*/
+			for (int i = AllVisibleMarkersInScene.Count - 1; i >= 0; --i) {
+				AllVisibleMarkersInScene[i].Show(false);
+			}
+		}
+
+		public static void ShowAll() {
+			/*
+			foreach (IconMarkerComponent item in AllVisibleMarkersInScene) {
+				item.Show(true);
+			}
+			*/
+			for (int i = AllVisibleMarkersInScene.Count - 1; i >= 0; --i) {
+				AllVisibleMarkersInScene[i].Show(true);
+			}
+		}
 
 		private void BaseInit() {
 			_iconGameObject = new GameObject("_marker");
@@ -38,15 +61,19 @@ namespace Game.Entities {
 		}
 
 		public void OnEnable() {
+			AllVisibleMarkersInScene.Add(this);
 			Show(true);
 		}
 
 		public void OnDisable() {
+			AllVisibleMarkersInScene.Remove(this);
 			Show(false);
 		}
 
-		public void Show(bool show) {
-			if (_icon) { _icon.enabled = show; }
+		private void Show(bool show) {
+			if (_icon) {
+				_icon.enabled = show;
+			}
 		}
 	}
 }

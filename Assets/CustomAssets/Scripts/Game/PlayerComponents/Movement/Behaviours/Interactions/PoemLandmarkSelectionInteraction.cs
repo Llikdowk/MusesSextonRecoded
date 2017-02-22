@@ -5,7 +5,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public class PoemLandmarkSelectionInteraction : Interaction {
 
 		private static readonly int _outlineLayer = LayerMaskManager.Get(Layer.Outline);
-		private static readonly int _defaultLayer = LayerMaskManager.Get(Layer.Default);
+		private static readonly int _defaultLayer = LayerMaskManager.Get(Layer.Landmark);
 		private Transform _landmarkVisuals = null;
 		private LandmarkVersesComponent _verses;
 

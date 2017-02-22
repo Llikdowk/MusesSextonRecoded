@@ -121,10 +121,12 @@ namespace Game {
 			_gender = Gender.Undefined;
 			_tombComponent = tombComponent;
 			AudioController.GetInstance().FadeInPercussion();
+			IconMarkerComponent.HideAll();
 		}
 
 		public override void OnDestroy() {
 			AudioController.GetInstance().FadeOutPercussion();
+			IconMarkerComponent.ShowAll();
 		}
 
 		public override void RunState() {
