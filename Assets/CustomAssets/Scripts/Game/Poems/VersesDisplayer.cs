@@ -69,6 +69,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				_displayMeshText[i].text = verses[i].Verse;
 				_displayMeshText[i].gameObject.AddComponent<BoxCollider>().isTrigger = true;
 				_displayMeshText[i].gameObject.GetOrAddComponent<VerseInfoComponent>().Info = verses[i];
+				_displayMeshText[i].color = BaseColor;
 				_shadowMeshText[i].text = verses[i].Verse;
 				position -= Vector3.up * VerticalSeparation;
 			}
