@@ -131,7 +131,6 @@ namespace Game {
 			_movement.MovementBehaviour.AddInteraction(new PoemLandmarkSelectionInteraction());
 			Player.GetInstance().CameraController.Unsaturate(1.0f, 1.0f);
 			Player.GetInstance().CameraController.DisableDepthOfField(0.5f);
-			//Player.GetInstance().MainCamera.GetComponent<UnsaturatePostEffect>().Intensity = 1.0f;
 			Player.GetInstance().Look.SetFreeLook(_lookConfig.PoemLandmarkFreeLook);
 		}
 

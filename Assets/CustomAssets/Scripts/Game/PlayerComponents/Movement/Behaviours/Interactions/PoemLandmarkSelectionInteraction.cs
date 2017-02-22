@@ -19,13 +19,16 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			if (Player.GetInstance().GetEyeSight(out hit)) {
 				Debug.DrawLine(Player.GetInstance().transform.position, hit.point, Color.magenta);
 				if (hit.collider.gameObject.tag == TagManager.Get(Tag.Landmark)
-					|| hit.collider.gameObject.tag == TagManager.Get(Tag.Coffin)) {
+				    || hit.collider.gameObject.tag == TagManager.Get(Tag.Coffin)) {
 					Transform current = hit.collider.transform;
 					if (!current.name.Contains("Landmark")) {
 						while (current.parent != null && !current.parent.name.Contains("Landmark")) {
 							current = current.parent;
 						}
 						if (current != null) {
+							if (_landmarkVisuals != null && current.gameObject.GetInstanceID() != _landmarkVisuals.gameObject.GetInstanceID()) {
+								HideFeedback();
+							}
 							_landmarkVisuals = current;
 							Transform landmarkParent = _landmarkVisuals.transform.parent;
 							_verses = landmarkParent.GetComponent<LandmarkVersesComponent>();
@@ -34,11 +37,17 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 						}
 					}
 					else {
+						if (_landmarkVisuals != null && current.gameObject.GetInstanceID() != _landmarkVisuals.gameObject.GetInstanceID()) {
+							HideFeedback();
+						}
 						_landmarkVisuals = current;
 						_verses = current.GetComponent<LandmarkVersesComponent>();
 						ShowFeedback();
 						return this;
 					}
+				}
+				else {
+					HideFeedback();
 				}
 			}
 

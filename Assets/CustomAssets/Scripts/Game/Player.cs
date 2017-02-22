@@ -125,13 +125,16 @@ namespace Game.PlayerComponents {
 		}
 
 		// Poem Controller
+		private int _currentTombVerses = 0;
+
 		public void AddPoemVerse(string verse) {
 			_poem.Add(verse);
 		}
 
 		public string[] GetNextTombPoem() {
-			if (GameState.CoffinsBuried < 3) {
-				string[] result = _poem.View(GameState.CoffinsBuried * PoemState.MaxVerses, PoemState.MaxVerses).ToArray();
+			if (_currentTombVerses < 3) {
+				string[] result = _poem.View(_currentTombVerses* PoemState.MaxVerses, PoemState.MaxVerses).ToArray();
+				++_currentTombVerses;
 				return result;
 			}
 			return null;

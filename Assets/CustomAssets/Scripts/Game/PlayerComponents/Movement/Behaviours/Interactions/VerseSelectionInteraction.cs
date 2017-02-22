@@ -119,11 +119,17 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public override void ShowFeedback() {
-			_selectedGameObject.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = _displayMeshText.BaseHighlightColor;
+			if (_selectedGameObject != null) {
+				_selectedGameObject.GetComponent<TextMesh>()
+					.GetComponent<Renderer>().material.color = _displayMeshText.BaseHighlightColor;
+			}
 		}
 
 		public override void HideFeedback() {
-			_selectedGameObject.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = _displayMeshText.BaseColor;
+			if (_selectedGameObject != null) {
+				_selectedGameObject.GetComponent<TextMesh>()
+					.GetComponent<Renderer>().material.color = _displayMeshText.BaseColor;
+			}
 		}
 
 		public override Interaction CheckForPromotion() {
@@ -144,6 +150,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			}
 			else {
 				HideFeedback();
+				_selectedGameObject = null;
 			}
 			return this;
 		}
