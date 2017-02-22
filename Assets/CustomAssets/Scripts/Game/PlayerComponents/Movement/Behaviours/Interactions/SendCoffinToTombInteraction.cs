@@ -20,7 +20,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public override void DoInteraction() {
 			_coffin.layer = LayerMaskManager.Get(Layer.Default);
 			AnimationUtils.MoveSmoothlyTo(_coffin.transform, _coffin.transform.position, _tomb.transform.position - Vector3.up*1.5f, 0.5f);
-			AnimationUtils.SlerpTowards(_coffin.transform, _coffin.transform.forward, _tomb.transform.right, 0.5f, () => {
+			AnimationUtils.SlerpTowards(_coffin.transform, _tomb.transform.right, 0.5f, () => {
 				_coffin.transform.parent = _tomb.transform;
 			});
 			_tombComponent.PlayerTombTransition(new PoemState(_tombComponent), false);

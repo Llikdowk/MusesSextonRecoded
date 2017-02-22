@@ -26,7 +26,6 @@ public class LoadComponents : MonoBehaviour {
 		TitleImage.enabled = true;
 		FallbackImage.gameObject.SetActive(true);
 		FallbackImage.enabled = true;
-		AudioController.GetInstance().FadeInWind();
 	}
 
 	public void Update() {
@@ -40,17 +39,6 @@ public class LoadComponents : MonoBehaviour {
 				FallbackImage.gameObject.SetActive(false);
 				Time.timeScale = _originalTimeScale;
 			}));
-			
-			/*
-			AudioController.GetInstance().FadeInMusic1(
-				()=>AudioController.GetInstance().FadeInMusic2(
-					() => AudioController.GetInstance().FadeInMusic3(
-						() => AudioController.GetInstance().FadeInPercussion()
-					)
-				)
-			);
-			*/
-			
 		}
 		else {
 			if (Input.GetKeyDown(KeyCode.Mouse0)) {
@@ -60,6 +48,7 @@ public class LoadComponents : MonoBehaviour {
 				}));
 				FallbackImage.gameObject.SetActive(true);
 				AudioController.GetInstance().PlayBell();
+				AudioController.GetInstance().FadeInWind();
 			}
 		}
 	}

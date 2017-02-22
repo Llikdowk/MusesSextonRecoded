@@ -15,9 +15,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				_tombComponent.Bury();
 				++_counter;
 				Player.GetInstance().AnimationEnding = () => {
-					//++GameState.CoffinsBuried;
 					Player.GetInstance().CurrentState = new PoemState(_tombComponent);
-					//_tombComponent.Hide();
 				};
 				if (_counter >= MaxCount) {
 					Player.GetInstance().AnimationEnding = () => {
