@@ -21,7 +21,7 @@ namespace Audio {
 		[Range(0, 1)] public float Bell = 0.0f;
 
 		[Range(0, 1)] public float StepsSpeed = 0.0f;
-		[Range(0, 1)] public float StepsVolume = 0.5f;
+		[Range(0, 1)] public float StepsVolume = 0.65f;
 
 		public bool IsMuted;
 
@@ -140,9 +140,11 @@ namespace Audio {
 			if (IsMuted) return;
 			if (StepsSpeed == 0.0f) return;
 			if (_steps.IsPlaying()) {
+				/*
 				if (_steps.GetNormalizedTimelinePosition() >= 1 - StepsSpeed) {
 					_steps.Play();
 				}
+				*/
 			}
 			else {
 				_steps.Play();

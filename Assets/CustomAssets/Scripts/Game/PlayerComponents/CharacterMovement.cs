@@ -25,17 +25,13 @@ namespace Game.PlayerComponents {
 		public Vector3 SelfDir { get { return _movementBehaviour.SelfDir; } }
 		public Vector3 WorldDir { get { return _movementBehaviour.WorldDir; } }
 		private bool _canInteract = true;
- 
+
 		public void Awake() {
-			_movementBehaviour = new NullMovementBehaviour(transform);
+			_movementBehaviour = new NullMovementBehaviour();
 		}
-
-		public void Start() {
-		}
-
+ 
 		public void Update() {
 			_movementBehaviour.Step();
-
 		}
 
 	}

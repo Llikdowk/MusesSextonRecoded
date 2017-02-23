@@ -89,7 +89,7 @@ namespace Game {
 		}
 
 		public override void RunState() {
-			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			_movement.MovementBehaviour = new NullMovementBehaviour();
 			_movement.MovementBehaviour.AddInteraction(new DigInteraction(_tombComponent));
 			Player.GetInstance().ShowShovel();
 			Player.GetInstance().Look.SetScopedLook(_lookConfig.DiggingScopedLook, _transform.rotation);
@@ -123,7 +123,7 @@ namespace Game {
 
 		public override void RunState() {
 			Player.GetInstance().HideShovel();
-			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			_movement.MovementBehaviour = new NullMovementBehaviour();
 			SetLandmarkSelectionInteraction();
 		}
 
@@ -158,7 +158,7 @@ namespace Game {
 			Player.GetInstance().HideShovel();
 			Player.GetInstance().Look.SetScopedLook(_lookConfig.PoemScopedLook, Player.GetInstance().MainCamera.transform.rotation);
 			Player.GetInstance().CameraController.EnableDepthOfField(0.5f);
-			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
+			_movement.MovementBehaviour = new NullMovementBehaviour();
 			_movement.MovementBehaviour.AddInteraction(new PlayerPoemInteraction());
 		}
 	}

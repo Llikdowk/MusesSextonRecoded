@@ -30,7 +30,7 @@ MonoBehaviour:
   - {fileID: 114899279028256008}
   MasterBankRef: {fileID: 114055672616821706}
   StringsBankRef: {fileID: 114190188123820046}
-  stringsBankWriteTime: 636234534087222477
+  stringsBankWriteTime: 636234827197901814
   cacheVersion: 2
 --- !u!114 &114010418673977386
 MonoBehaviour:
@@ -315,11 +315,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: D:\WORKSPACE\Unity Projects\MusesSextonRecoded\FMODProject\MusesSexton\Build\Desktop\Master
     Bank.bank
-  lastModified: 636234534087182438
+  lastModified: 636234827197861770
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 6368992
+    Value: 6368224
   Exists: 1
 --- !u!114 &114055801391498148
 MonoBehaviour:
@@ -702,6 +702,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114132831762463496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Volume
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114132946487655686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -781,10 +796,10 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114150371690432678}
-  - {fileID: 114973420790702662}
-  - {fileID: 114159987333233042}
-  - {fileID: 114251431073009048}
+  - {fileID: 114672006974203368}
+  - {fileID: 114534057713615528}
+  - {fileID: 114390423210856646}
+  - {fileID: 114710422335998958}
   MinDistance: 0
   MaxDistance: 0
 --- !u!114 &114159400273237984
@@ -1005,7 +1020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: FMODProject\MusesSexton\Build\Desktop\Master Bank.strings.bank
-  lastModified: 636234534087222477
+  lastModified: 636234827197901814
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -1443,6 +1458,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114291539801804000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Volume
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114302697657635408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1824,6 +1854,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114390423210856646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Music3
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114399325087676482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2001,6 +2046,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Music1
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &114437568764698246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Volume
   Min: 0
   Max: 1
   Default: 0
@@ -2280,6 +2340,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114534057713615528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Music2
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114536845237246280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2499,7 +2574,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114838475935951728}
+  - {fileID: 114786195786691548}
   MinDistance: 0
   MaxDistance: 0
 --- !u!114 &114613758138803446
@@ -2713,6 +2788,21 @@ MonoBehaviour:
   Max: 1
   Default: 0
 --- !u!114 &114666162316279868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Percussion
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &114672006974203368
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -2967,6 +3057,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114710422335998958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Music1
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114712110501233252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3001,7 +3106,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 114734410758841962}
+  - {fileID: 114437568764698246}
   MinDistance: 0
   MaxDistance: 0
 --- !u!114 &114714606411436152
@@ -3290,6 +3395,21 @@ MonoBehaviour:
   Max: 1
   Default: 0
 --- !u!114 &114780722707072090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Volume
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &114786195786691548
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -3935,7 +4055,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 114796033483883100}
+  - {fileID: 114291539801804000}
   MinDistance: 0
   MaxDistance: 0
 --- !u!114 &114930023331935976
@@ -4017,7 +4137,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114726452745835736}
+  - {fileID: 114132831762463496}
   MinDistance: 0
   MaxDistance: 0
 --- !u!114 &114934174691916306

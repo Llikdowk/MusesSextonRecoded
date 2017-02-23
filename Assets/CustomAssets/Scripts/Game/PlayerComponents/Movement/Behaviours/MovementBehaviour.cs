@@ -8,10 +8,10 @@ namespace Game.PlayerComponents.Movement.Behaviours {
 
 		public Vector3 StepMovement { get { return _stepMovement; } }
 		protected Vector3 _stepMovement;
-		public Vector3 SelfMovement { get { return _movement.SelfMovement; } }
-		public Vector3 WorldMovement { get { return _transform.localToWorldMatrix.MultiplyVector(_movement.SelfMovement); } }
-		public Vector3 SelfDir { get { return _movement.SelfMovement.normalized; } }
-		public Vector3 WorldDir { get { return _transform.localToWorldMatrix.MultiplyVector(SelfDir); } }
+		public virtual Vector3 SelfMovement { get { return _movement.SelfMovement; } }
+		public virtual Vector3 WorldMovement { get { return _transform.localToWorldMatrix.MultiplyVector(_movement.SelfMovement); } }
+		public virtual Vector3 SelfDir { get { return _movement.SelfMovement.normalized; } }
+		public virtual Vector3 WorldDir { get { return _transform.localToWorldMatrix.MultiplyVector(SelfDir); } }
 
 		public bool CanInteract = true;
 		public Interaction CurrentInteraction = new EmptyInteraction();

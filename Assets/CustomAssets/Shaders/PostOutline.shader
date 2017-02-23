@@ -19,7 +19,7 @@ Shader "Custom/PostOutline"
      
             sampler2D _MainTex;
 			half4 _Color;
-			half _Thickness;
+			int _Thickness;
  
             //<SamplerName>_TexelSize is a float2 that says how much screen space a texel occupies.
             float2 _MainTex_TexelSize;
@@ -51,8 +51,8 @@ Shader "Custom/PostOutline"
                     discard;
                 }
                 half ColorIntensityInRadius = 0.0f;
-                for(half i = -_Thickness/2.0; i < _Thickness/2.0; ++i) {
-                    for(half j = -_Thickness/2.0; j < _Thickness/2.0; ++j) {
+                for(int i = -_Thickness/2; i < _Thickness/2; ++i) {
+                    for(int j = -_Thickness/2; j < _Thickness/2; ++j) {
                         ColorIntensityInRadius += 
                             tex2D(_MainTex, input.uv + float2(i*_MainTex_TexelSize.x, j*_MainTex_TexelSize.y)).r; // Potential performance issue: lots of lookups
                     }
