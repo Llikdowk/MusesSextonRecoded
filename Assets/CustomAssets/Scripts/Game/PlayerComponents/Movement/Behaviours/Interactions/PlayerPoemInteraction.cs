@@ -1,3 +1,4 @@
+using Audio;
 using Game;
 using Game.Entities;
 using Game.PlayerComponents;
@@ -36,8 +37,8 @@ public class PlayerPoemInteraction : Interaction {
 
 	public override void DoInteraction() {
 		if (_hasHit) {
+			AudioController.GetInstance().PlayTone();
 			DisplayVerses();
-			// TODO raiseTomb
 			_finalTombstone.GetComponent<TombComponent>().AddVerse(_selectedVerse.Verse);
 			_finalTombstone.transform.position += _finalTombstone.transform.up * 1.2f; // TODO! use GravestoneComponent.RaiseGravestone();
 		}

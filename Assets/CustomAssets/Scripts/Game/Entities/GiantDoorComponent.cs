@@ -1,11 +1,12 @@
 ﻿
 using System.Collections;
+using Audio;
 using UnityEngine;
 
 namespace Game.Entities {
 	public class GiantDoorComponent : MonoBehaviour {
 
-		public float Duration_s = 4.5f;
+		private float duration_s = 7.5f;
 		private GameObject _leftDoor;
 		private GameObject _rightDoor;
 
@@ -16,6 +17,7 @@ namespace Game.Entities {
 
 
 		public void Open() {
+			AudioController.GetInstance().PlayDoor();
 			StartCoroutine(DoOpen());
 		}
 
@@ -23,9 +25,9 @@ namespace Game.Entities {
 		private IEnumerator DoOpen() {
 			float t = 0.0f;
 			while (t < 1.0f) {
-				t += Time.deltaTime / Duration_s;
-				_leftDoor.transform.Rotate(Vector3.up, 0.1f);
-				_rightDoor.transform.Rotate(Vector3.up, -0.1f);
+				t += Time.deltaTime / duration_s;
+				_leftDoor.transform.Rotate(Vector3.up, 0.075f);
+				_rightDoor.transform.Rotate(Vector3.up, -0.075f);
 				yield return null;
 			}
 		}

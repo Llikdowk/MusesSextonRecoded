@@ -130,7 +130,7 @@ namespace Game {
 			_movement.MovementBehaviour.AddInteraction(new VerseSelectionInteraction(verses, Gender, _tombComponent));
 
 			Player.GetInstance().CameraController.EnableDepthOfField(0.5f);
-			Player.GetInstance().Look.SetScopedLook(_lookConfig.PoemScopedLook, _transform.rotation);
+			Player.GetInstance().Look.SetScopedLook(_lookConfig.PoemScopedLook, Player.GetInstance().MainCamera.transform.rotation);
 		}
 	}
 

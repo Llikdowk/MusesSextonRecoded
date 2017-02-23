@@ -75,7 +75,8 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 
 			Player player = Player.GetInstance();
-			_displayMeshText.Display(player.transform.position + player.transform.forward * _distanceFromPlayer, player.transform.rotation, versesText); // TODO parametrice distance
+			_displayMeshText.Display(player.MainCamera.transform.position + player.MainCamera.transform.forward * _distanceFromPlayer,
+				player.MainCamera.transform.rotation, versesText); // TODO parametrice distance
 		}
 
 

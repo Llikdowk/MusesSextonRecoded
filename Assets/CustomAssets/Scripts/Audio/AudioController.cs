@@ -35,6 +35,7 @@ namespace Audio {
 		private FMODObject _cart;
 		private FMODObject _raiseTomb;
 		private FMODObject _tones;
+		private FMODObject _door;
 
 		private static AudioController _instance;
 
@@ -69,6 +70,7 @@ namespace Audio {
 				_cart.SetParameter("Volume", 0.75f);
 				_raiseTomb = new FMODObject("event:/RaiseTomb");
 				_tones = new FMODObject("event:/Tones");
+				_door = new FMODObject("event:/GiantDoor");
 			}
 			else {
 				Destroy(gameObject);
@@ -129,6 +131,10 @@ namespace Audio {
 
 		public void PlayTone() {
 			_tones.Play();
+		}
+
+		public void PlayDoor() {
+			_door.Play();
 		}
 
 		public void PlaySteps() {

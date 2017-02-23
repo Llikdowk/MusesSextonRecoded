@@ -5,7 +5,7 @@
             <value>GiantDoor</value>
         </property>
         <property name="outputFormat">
-            <value>2</value>
+            <value>1</value>
         </property>
         <relationship name="folder">
             <destination>{3c366c63-b7f2-4200-b61a-c6a1a0ee94a4}</destination>
@@ -113,7 +113,6 @@
     <object class="MixerBusEffectChain" id="{5aee4ddb-6e63-4f2a-9f6d-76821cd599cc}">
         <relationship name="effects">
             <destination>{7723c55f-81e8-4a4c-a8c9-e7c924f8c592}</destination>
-            <destination>{de766a3f-5a4d-4fc2-b38f-b6358ac89941}</destination>
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{6963cb15-2c03-4391-b07f-626dc09c629f}"/>
@@ -125,6 +124,5 @@
     </object>
     <object class="MixerBusPanner" id="{b5204139-f72b-4269-b6ee-88a30d1dd065}"/>
     <object class="MixerBusFader" id="{7723c55f-81e8-4a4c-a8c9-e7c924f8c592}"/>
-    <object class="SpatialiserEffect" id="{de766a3f-5a4d-4fc2-b38f-b6358ac89941}"/>
     <object class="MixerBusFader" id="{c2c67224-aee1-478e-97f3-c9b96a0ddf46}"/>
 </objects>
