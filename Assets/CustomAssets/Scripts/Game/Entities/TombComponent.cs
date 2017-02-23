@@ -147,6 +147,7 @@ namespace Game.Entities {
 				3.0f,
 				() => {
 					if (_isFinished) {
+						AudioController.GetInstance().PlayBell();
 						Hide();
 					}
 					else {

@@ -8,7 +8,6 @@ namespace Game {
 			set {
 				_coffinsBuried = value;
 				if (_coffinsBuried == 3) {
-					Debug.Log("OPEN GIANT DOOR");
 					GameObject.Find("LandmarkGIANTDOOR").GetComponent<GiantDoorComponent>().Open();
 				}
 			}

@@ -7,24 +7,18 @@ namespace Game.Entities {
 		private GameObject _iconGameObject;
 
 		public static void HideAll() {
-			/*
-			foreach (IconMarkerComponent item in AllVisibleMarkersInScene) {
-				item.Show(false);
-			}
-			*/
 			for (int i = AllVisibleMarkersInScene.Count - 1; i >= 0; --i) {
-				AllVisibleMarkersInScene[i].Show(false);
+				if (AllVisibleMarkersInScene[i].gameObject.activeSelf) {
+					AllVisibleMarkersInScene[i].Show(false);
+				}
 			}
 		}
 
 		public static void ShowAll() {
-			/*
-			foreach (IconMarkerComponent item in AllVisibleMarkersInScene) {
-				item.Show(true);
-			}
-			*/
 			for (int i = AllVisibleMarkersInScene.Count - 1; i >= 0; --i) {
-				AllVisibleMarkersInScene[i].Show(true);
+				if (AllVisibleMarkersInScene[i].gameObject.activeSelf) {
+					AllVisibleMarkersInScene[i].Show(true);
+				}
 			}
 		}
 

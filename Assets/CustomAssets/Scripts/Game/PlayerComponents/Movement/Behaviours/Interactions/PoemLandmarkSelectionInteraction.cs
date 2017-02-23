@@ -1,3 +1,4 @@
+using Audio;
 using Game.Poems;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		private LandmarkVersesComponent _verses;
 
 		public override void DoInteraction() {
+			AudioController.GetInstance().PlayTone();
 			((PoemState)Player.GetInstance().CurrentState).SetVerseInteraction(_verses.LandmarkVerses);
 
 		}

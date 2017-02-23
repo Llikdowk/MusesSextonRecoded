@@ -1,4 +1,5 @@
-﻿using Game.Entities;
+﻿using Audio;
+using Game.Entities;
 using Game.Poems;
 using UnityEngine;
 
@@ -84,6 +85,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public override void DoInteraction() {
 			PoemState poemState = ((PoemState)Player.GetInstance().CurrentState); // TODO: send in constructor
 			if (_hasHit) {
+				AudioController.GetInstance().PlayTone();
 				if (poemState.Gender == PoemState.GenderEnum.Undefined) {
 					poemState.Gender = _selectedVerse.Gender;
 				}
