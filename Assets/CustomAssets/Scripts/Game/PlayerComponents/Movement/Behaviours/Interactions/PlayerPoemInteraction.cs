@@ -3,7 +3,6 @@ using Game;
 using Game.Entities;
 using Game.PlayerComponents;
 using Game.PlayerComponents.Movement.Behaviours.Interactions;
-using Game.Poems;
 using UnityEngine;
 
 public class PlayerPoemInteraction : Interaction {

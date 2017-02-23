@@ -13,11 +13,13 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		protected bool _hasHit;
 		private readonly TombComponent _tombComponent;
 		private const float _distanceFromPlayer = 10.0f;
+		private readonly PoemState _poemState;
 
 		public VerseSelectionInteraction(LandmarkVerses verses, PoemState.GenderEnum gender, TombComponent tombComponent) {
 			_verses = verses;
-			DisplayVerses(gender);
 			_tombComponent = tombComponent;
+			_poemState = ((PoemState)Player.GetInstance().CurrentState); // TODO: send in constructor
+			DisplayVerses(gender);
 		}
 
 
@@ -84,11 +86,10 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		private const int MaxCount = 3;
 		private bool _animationRunning = false;
 		public override void DoInteraction() {
-			PoemState poemState = ((PoemState)Player.GetInstance().CurrentState); // TODO: send in constructor
-			if (_hasHit) {
+			if (_selectedVerse.Verse != null) {
 				AudioController.GetInstance().PlayTone();
-				if (poemState.Gender == PoemState.GenderEnum.Undefined) {
-					poemState.Gender = _selectedVerse.Gender;
+				if (_poemState.Gender == PoemState.GenderEnum.Undefined) {
+					_poemState.Gender = _selectedVerse.Gender;
 				}
 				Player.GetInstance().AddPoemVerse(_selectedVerse.FirstPersonVerse);
 				_tombComponent.AddVerse(_selectedVerse.Verse);
@@ -102,7 +103,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				if (Player.GetInstance().PlayDigAnimation()) {
 					_animationRunning = true;
 					_tombComponent.Bury(() => {
-						poemState.SetLandmarkSelectionInteraction();
+						_poemState.SetLandmarkSelectionInteraction();
 						_animationRunning = false;
 					});
 					++VersesChosen;
@@ -116,12 +117,15 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 					}
 				}
 			}
+
 			else {
 				if (!_animationRunning) {
-					poemState.SetLandmarkSelectionInteraction();
+					_poemState.SetLandmarkSelectionInteraction();
 				}
 			}
 			_displayMeshText.HideSmooth();
+			_selectedGameObject = null;
+			_selectedVerse.Verse = null;
 		}
 
 		public override void ShowFeedback() {
@@ -160,6 +164,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			else {
 				HideFeedback();
 				_selectedGameObject = null;
+				_selectedVerse.Verse = null;
 			}
 			return this;
 		}

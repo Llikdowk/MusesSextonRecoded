@@ -60,12 +60,15 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public void Display(Vector3 position, Quaternion rotation, VerseInfo[] verses) {
+
 			_container.transform.position = position;
 			_container.transform.rotation = rotation;
 			Vector3 upperPosition =  Vector3.up * 2.5f * VerticalSeparation;
 			position = upperPosition;
 			for (int i = 0; i < _displayMeshText.Length; ++i) {
 				_displayMeshText[i].gameObject.SetActive(true);
+				Collider c = _displayMeshText[i].gameObject.GetComponent<BoxCollider>();
+				if (c != null) Object.Destroy(c);
 				_displayMeshText[i].gameObject.transform.localPosition = position;
 				_displayMeshText[i].text = verses[i].Verse;
 				_displayMeshText[i].gameObject.GetOrAddComponent<VerseInfoComponent>().Info = verses[i];
@@ -84,9 +87,10 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		public void HideSmooth() {
 			for (int i = 0; i < _displayMeshText.Length; ++i) {
-				if (!_displayMeshText[i].gameObject.activeSelf) continue;
 				Object.Destroy(_displayMeshText[i].gameObject.GetComponent<BoxCollider>());
-				_displayMeshText[i].GetComponent<SmoothTextTransitionComponent>().RunHide(0.5f, i*0.1f);
+				if (_displayMeshText[i].gameObject.activeSelf) {
+					_displayMeshText[i].GetComponent<SmoothTextTransitionComponent>().RunHide(0.5f, i * 0.1f);
+				}
 			}
 		}
 
@@ -150,7 +154,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 					t += Time.deltaTime / duration_s;
 					yield return null;
 				}
-				_displayText.gameObject.AddComponent<BoxCollider>().isTrigger = true;
+				_displayText.gameObject.AddComponent<BoxCollider>().isTrigger = true; // this is necessary as the collider will fit its size when created
 			}
 
 			private IEnumerator SmoothHide(float duration_s, float delay_s) {

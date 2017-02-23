@@ -85,8 +85,8 @@ namespace Audio {
 		}
 
 		public void Update() {
-		#if UNITY_EDITOR
 			_steps.SetParameter("Volume", StepsVolume);
+		#if UNITY_EDITOR
 			if (IsMuted) {
 				Mute();
 			}
@@ -137,14 +137,11 @@ namespace Audio {
 		}
 
 		public void PlaySteps() {
-			if (IsMuted) return;
 			if (StepsSpeed == 0.0f) return;
 			if (_steps.IsPlaying()) {
-				/*
 				if (_steps.GetNormalizedTimelinePosition() >= 1 - StepsSpeed) {
 					_steps.Play();
 				}
-				*/
 			}
 			else {
 				_steps.Play();

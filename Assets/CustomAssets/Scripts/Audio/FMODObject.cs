@@ -37,6 +37,7 @@ namespace Audio {
 		}
 
 		public void Play() {
+			StopImmediate();
 			_audio.start();
 		}
 
