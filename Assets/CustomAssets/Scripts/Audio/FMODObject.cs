@@ -56,7 +56,7 @@ namespace Audio {
 			_audio.stop(STOP_MODE.IMMEDIATE);
 		}
 
-		public void ReleaseResource() {
+		public void Release() {
 			_audio.release();
 		}
 

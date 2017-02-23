@@ -20,8 +20,8 @@ namespace Game.Poems {
 		//     well
 
 		public void Awake() {
-			string jsonText = System.IO.File.ReadAllText("Assets/Resources/poems.json");
-			LandmarkVerses[] verses = JsonConvert.DeserializeObject<LandmarkVerses[]>(jsonText);
+			TextAsset jsonText = Resources.Load<TextAsset>("poems");
+			LandmarkVerses[] verses = JsonConvert.DeserializeObject<LandmarkVerses[]>(jsonText.text);
 			foreach (Transform child in gameObject.GetComponentsInChildren<Transform>()) {
 				foreach (LandmarkVerses v in verses) {
 					if (child.name.Contains(v.LandmarkName)) {

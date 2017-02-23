@@ -60,7 +60,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public void Display(Vector3 position, Quaternion rotation, VerseInfo[] verses) {
-			Debug.Log("called for display");
 			_container.transform.position = position;
 			_container.transform.rotation = rotation;
 			Vector3 upperPosition =  Vector3.up * 2.5f * VerticalSeparation;

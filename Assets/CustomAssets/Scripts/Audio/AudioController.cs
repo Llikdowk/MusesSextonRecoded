@@ -78,19 +78,6 @@ namespace Audio {
 
 		}
 
-		public void OnDestroy() {
-			_music.ReleaseResource();
-			_wind.ReleaseResource();
-			_bell.ReleaseResource();
-			_steps.ReleaseResource();
-			_shovel.ReleaseResource();
-			_pickupCoffin.ReleaseResource();
-			_cart.ReleaseResource();
-			_raiseTomb.ReleaseResource();
-			_tones.ReleaseResource();
-			_door.ReleaseResource();
-		}
-
 		public void Start() {
 			if (IsMuted) {
 				Mute();
@@ -138,7 +125,6 @@ namespace Audio {
 		}
 
 		public void PlayRaiseTomb() {
-			Debug.Log("play raise tomb!");
 			_raiseTomb.Play();
 		}
 
