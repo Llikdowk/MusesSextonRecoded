@@ -1,7 +1,6 @@
 ﻿using Audio;
 using UnityEngine;
 using Cubiquity;
-using UnityEditor.Animations;
 using UnityEngine.UI;
 using Utils;
 
@@ -35,18 +34,22 @@ public class LoadComponents : MonoBehaviour {
 				child.tag = terrainTag;
 			}
 			enabled = false;
-			StartCoroutine(UIUtils.FadeOut(FallbackImage, 0.5f, () => {
+
+			UIGame.GetInstance().FadeOut(FallbackImage, 0.5f, () => {
 				FallbackImage.gameObject.SetActive(false);
 				Time.timeScale = _originalTimeScale;
-			}));
+			});
+
 		}
 		else {
 			if (Input.GetKeyDown(KeyCode.Mouse0)) {
 				_hasClicked = true;
-				StartCoroutine(UIUtils.FadeOut(TitleImage, 3.0f, () => {
+
+				UIGame.GetInstance().FadeOut(TitleImage, 3.0f, () => {
 					TitleImage.gameObject.SetActive(false);
-				}));
+				});
 				FallbackImage.gameObject.SetActive(true);
+
 				AudioController.GetInstance().PlayBell();
 				AudioController.GetInstance().FadeInWind();
 			}

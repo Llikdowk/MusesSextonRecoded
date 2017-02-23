@@ -4,12 +4,12 @@ using UnityEngine.UI;
 
 namespace Utils {
 
-	public class UIGame : MonoBehaviour {
-		public delegate void UIAction();
-
+	public class UIGame : CoroutineBase {
 		private static UIGame _instance = null;
-		private GameObject Crosshair;
-		private Image BlackImage;
+
+		private Transform _canvas;
+		private GameObject _crosshair;
+		private Image _blackImage;
 
 		public static UIGame GetInstance() {
 			return _instance;
@@ -18,11 +18,22 @@ namespace Utils {
 		public void Awake() {
 			if (_instance == null) {
 				_instance = this;
-				foreach (Transform child in transform.GetComponentsInChildren<Transform>()) {
+				_canvas = transform.FindChild("Canvas");
+				if (!_canvas) {
+					DebugMsg.GameObjectNotFound(Debug.LogError, "Canvas");
+				}
+
+				foreach (Transform child in _canvas.transform.GetComponentsInChildren<Transform>()) {
 					if (child.name.Equals("Crosshair")) {
-						Crosshair = child.gameObject;
+						_crosshair = child.gameObject;
 					}
 				}
+				GameObject black = new GameObject("_blackImage");
+				black.transform.parent = _canvas.transform;
+				black.transform.LocalReset();
+				_blackImage = black.AddComponent<Image>();
+				_blackImage.color = new Color(0,0,0,0);
+				_blackImage.enabled = false;
 				DontDestroyOnLoad(this);
 			} else {
 				Destroy(gameObject);
@@ -30,21 +41,38 @@ namespace Utils {
 		}
 
 		public void ShowCrosshair(bool enabled) {
-			Crosshair.SetActive(enabled);
+			_crosshair.SetActive(enabled);
 		}
 
-		public void FadeInLoadingScreen() {
-			
+		public void FadeOut(Image image, float duration_s, CoroutineCallback callback = null) {
+			Color start = image.color;
+			Color end = image.color * new Color(1, 1, 1, 0);
+			StartCoroutineNoTimescaled(duration_s,
+				(t) => {
+					image.color = Color.Lerp(start, end, t);
+				}, 
+				callback
+			);
 		}
 
-		public void FadeOutLoadingScreen() {
-			
+		public void FadeIn(Image image, float duration_s, CoroutineCallback callback = null) {
+			Color start = image.color;
+			Color end = image.color * new Color(1, 1, 1, 1);
+			StartCoroutineNoTimescaled(duration_s,
+				(t) => {
+					image.color = Color.Lerp(start, end, t);
+				}, 
+				callback
+			);
 		}
 
-		public void FadeToBlack(float duration_s, UIAction callback) {
-			//BlackImage.enabled = true;
-			//BlackImage.color = Color.black;
-			Debug.Log("fade to black!");
+		public void FadeToBlack(float duration_s, CoroutineCallback callback = null) {
+			_blackImage.color = new Color(0,0,0,0);
+			FadeIn(_blackImage, duration_s, callback);
+		}
+		public void FadeFromBlack(float duration_s, CoroutineCallback callback = null) {
+			_blackImage.color = new Color(0,0,0,1);
+			FadeOut(_blackImage, duration_s, callback);
 		}
 
 	}
