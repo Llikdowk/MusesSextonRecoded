@@ -35,7 +35,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		public override void HideFeedback() {
 			_mark.enabled = true;
 			foreach (MeshRenderer r in _model.GetComponentsInChildren<MeshRenderer>()) {
-				r.gameObject.layer = LayerMaskManager.Get(Layer.Default);
+				r.gameObject.layer = LayerMaskManager.Get(Layer.Landmark);
 			}
 		}
 

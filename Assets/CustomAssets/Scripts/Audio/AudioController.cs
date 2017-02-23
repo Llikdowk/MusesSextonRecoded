@@ -196,6 +196,14 @@ namespace Audio {
 			StartCoroutine(Fade(_music, "Percussion", 0.0f, PercussionFadeTime));
 		}
 
+		public void FadeOutMusic1(float fadeOutTime_s, AudioAction f = null) {
+			StartCoroutine(Fade(_music, "Music1", 0.0f, fadeOutTime_s, f));
+		}
+
+		public void FadeOutMusic2(float fadeOutTime_s, AudioAction f = null) {
+			StartCoroutine(Fade(_music, "Music2", 0.0f, fadeOutTime_s, f));
+		}
+
 		private IEnumerator Fade(FMODObject audio, string paramName, float endVolume, float duration_s, AudioAction f = null) {
 			float t = 0.0f;
 			float originalVolume = audio.GetParameter(paramName);

@@ -84,9 +84,9 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		public void Hide() {
 			for (int i = 0; i < _displayMeshText.Length; ++i) {
+				if (!_displayMeshText[i].gameObject.activeSelf) continue;
 				Object.Destroy(_displayMeshText[i].gameObject.GetComponent<BoxCollider>());
 				_displayMeshText[i].GetComponent<SmoothTextTransitionComponent>().RunHide(0.5f, i*0.1f);
-				//_displayMeshText[i].gameObject.SetActive(false);
 			}
 			
 		}

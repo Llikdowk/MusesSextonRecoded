@@ -1,5 +1,8 @@
-﻿using Game.Entities;
+﻿using Audio;
+using Game.Entities;
+using Game.PlayerComponents;
 using UnityEngine;
+using Utils;
 
 namespace Game {
 	public class GameState {
@@ -8,7 +11,15 @@ namespace Game {
 			set {
 				_coffinsBuried = value;
 				if (_coffinsBuried == 3) {
-					GameObject.Find("LandmarkGIANTDOOR").GetComponent<GiantDoorComponent>().Open();
+					AudioController.GetInstance().FadeOutMusic2(5.0f, () => {
+						AudioController.GetInstance().FadeOutMusic1(5.0f);
+					});
+					GiantDoorComponent door = GameObject.Find("LandmarkGIANTDOOR").GetComponent<GiantDoorComponent>();
+					door.Open();
+					Player player = Player.GetInstance();
+					AnimationUtils.LookTowardsHorizontal(player.transform,
+						(door.transform.position - player.transform.position).normalized, 1.0f);
+					AnimationUtils.LookTowardsVertical(player.MainCamera.transform, door.transform.position, 1.0f);
 				}
 			}
 		}
