@@ -146,25 +146,20 @@ namespace Game {
 
 	public class PlayerPoemState : PlayerState {
 		public PlayerPoemState() {
+			IconMarkerComponent.HideAll();
+		}
+
+		public override void OnDestroy() {
+			AudioController.GetInstance().FadeOutMusic3(5.0f);
+			Player.GetInstance().CameraController.DisableDepthOfField(0.5f);
 		}
 
 		public override void RunState() {
 			Player.GetInstance().HideShovel();
+			Player.GetInstance().Look.SetScopedLook(_lookConfig.PoemScopedLook, Player.GetInstance().MainCamera.transform.rotation);
+			Player.GetInstance().CameraController.EnableDepthOfField(0.5f);
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
 			_movement.MovementBehaviour.AddInteraction(new PlayerPoemInteraction());
 		}
 	}
-
-	public class FinalGameState : PlayerState {
-		public FinalGameState() {
-		}
-
-		public override void RunState() {
-			Debug.Log("GAME FINISHED");
-			Player.GetInstance().ShowShovel();
-			Player.GetInstance().CurrentState = new WalkRunState();
-		}
-	}
-
-
 }

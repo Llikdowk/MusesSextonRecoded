@@ -12,19 +12,20 @@ public class PlayerPoemInteraction : Interaction {
 	private bool _hasHit = false;
 	private GameObject _selectedGameObject;
 	private VerseInfo _selectedVerse;
-	private GameObject _finalTombstone;
+	private readonly GameObject _finalTombstone;
 
 	public PlayerPoemInteraction() {
 		DisplayVerses();
 		_finalTombstone = GameObject.Find("_finalTombstone");
 	}
 
-	public void DisplayVerses() {
+	public bool DisplayVerses() {
 		string[] verses = Player.GetInstance().GetNextTombPoem();
 		if (verses == null) {
 			_displayMeshText.HideSmooth();
-			Player.GetInstance().CurrentState = new FinalGameState();
-			return;
+			GameState.HasEnded = true;
+			Player.GetInstance().CurrentState = new WalkRunState();
+			return false;
 		}
 
 		VerseInfo[] versesText = new VerseInfo[verses.Length];
@@ -35,6 +36,7 @@ public class PlayerPoemInteraction : Interaction {
 
 		_displayMeshText.Display(player.MainCamera.transform.position + player.MainCamera.transform.forward * _distanceFromPlayer,
 			player.MainCamera.transform.rotation, versesText);
+		return true;
 	}
 
 	public override void DoInteraction() {
@@ -43,7 +45,13 @@ public class PlayerPoemInteraction : Interaction {
 			_displayMeshText.HideSmooth();
 			TombComponent tomb = _finalTombstone.GetComponent<TombComponent>();
 			tomb.AddVerse(_selectedVerse.Verse);
-			tomb.RaiseGravestone(1.0f, DisplayVerses);
+			Player.GetInstance().AddPlayerTombVerse(_selectedVerse.Verse);
+			Player.GetInstance().CameraController.DisableDepthOfField(0.25f);
+			tomb.RaiseGravestone(1.0f, () => {
+				if (DisplayVerses()) {
+					Player.GetInstance().CameraController.EnableDepthOfField(0.5f);
+				}
+			});
 		}
 	}
 
@@ -56,13 +64,12 @@ public class PlayerPoemInteraction : Interaction {
 			QueryTriggerInteraction.Collide);
 
 		if (_hasHit) {
-			if (_selectedGameObject == null) _selectedGameObject = hit.collider.gameObject;
-			if (_selectedGameObject.GetInstanceID() != hit.collider.gameObject.GetInstanceID()) {
+			if (_selectedGameObject != null && _selectedGameObject.GetInstanceID() != hit.collider.gameObject.GetInstanceID()) {
 				HideFeedback();
-				_selectedGameObject = hit.collider.gameObject;
-				_selectedVerse = _selectedGameObject.GetComponent<VerseInfoComponent>().Info;
-				ShowFeedback();
 			}
+			_selectedGameObject = hit.collider.gameObject;
+			_selectedVerse = _selectedGameObject.GetComponent<VerseInfoComponent>().Info;
+			ShowFeedback();
 		}
 		else {
 			HideFeedback();

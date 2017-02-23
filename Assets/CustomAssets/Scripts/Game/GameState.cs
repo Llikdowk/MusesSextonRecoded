@@ -25,5 +25,6 @@ namespace Game {
 		}
 
 		private static int _coffinsBuried = 0;
+		public static bool HasEnded = false;
 	}
 }

@@ -78,6 +78,19 @@ namespace Audio {
 
 		}
 
+		public void OnDestroy() {
+			_music.ReleaseResource();
+			_wind.ReleaseResource();
+			_bell.ReleaseResource();
+			_steps.ReleaseResource();
+			_shovel.ReleaseResource();
+			_pickupCoffin.ReleaseResource();
+			_cart.ReleaseResource();
+			_raiseTomb.ReleaseResource();
+			_tones.ReleaseResource();
+			_door.ReleaseResource();
+		}
+
 		public void Start() {
 			if (IsMuted) {
 				Mute();
@@ -202,6 +215,10 @@ namespace Audio {
 
 		public void FadeOutMusic2(float fadeOutTime_s, AudioAction f = null) {
 			StartCoroutine(Fade(_music, "Music2", 0.0f, fadeOutTime_s, f));
+		}
+		
+		public void FadeOutMusic3(float fadeOutTime_s, AudioAction f = null) {
+			StartCoroutine(Fade(_music, "Music3", 0.0f, fadeOutTime_s, f));
 		}
 
 		private IEnumerator Fade(FMODObject audio, string paramName, float endVolume, float duration_s, AudioAction f = null) {

@@ -60,14 +60,14 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			RaycastHit hit;
 			_player.GetEyeSight(out hit);
 
-			UIUtils.Crosshair(false);
+			UIGame.GetInstance().ShowCrosshair(false);
 			_digMarker.SetActive(true);
 			_digMarker.transform.position = hit.point;
 			_digMarker.transform.up = Vector3.Lerp(_digMarker.transform.up, hit.normal, 0.05f);
 		}
 
 		public override void HideFeedback() {
-			UIUtils.Crosshair(true);
+			UIGame.GetInstance().ShowCrosshair(true);
 			_digMarker.SetActive(false);
 		}
 

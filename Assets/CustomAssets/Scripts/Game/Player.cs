@@ -1,10 +1,13 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Audio;
+using FMOD;
 using Game.CameraComponents;
 using Game.Entities;
 using Game.PlayerComponents.Movement;
 using UnityEngine;
 using Utils;
+using Debug = UnityEngine.Debug;
 
 
 namespace Game.PlayerComponents {
@@ -46,7 +49,6 @@ namespace Game.PlayerComponents {
 		private RaycastHit _hit;
 		private bool _hasHit;
 		private bool _isEyeSightValid = false;
-		private readonly C5.IList<string> _poem = new C5.ArrayList<string>();
 		private ShovelMovementComponent _shovel;
 
 
@@ -125,7 +127,9 @@ namespace Game.PlayerComponents {
 		}
 
 		// Poem Controller
+		private readonly C5.IList<string> _poem = new C5.ArrayList<string>();
 		private int _currentTombVerses = 0;
+		private readonly C5.IList<string> _lastVersesChosen = new C5.ArrayList<string>();
 
 		public void AddPoemVerse(string verse) {
 			_poem.Add(verse);
@@ -138,6 +142,15 @@ namespace Game.PlayerComponents {
 				return result;
 			}
 			return null;
+		}
+
+		public void AddPlayerTombVerse(string verse) {
+			_lastVersesChosen.Add(verse);
+		}
+
+		private int _currentVerseIndex = 0;
+		public string GetPlayerTombVerse() {
+			return _lastVersesChosen[_currentVerseIndex++];
 		}
 
 

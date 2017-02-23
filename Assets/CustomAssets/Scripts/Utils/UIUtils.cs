@@ -3,9 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Utils {
+
+	// TODO move to UIGameComponent
 	public static class UIUtils {
 		public delegate void UIAction();
 
+		// Time.timeScale do not affect this
 		public static IEnumerator FadeOut(Image img, float duration_s, UIAction f = null) {
 			float t = 0.0f;
 			float time = Time.realtimeSinceStartup;
@@ -22,8 +25,5 @@ namespace Utils {
 			if (f != null) f();
 		}
 
-		public static void Crosshair(bool enabled) {
-			UIGameComponent.GetInstance().Crosshair.SetActive(enabled);
-		}
 	}
 }
