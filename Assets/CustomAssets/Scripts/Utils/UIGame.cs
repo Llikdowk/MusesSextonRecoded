@@ -33,6 +33,14 @@ namespace Utils {
 			Crosshair.SetActive(enabled);
 		}
 
+		public void FadeInLoadingScreen() {
+			
+		}
+
+		public void FadeOutLoadingScreen() {
+			
+		}
+
 		public void FadeToBlack(float duration_s, UIAction callback) {
 			//BlackImage.enabled = true;
 			//BlackImage.color = Color.black;

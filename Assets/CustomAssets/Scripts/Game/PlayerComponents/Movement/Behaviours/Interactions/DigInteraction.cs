@@ -1,5 +1,6 @@
 ﻿
 using Game.Entities;
+using UnityEngine;
 
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public class DigInteraction : Interaction {
@@ -16,7 +17,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				++_counter;
 				_tombComponent.Dig();
 				if (_counter >= MaxCount) {
-					Player.GetInstance().AnimationEnding = 
+					Player.GetInstance().PlayerShovelAnimationEnding = 
 						() => Player.GetInstance().CurrentState = new WalkRunState();
 				}
 			}

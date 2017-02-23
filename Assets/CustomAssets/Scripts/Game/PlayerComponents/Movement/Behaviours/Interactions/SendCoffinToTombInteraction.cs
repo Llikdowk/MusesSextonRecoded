@@ -18,11 +18,12 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 
 		public override void DoInteraction() {
 			_coffin.layer = LayerMaskManager.Get(Layer.Landmark);
-			AnimationUtils.MoveSmoothlyTo(_coffin.transform, _coffin.transform.position, _tomb.transform.position - Vector3.up*1.5f, 0.5f);
+			AnimationUtils.MoveSmoothlyTo(_coffin.transform, _tomb.transform.position - Vector3.up*1.5f, 0.5f);
 			AnimationUtils.LookTowardsHorizontal(_coffin.transform, _tomb.transform.right, 0.5f, () => {
 				_coffin.transform.parent = _tomb.transform;
 				_coffin.GetComponent<Collider>().enabled = true;
 			});
+			// TODO LookTowardsVertical (using arg lookDir instead of LookAtPoint)
 			_tombComponent.PlayerTombTransition(new PoemState(_tombComponent), false);
 			_tombComponent.HideMarker();
 			_tombComponent.HideColliders();

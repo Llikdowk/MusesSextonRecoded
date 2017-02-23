@@ -1,12 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using Audio;
-using FMOD;
 using Game.CameraComponents;
 using Game.Entities;
 using Game.PlayerComponents.Movement;
 using UnityEngine;
-using Utils;
 using Debug = UnityEngine.Debug;
 
 
@@ -168,11 +165,12 @@ namespace Game.PlayerComponents {
 			AudioController.GetInstance().PlayShovel();
 		}
 
-		public AnimationDelegate AnimationEnding = null;
+		public delegate void PlayerAnimation();
+		public PlayerAnimation PlayerShovelAnimationEnding = null;
 		public void OnDigAnimationEnding() {
-			if (AnimationEnding != null) {
-				AnimationEnding();
-				AnimationEnding = null;
+			if (PlayerShovelAnimationEnding != null) {
+				PlayerShovelAnimationEnding();
+				PlayerShovelAnimationEnding = null;
 			}
 		}
 

@@ -31,7 +31,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public override void DoInteraction() {
-			Debug.Log("DO PICK UP INTERACTION");
 			Coffin.layer = LayerMaskManager.Get(Layer.DrawFront);
 			MarkableComponent m = Coffin.GetComponent<MarkableComponent>();
 			if (m != null) {

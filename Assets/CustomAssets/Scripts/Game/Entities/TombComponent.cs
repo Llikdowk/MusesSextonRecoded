@@ -1,5 +1,4 @@
 ﻿
-using System.Collections;
 using Audio;
 using Game.PlayerComponents;
 using Triggers;
@@ -7,7 +6,7 @@ using UnityEngine;
 using Utils;
 
 namespace Game.Entities {
-	public class TombComponent : MonoBehaviour {
+	public class TombComponent : CoroutineBase {
 		private static GameObject _groundInstantiator;
 		private static GameObject _groundHeapInstantiator;
 		private static GameObject _gravestoneInstantiator;
@@ -25,22 +24,6 @@ namespace Game.Entities {
 		private const float _upGroundStep = 0.6f;
 		private const float _heapStep = 0.5f;
 		private const float _upGravestoneStep = 1.35f;
-
-		private delegate void CoroutineAction(float t);
-		public delegate void CoroutineCallback();
-
-		private IEnumerator GenericCoroutine(CoroutineAction f, float duration_s, CoroutineCallback callback = null) {
-			float t = 0.0f;
-			while (t < 1.0f) {
-				t += Time.deltaTime / duration_s;
-				f(t);
-				yield return null;
-			}
-
-			if (callback != null) {
-				callback();
-			}
-		}
 
 		public void Init(Vector3 upperLeft, Vector3 lowerRight) {
 
@@ -116,12 +99,12 @@ namespace Game.Entities {
 			Vector3 groundHeapStart = _groundHeap.transform.position;
 			Vector3 groundHeapEnd = groundHeapStart + _ground.transform.up * _heapStep;
 
-			StartCoroutine(GenericCoroutine(
+			StartCoroutine(0.5f, 
 				(t) => {
 					_ground.transform.position = Vector3.Lerp(groundStart, groundEnd, t);
 					_groundHeap.transform.position = Vector3.Lerp(groundHeapStart, groundHeapEnd, t);
-				}, 
-				0.5f));
+				},
+				null);
 		}
 
 		public void MarkForFinished() {
@@ -138,13 +121,12 @@ namespace Game.Entities {
 
 			Player.GetInstance().CameraController.Shake(4.0f);
 			AudioController.GetInstance().PlayRaiseTomb();
-			StartCoroutine(GenericCoroutine(
+			StartCoroutine(3.0f,
 				(t) => {
 					_ground.transform.position = Vector3.Lerp(groundStart, groundEnd, t);
 					_groundHeap.transform.position = Vector3.Lerp(groundHeapStart, groundHeapEnd, t);
 					_gravestone.transform.position = Vector3.Lerp(gravestoneStart, gravestoneEnd, t);
 				}, 
-				3.0f,
 				() => {
 					if (_isFinished) {
 						AudioController.GetInstance().PlayBell();
@@ -153,7 +135,7 @@ namespace Game.Entities {
 					else {
 						OnFinishedBury();
 					}
-				}));
+				});
 		}
 
 		public void PlayerTombTransition(PlayerState newPlayerState, bool animate) {
@@ -211,12 +193,11 @@ namespace Game.Entities {
 
 			Player.GetInstance().CameraController.Shake(4.0f);
 			AudioController.GetInstance().PlayRaiseTomb();
-			StartCoroutine(GenericCoroutine(
+			StartCoroutine(3.0f,
 				(t) => {
 					_gravestone.transform.position = Vector3.Lerp(gravestoneStart, gravestoneEnd, t);
 				},
-				3.0f,
-				callback)
+				callback
 			);
 		}
 	}

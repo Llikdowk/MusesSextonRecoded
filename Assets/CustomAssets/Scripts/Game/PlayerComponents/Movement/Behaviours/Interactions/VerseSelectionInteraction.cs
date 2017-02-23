@@ -98,7 +98,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				Player.GetInstance().CameraController.DisableDepthOfField(0.25f);
 				Player.GetInstance().CameraController.Unsaturate(0.0f, 1.0f);
 				Player.GetInstance().ShowShovel();
-				Player.GetInstance().AnimationEnding = () => Player.GetInstance().HideShovel();
+				Player.GetInstance().PlayerShovelAnimationEnding = () => Player.GetInstance().HideShovel();
 				if (Player.GetInstance().PlayDigAnimation()) {
 					_animationRunning = true;
 					_tombComponent.Bury(() => {
@@ -107,7 +107,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 					});
 					++VersesChosen;
 					if (VersesChosen >= MaxCount) {
-						Player.GetInstance().AnimationEnding = () => {
+						Player.GetInstance().PlayerShovelAnimationEnding = () => {
 							++GameState.CoffinsBuried;
 							Player.GetInstance().CurrentState = new WalkRunState();
 							_tombComponent.MarkForFinished();

@@ -1,85 +1,68 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Utils {
 
-	public delegate void AnimationDelegate();
 
 	public class AnimationUtils {
 
-		public static void LookTowardsHorizontal(Transform target, Vector3 newHorizontalLookDir, float durationSecs, AnimationDelegate callback = null) {
+		public static void LookTowardsHorizontal(Transform target, Vector3 newHorizontalLookDir, float durationSecs, 
+			CoroutineBase.CoroutineCallback callback = null) 
+		{
 			LookTowardsHorizontalComponent anim = target.gameObject.AddComponent<LookTowardsHorizontalComponent>();
 			anim.Init(newHorizontalLookDir, durationSecs, callback);
 			anim.Run();
 		}
 
 		public static void LookTowardsVertical(Transform target, Vector3 focusPoint, float durationSecs,
-			AnimationDelegate callback = null) {
+			CoroutineBase.CoroutineCallback callback = null) 
+		{
 			LookTowardsVerticalComponent anim = target.gameObject.AddComponent<LookTowardsVerticalComponent>();
 			anim.Init(focusPoint, durationSecs, callback);
 			anim.Run();
 		}
 
-		public static void MoveSmoothlyTo(Transform target, Vector3 start, Vector3 destination, float durationSecs,
-			AnimationDelegate callback = null) {
+		public static void MoveSmoothlyTo(Transform target, Vector3 destination, float durationSecs,
+			CoroutineBase.CoroutineCallback callback = null) 
+		{
 			MoveSmoothlyAnimationComponent anim = target.gameObject.AddComponent<MoveSmoothlyAnimationComponent>();
-			anim.Init(start, destination, durationSecs);
+			anim.Init(destination, durationSecs, callback);
 			anim.Run();
 		}
 
+		private interface IAnimationUtils {
+			void Init(Vector3 v, float f, CoroutineBase.CoroutineCallback c);
+			void Run();
+		}
 
-		private abstract class AnimationHelper : MonoBehaviour {
-			protected float _durationSecs;
-			private AnimationDelegate _callback;
-			protected float t = 0.0f;
+		private class LookTowardsHorizontalComponent : CoroutineBase, IAnimationUtils {
+			private Quaternion _horizontalRotation;
+			private float _durationSecs;
+			private CoroutineCallback _callback;
 
-			protected virtual void Init(float durationSecs, AnimationDelegate callback = null) {
+			public void Init(Vector3 newHorizontalLookDir, float durationSecs, CoroutineCallback callback = null) {
+				_horizontalRotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(newHorizontalLookDir, transform.up), transform.up);
 				_durationSecs = durationSecs;
 				_callback = callback;
 			}
 
-			public abstract void Run();
-
-			protected void ApplyCoroutine(AnimationDelegate coroutineBody) {
-				StartCoroutine(Coroutine(coroutineBody));
-			}
-
-			private IEnumerator Coroutine(AnimationDelegate coroutineBody) {
-				t = 0.0f;
-				while (t < 1.0f) {
-					coroutineBody();
-					t += Time.deltaTime / _durationSecs;
-					yield return null;
-				}
-				if (_callback != null) {
-					_callback();
-				}
-				Destroy(this);
-			}
-		}
-
-		private class LookTowardsHorizontalComponent : AnimationHelper {
-			private Quaternion _horizontalRotation;
-
-			public void Init(Vector3 newHorizontalLookDir, float durationSecs, AnimationDelegate callback = null) {
-				base.Init(durationSecs, callback);
-				_horizontalRotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(newHorizontalLookDir, transform.up), transform.up);
-			}
-
-			public override void Run() {
+			public void Run() {
 				Transform horizontal = transform;
 				Quaternion startHorizontal = horizontal.rotation;
-				ApplyCoroutine(() => {
-					horizontal.rotation = Quaternion.Slerp(startHorizontal, _horizontalRotation, t);
-				});
+				StartVolatileCoroutine(_durationSecs, 
+					(t) => {
+						horizontal.rotation = Quaternion.Slerp(startHorizontal, _horizontalRotation, t);
+					},
+					_callback
+				);
 			}
 		}
 
-		private class LookTowardsVerticalComponent : AnimationHelper {
+		private class LookTowardsVerticalComponent : CoroutineBase, IAnimationUtils {
 			private float _angle = 0.0f;
+			private float _durationSecs;
+			private CoroutineCallback _callback;
 
-			public void Init(Vector3 focusPoint, float durationSecs, AnimationDelegate callback = null) {
-				base.Init(durationSecs, callback);
+			public void Init(Vector3 focusPoint, float durationSecs, CoroutineCallback callback = null) {
 				Vector3 lookDir = (focusPoint - transform.position).normalized;
 				float sign = -1;
 				if (transform.forward.y > lookDir.y) {
@@ -87,31 +70,43 @@ namespace Utils {
 				}
 				lookDir = new Vector3(transform.forward.x, lookDir.y, transform.forward.z);
 				_angle = Vector3.Angle(transform.forward, lookDir) * sign;
+				_durationSecs = durationSecs;
+				_callback = callback;
 			}
 
-			public override void Run() {
-				ApplyCoroutine(() => {
-					float angleStep = Time.deltaTime / _durationSecs * _angle;
-					transform.rotation *= Quaternion.AngleAxis(angleStep, Vector3.right);
-				});
+			public void Run() {
+				StartVolatileCoroutine(_durationSecs,
+					(t) => {
+						float dt = Time.deltaTime / _durationSecs;
+						float angleStep = dt * _angle;
+						transform.rotation *= Quaternion.AngleAxis(angleStep, Vector3.right);
+					},
+					_callback
+				);
 				
 			}
 		}
 
-		private class MoveSmoothlyAnimationComponent : AnimationHelper {
+		private class MoveSmoothlyAnimationComponent : CoroutineBase, IAnimationUtils {
 			private Vector3 _start;
 			private Vector3 _destination;
+			private float _durationSecs;
+			private CoroutineCallback _callback;
 
-			public void Init(Vector3 start, Vector3 destination, float durationSecs, AnimationDelegate callback = null) {
-				base.Init(durationSecs, callback);
-				_start = start;
+			public void Init(Vector3 destination, float durationSecs, CoroutineCallback callback = null) {
+				_start = transform.position;
 				_destination = destination;
+				_durationSecs = durationSecs;
+				_callback = callback;
 			}
 
-			public override void Run() {
-				ApplyCoroutine(() => {
-					transform.position = Vector3.Lerp(_start, _destination, t);
-				});
+			public void Run() {
+				StartVolatileCoroutine(_durationSecs,
+					(t) => {
+						transform.position = Vector3.Lerp(_start, _destination, t);
+					},
+					_callback
+				);
 			}
 		}
 	}
