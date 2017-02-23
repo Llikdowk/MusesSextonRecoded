@@ -28,6 +28,16 @@ namespace Game {
 		protected SuperLookConfig _lookConfig;
 	}
 
+	public class NullState : PlayerState {
+		public static readonly NullState State = new NullState();
+
+		private NullState() {
+		}
+
+		public override void RunState() {
+		}
+	}
+
 	public class WalkRunState : PlayerState {
 		public WalkRunState() {
 		}
@@ -139,6 +149,7 @@ namespace Game {
 		}
 
 		public override void RunState() {
+			Player.GetInstance().HideShovel();
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
 			_movement.MovementBehaviour.AddInteraction(new PlayerPoemInteraction());
 		}
@@ -150,6 +161,7 @@ namespace Game {
 
 		public override void RunState() {
 			Debug.Log("GAME FINISHED");
+			Player.GetInstance().ShowShovel();
 			Player.GetInstance().CurrentState = new WalkRunState();
 		}
 	}

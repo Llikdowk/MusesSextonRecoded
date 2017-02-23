@@ -22,7 +22,7 @@ public class PlayerPoemInteraction : Interaction {
 	public void DisplayVerses() {
 		string[] verses = Player.GetInstance().GetNextTombPoem();
 		if (verses == null) {
-			_displayMeshText.Hide();
+			_displayMeshText.HideSmooth();
 			Player.GetInstance().CurrentState = new FinalGameState();
 			return;
 		}
@@ -32,15 +32,18 @@ public class PlayerPoemInteraction : Interaction {
 			versesText[i].Verse = verses[i];
 		}
 		Player player = Player.GetInstance();
-		_displayMeshText.Display(player.transform.position + player.transform.forward * _distanceFromPlayer, player.transform.rotation, versesText); // TODO parametrice distance
+
+		_displayMeshText.Display(player.MainCamera.transform.position + player.MainCamera.transform.forward * _distanceFromPlayer,
+			player.MainCamera.transform.rotation, versesText);
 	}
 
 	public override void DoInteraction() {
 		if (_hasHit) {
 			AudioController.GetInstance().PlayTone();
-			DisplayVerses();
-			_finalTombstone.GetComponent<TombComponent>().AddVerse(_selectedVerse.Verse);
-			_finalTombstone.transform.position += _finalTombstone.transform.up * 1.2f; // TODO! use GravestoneComponent.RaiseGravestone();
+			_displayMeshText.HideSmooth();
+			TombComponent tomb = _finalTombstone.GetComponent<TombComponent>();
+			tomb.AddVerse(_selectedVerse.Verse);
+			tomb.RaiseGravestone(1.0f, DisplayVerses);
 		}
 	}
 

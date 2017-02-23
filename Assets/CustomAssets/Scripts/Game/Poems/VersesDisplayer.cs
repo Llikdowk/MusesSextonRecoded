@@ -60,6 +60,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 		public void Display(Vector3 position, Quaternion rotation, VerseInfo[] verses) {
+			Debug.Log("called for display");
 			_container.transform.position = position;
 			_container.transform.rotation = rotation;
 			Vector3 upperPosition =  Vector3.up * 2.5f * VerticalSeparation;
@@ -82,13 +83,12 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 			}
 		}
 
-		public void Hide() {
+		public void HideSmooth() {
 			for (int i = 0; i < _displayMeshText.Length; ++i) {
 				if (!_displayMeshText[i].gameObject.activeSelf) continue;
 				Object.Destroy(_displayMeshText[i].gameObject.GetComponent<BoxCollider>());
 				_displayMeshText[i].GetComponent<SmoothTextTransitionComponent>().RunHide(0.5f, i*0.1f);
 			}
-			
 		}
 
 		private class SmoothTextTransitionComponent : MonoBehaviour {
@@ -168,7 +168,6 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				}
 				gameObject.SetActive(false);
 			}
-			
 		}
 	}
 }

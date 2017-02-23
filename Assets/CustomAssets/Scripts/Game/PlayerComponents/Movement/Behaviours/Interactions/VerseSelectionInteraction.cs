@@ -121,7 +121,7 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 					poemState.SetLandmarkSelectionInteraction();
 				}
 			}
-			_displayMeshText.Hide();
+			_displayMeshText.HideSmooth();
 		}
 
 		public override void ShowFeedback() {

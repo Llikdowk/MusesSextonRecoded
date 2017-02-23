@@ -205,5 +205,19 @@ namespace Game.Entities {
 			++VerseIndex;
 		}
 
+		public void RaiseGravestone(float upStep, CoroutineCallback callback) {
+			Vector3 gravestoneStart = _gravestone.transform.position;
+			Vector3 gravestoneEnd = _gravestone.transform.position + _gravestone.transform.up * upStep;
+
+			Player.GetInstance().CameraController.Shake(4.0f);
+			AudioController.GetInstance().PlayRaiseTomb();
+			StartCoroutine(GenericCoroutine(
+				(t) => {
+					_gravestone.transform.position = Vector3.Lerp(gravestoneStart, gravestoneEnd, t);
+				},
+				3.0f,
+				callback)
+			);
+		}
 	}
 }
