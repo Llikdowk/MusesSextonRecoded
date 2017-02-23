@@ -95,7 +95,6 @@ namespace Game {
 
 		private readonly TombComponent _tombComponent;
 		public GenderEnum Gender;
-		private int _selectedVersesCount = 0;
 		public const int MaxVerses = 3;
 
 		public PoemState(TombComponent tombComponent) {
@@ -108,22 +107,14 @@ namespace Game {
 		public override void OnDestroy() {
 			AudioController.GetInstance().FadeOutPercussion();
 			IconMarkerComponent.ShowAll();
+			Player.GetInstance().CameraController.Unsaturate(0.0f, 0.5f);
+			Player.GetInstance().CameraController.DisableDepthOfField(0.5f);
 		}
 
 		public override void RunState() {
 			Player.GetInstance().HideShovel();
 			_movement.MovementBehaviour = new NullMovementBehaviour(_transform);
 			SetLandmarkSelectionInteraction();
-		}
-
-		public void CalcNextInteraction() {
-			++_selectedVersesCount;
-			if (_selectedVersesCount == MaxVerses) {
-				Player.GetInstance().CurrentState = new WalkRunState();
-			}
-			else {
-				SetLandmarkSelectionInteraction();
-			}
 		}
 
 		public void SetLandmarkSelectionInteraction() {

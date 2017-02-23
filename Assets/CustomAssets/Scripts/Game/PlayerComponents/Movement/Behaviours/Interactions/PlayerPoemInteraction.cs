@@ -1,4 +1,5 @@
 using Game;
+using Game.Entities;
 using Game.PlayerComponents;
 using Game.PlayerComponents.Movement.Behaviours.Interactions;
 using Game.Poems;
@@ -10,14 +11,17 @@ public class PlayerPoemInteraction : Interaction {
 	private bool _hasHit = false;
 	private GameObject _selectedGameObject;
 	private VerseInfo _selectedVerse;
+	private GameObject _finalTombstone;
 
 	public PlayerPoemInteraction() {
 		DisplayVerses();
+		_finalTombstone = GameObject.Find("_finalTombstone");
 	}
 
 	public void DisplayVerses() {
 		string[] verses = Player.GetInstance().GetNextTombPoem();
 		if (verses == null) {
+			_displayMeshText.Hide();
 			Player.GetInstance().CurrentState = new FinalGameState();
 			return;
 		}
@@ -34,6 +38,8 @@ public class PlayerPoemInteraction : Interaction {
 		if (_hasHit) {
 			DisplayVerses();
 			// TODO raiseTomb
+			_finalTombstone.GetComponent<TombComponent>().AddVerse(_selectedVerse.Verse);
+			_finalTombstone.transform.position += _finalTombstone.transform.up * 1.2f; // TODO! use GravestoneComponent.RaiseGravestone();
 		}
 	}
 
@@ -59,5 +65,20 @@ public class PlayerPoemInteraction : Interaction {
 			_selectedGameObject = null;
 		}
 		return this;
+	}
+
+
+	public override void ShowFeedback() {
+		if (_selectedGameObject != null) {
+			_selectedGameObject.GetComponent<TextMesh>()
+				.GetComponent<Renderer>().material.color = _displayMeshText.BaseHighlightColor;
+		}
+	}
+
+	public override void HideFeedback() {
+		if (_selectedGameObject != null) {
+			_selectedGameObject.GetComponent<TextMesh>()
+				.GetComponent<Renderer>().material.color = _displayMeshText.BaseColor;
+		}
 	}
 }

@@ -15,7 +15,7 @@ namespace Game.Entities {
 
 		public Vector3 MiddleLow { get; private set; }
 
-		private GameObject _gravestone;
+		public GameObject _gravestone; // TODO: create another script [GravestoneComponent] with this public and AddVerse()
 		private GameObject _ground;
 		private GameObject _groundHeap;
 		private IconMarkerComponent _icon;
@@ -183,6 +183,14 @@ namespace Game.Entities {
 			}
 		}
 
+		public void Hide() {
+			_ground.transform.parent = null;
+			_gravestone.transform.parent = null;
+			_groundHeap.transform.parent = null;
+			gameObject.SetActive(false);
+		}
+
+		// TODO: maybe this should be extracted?
 		public void AddVerse(string text) {
 			string splittedText = text;
 			const int cutIndex = 16;
@@ -194,14 +202,6 @@ namespace Game.Entities {
 			}
 			_gravestone.transform.GetChild(VerseIndex).GetComponent<TextMesh>().text = splittedText;
 			++VerseIndex;
-		}
-
-
-		public void Hide() {
-			_ground.transform.parent = null;
-			_gravestone.transform.parent = null;
-			_groundHeap.transform.parent = null;
-			gameObject.SetActive(false);
 		}
 
 	}

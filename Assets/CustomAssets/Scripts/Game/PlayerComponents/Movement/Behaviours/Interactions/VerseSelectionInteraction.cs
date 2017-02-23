@@ -78,8 +78,9 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 		}
 
 
-		private static int _counter = 0;
+		private static int VersesChosen = 0; // TODO find another way
 		private const int MaxCount = 3;
+		private bool _animationRunning = false;
 		public override void DoInteraction() {
 			PoemState poemState = ((PoemState)Player.GetInstance().CurrentState); // TODO: send in constructor
 			if (_hasHit) {
@@ -96,24 +97,26 @@ namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 				Player.GetInstance().ShowShovel();
 				Player.GetInstance().AnimationEnding = () => Player.GetInstance().HideShovel();
 				if (Player.GetInstance().PlayDigAnimation()) {
+					_animationRunning = true;
 					_tombComponent.Bury(() => {
 						poemState.SetLandmarkSelectionInteraction();
+						_animationRunning = false;
 					});
-					++_counter;
-					if (_counter >= MaxCount) {
+					++VersesChosen;
+					if (VersesChosen >= MaxCount) {
 						Player.GetInstance().AnimationEnding = () => {
 							++GameState.CoffinsBuried;
 							Player.GetInstance().CurrentState = new WalkRunState();
 							_tombComponent.MarkForFinished();
+							VersesChosen = 0;
 						};
-						_counter = 0;
 					}
 				}
-
-
 			}
 			else {
-				poemState.CalcNextInteraction();
+				if (!_animationRunning) {
+					poemState.SetLandmarkSelectionInteraction();
+				}
 			}
 			_displayMeshText.Hide();
 		}
