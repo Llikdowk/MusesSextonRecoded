@@ -1,8 +1,8 @@
 ﻿using Audio;
 using UnityEngine;
 using Cubiquity;
+using UI;
 using UnityEngine.UI;
-using Utils;
 
 public class LoadComponents : MonoBehaviour {
 	public TerrainVolume Terrain;

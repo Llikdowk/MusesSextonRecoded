@@ -1,10 +1,8 @@
 ﻿
-using Audio;
 using Game;
 using Game.PlayerComponents;
+using UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Utils;
 
 namespace Triggers {
 	public class TEndGame : MonoBehaviour {

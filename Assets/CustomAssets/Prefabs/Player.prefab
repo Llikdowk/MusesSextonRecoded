@@ -48,6 +48,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1092943045719782
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4905112498591526}
+  - component: {fileID: 20733394092801206}
+  - component: {fileID: 114627513112760642}
+  - component: {fileID: 114994727608722826}
+  m_Layer: 8
+  m_Name: LandmarkCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1240036836139352
 GameObject:
   m_ObjectHideFlags: 1
@@ -93,11 +111,10 @@ GameObject:
   - component: {fileID: 92484441151758112}
   - component: {fileID: 124580714881258792}
   - component: {fileID: 81187682020227276}
-  - component: {fileID: 114484996876410282}
-  - component: {fileID: 114823792110289556}
-  - component: {fileID: 114672368536113020}
-  - component: {fileID: 114225689323701260}
   - component: {fileID: 114211897671917274}
+  - component: {fileID: 114484996876410282}
+  - component: {fileID: 114225689323701260}
+  - component: {fileID: 114823792110289556}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -133,7 +150,7 @@ Transform:
   - {fileID: 4377345879418486}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 126.770004, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4308734049002122
 Transform:
   m_ObjectHideFlags: 1
@@ -174,8 +191,22 @@ Transform:
   m_Children:
   - {fileID: 4921906988407616}
   - {fileID: 4308734049002122}
+  - {fileID: 4905112498591526}
   m_Father: {fileID: 4377345879418486}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4905112498591526
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092943045719782}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4791768322742770}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4921906988407616
 Transform:
@@ -212,7 +243,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.34901962, g: 0.5568628, b: 0.6313726, a: 0.019607844}
+  m_BackGroundColor: {r: 0.34901962, g: 0.5568628, b: 0.6313726, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -227,13 +258,47 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294966271
+    m_Bits: 4294964223
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
+--- !u!20 &20733394092801206
+Camera:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092943045719782}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 4
+  m_BackGroundColor: {r: 0.34901962, g: 0.5568628, b: 0.6313726, a: 1}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 75
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 0
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
@@ -330,6 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8c7ac177cf1cb4892ea8298c9ebec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Depth: 100
 --- !u!114 &114283957191764414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -354,20 +420,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Config:
-    WalkRunLook:
-      SmoothInput: 0
-      XSensitivity: 0.5
-      YSensitivity: 0.5
-      SensitivityMultiplicator: 200
-      SmoothVerticalClipping: 0
-      VerticalRangeDegrees: 90
-      VerticalForceBack: 0.5
-      VerticalLag: 0
-      SmoothHorizontalClipping: 0
-      HorizontalRangeDegrees: 181
-      HorizontalForceBack: 0.5
-      HorizontalLag: 0
-      FixedForward: {fileID: 4139878440087328}
     WalkMovement:
       ForwardSpeed: 5
       BackwardSpeed: 5
@@ -381,42 +433,93 @@ MonoBehaviour:
     WalkRunAcceleration:
       SpeedUp: 6
       SpeedDown: 6
-    DriveCartLook:
+    DriveCartMovement:
+      GoInsideTimeSeconds: 0.5
+      ForwardSpeed: 7.5
+      BackwardSpeed: 2
+      DistanceToPlayer: 1
+      VerticalRotationSpeed: 1
+      LookLag: 0.9
+    CartAcceleration:
+      SpeedUp: 0.5
+      SpeedDown: 0.75
+  LookConfig:
+    FreeLook:
+      SmoothInput: 0
+      XSensitivity: 0.5
+      YSensitivity: 0.5
+      SensitivityMultiplicator: 200
+      SmoothVerticalClipping: 0
+      VerticalRangeDegrees: 90
+      VerticalForceBack: 0.5
+      VerticalLag: 0
+      SmoothHorizontalClipping: 0
+      HorizontalRangeDegrees: 181
+      HorizontalForceBack: 0.5
+      HorizontalLag: 0
+    DriveScopedLook:
       SmoothInput: 1
       XSensitivity: 0.5
       YSensitivity: 0.5
       SensitivityMultiplicator: 200
       SmoothVerticalClipping: 1
-      VerticalRangeDegrees: 75
+      VerticalRangeDegrees: 60
       VerticalForceBack: 0.5
       VerticalLag: 0
       SmoothHorizontalClipping: 1
       HorizontalRangeDegrees: 45
       HorizontalForceBack: 0.5
       HorizontalLag: 0
-      FixedForward: {fileID: 0}
-    DriveCartMovement:
-      GoInsideTimeSeconds: 0.5
-      ForwardSpeed: 7.5
-      BackwardSpeed: 2
-      DistanceToPlayer: 1
-      VerticalRotationStep: 5
-      MovementLag: 0.9
-      LookLag: 0.9
-    CartAcceleration:
-      SpeedUp: 0.5
-      SpeedDown: 0.75
-  Movement: {fileID: 0}
-  Controller: {fileID: 0}
-  Look: {fileID: 0}
+    DiggingScopedLook:
+      SmoothInput: 1
+      XSensitivity: 0.5
+      YSensitivity: 0.5
+      SensitivityMultiplicator: 200
+      SmoothVerticalClipping: 1
+      VerticalRangeDegrees: 7.5
+      VerticalForceBack: 0.5
+      VerticalLag: 0
+      SmoothHorizontalClipping: 1
+      HorizontalRangeDegrees: 5
+      HorizontalForceBack: 0.5
+      HorizontalLag: 0
+    PoemScopedLook:
+      SmoothInput: 1
+      XSensitivity: 0.5
+      YSensitivity: 0.5
+      SensitivityMultiplicator: 200
+      SmoothVerticalClipping: 1
+      VerticalRangeDegrees: 45
+      VerticalForceBack: 0.5
+      VerticalLag: 0.8
+      SmoothHorizontalClipping: 1
+      HorizontalRangeDegrees: 35
+      HorizontalForceBack: 0.5
+      HorizontalLag: 0.8
+    PoemLandmarkFreeLook:
+      SmoothInput: 1
+      XSensitivity: 0.5
+      YSensitivity: 0.5
+      SensitivityMultiplicator: 200
+      SmoothVerticalClipping: 1
+      VerticalRangeDegrees: 50
+      VerticalForceBack: 0.5
+      VerticalLag: 0.9
+      SmoothHorizontalClipping: 1
+      HorizontalRangeDegrees: 181
+      HorizontalForceBack: 0.5
+      HorizontalLag: 0.9
+  CharMovement: {fileID: 0}
+  CharController: {fileID: 0}
   Animator: {fileID: 0}
+  CameraController: {fileID: 0}
 --- !u!114 &114484996876410282
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1318661995506684}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85f86798f0f2a9e4d8e3cdde7fd5a4a3, type: 3}
   m_Name: 
@@ -431,7 +534,7 @@ MonoBehaviour:
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.5
+      time: 0.7993465
       value: 1
       inSlope: 0
       outSlope: 0
@@ -484,7 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c78a97b4997cd8448c12030c6ddc1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Config:
+  CurrentConfig:
     SmoothInput: 0
     XSensitivity: 0.5
     YSensitivity: 0.5
@@ -497,7 +600,20 @@ MonoBehaviour:
     HorizontalRangeDegrees: 181
     HorizontalForceBack: 0.5
     HorizontalLag: 0
-    FixedForward: {fileID: 0}
+  FixedForward: {fileID: 0}
+--- !u!114 &114627513112760642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092943045719782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f02f700044bfb04ba121bc0c44b7ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OutlineColor: {r: 0, g: 1, b: 1, a: 0.05882353}
+  Thickness: 6
 --- !u!114 &114631627625898874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -512,19 +628,6 @@ MonoBehaviour:
   Speed: 5
   Clamp: 0.05
   VerticalLag: 0.75
---- !u!114 &114672368536113020
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1318661995506684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f02f700044bfb04ba121bc0c44b7ed6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OutlineColor: {r: 0, g: 1, b: 1, a: 0.0627451}
-  Thickness: 6
 --- !u!114 &114823792110289556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -548,6 +651,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e9bce7f8e342f54282791e9e71492af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114994727608722826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092943045719782}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd70d448b18cfbc46af26466f752332c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visualizeFocus: 0
+  focalLength: 10
+  focalSize: 0.18
+  aperture: 0.759
+  focalTransform: {fileID: 0}
+  maxBlurSize: 2
+  highResolution: 0
+  blurType: 0
+  blurSampleCount: 2
+  nearBlur: 0
+  foregroundOverlap: 1
+  dofHdrShader: {fileID: 4800000, guid: acd613035ff3e455e8abf23fdc8c8c24, type: 3}
+  dx11BokehShader: {fileID: 4800000, guid: d8e82664aa8686642a424c88ab10164a, type: 3}
+  dx11BokehThreshold: 0.5
+  dx11SpawnHeuristic: 0.0875
+  dx11BokehTexture: {fileID: 2800000, guid: a4cdca73d61814d33ac1587f6c163bca, type: 3}
+  dx11BokehScale: 1.2
+  dx11BokehIntensity: 2.5
 --- !u!124 &124580714881258792
 Behaviour:
   m_ObjectHideFlags: 1

@@ -1,7 +1,7 @@
 using Cubiquity;
 using Game.Entities;
+using UI;
 using UnityEngine;
-using Utils;
 
 namespace Game.PlayerComponents.Movement.Behaviours.Interactions {
 	public class CarveTerrainInteraction : Interaction {

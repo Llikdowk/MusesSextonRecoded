@@ -2,7 +2,6 @@
 
 namespace Utils {
 
-
 	public class AnimationUtils {
 
 		public static void LookTowardsHorizontal(Transform target, Vector3 newHorizontalLookDir, float durationSecs, 
