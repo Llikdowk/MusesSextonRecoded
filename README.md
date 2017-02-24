@@ -8,11 +8,11 @@ This project is a recodification of that one. The result is far from perfect and
 
 &nbsp;
 
-**Assets** modelled by [@PabloSpaceboy](https://twitter.com/PabloSpaceboy).
+**Assets** modelled by [@PabloSpaceboy](https://twitter.com/PabloSpaceboy)
 
-**Music** composed by [@thefingerspit](https://twitter.com/thefingerspit).
+**Music** composed by [@thefingerspit](https://twitter.com/thefingerspit)
 
-**Writing & Design** done by [@jordidepaco](https://twitter.com/jordidepaco).
+**Writing & Design** done by [@jordidepaco](https://twitter.com/jordidepaco)
 &nbsp;
 
 &nbsp;
