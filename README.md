@@ -20,6 +20,8 @@ This project is a recodification of that one. The result is far from perfect and
 **Code path:** */Assets/CustomAssets/Scripts*
 
 **Shaders path:** */Assets/CustomAssets/Shaders*
+
+The project uses [**Cubiquity**](https://www.assetstore.unity3d.com/en/#!/content/12689) for the terrain and [**The C5 Generic Collection Library**](https://www.itu.dk/research/c5/) for some data structures.
 &nbsp;
 
 &nbsp;
